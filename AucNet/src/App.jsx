@@ -7,16 +7,28 @@ import {
   MdOutlineNotifications,
   MdOutlinePersonOutline,
 } from "react-icons/md";
-import { FaChevronDown, FaSearch } from "react-icons/fa";
+import { FaChevronDown, FaSearch, FaTable, FaThLarge } from "react-icons/fa";
 import JapanFlag from "./assets/JapanFlag.svg";
 
 function App() {
+  const [isTableView, setIsTableView] = useState(true);
+
+  const toggleView = () => {
+    setIsTableView(!isTableView);
+  };
+
   return (
     <>
       <nav className="flex justify-between align-middle fixed w-screen top-0 left-0 shadow-sm p-32 py-0 z-50">
         <img src={cosmoLogo} alt="Logo" className="w-32 my-3" />
         <div className="navLinks w-1/2 flex items-center">
-          <a href="#" rel="noopener noreferrer" className="flex items-center font-bold h-full text-yellow-600 border-b-4 border-b-yellow-600">Car Stock</a>
+          <a
+            href="#"
+            rel="noopener noreferrer"
+            className="flex items-center font-bold h-full text-yellow-600 border-b-4 border-b-yellow-600"
+          >
+            Car Stock
+          </a>
         </div>
         <div className="flex items-center gap-4">
           <div className="relative">
@@ -57,8 +69,29 @@ function App() {
       <section className="fixed top-0 left-0 w-screen h-screen bg-slate-50 px-32 pt-28">
         <div className="w-full flex items-center justify-between">
           <h1 className="text-3xl text-neutral-900 font-bold">Cars For Sale</h1>
-          <div>
-            <p>Showing 1-20 of 2,420 listings</p>
+          <div className="flex gap-2 items-center">
+            <p>
+              Showing <b>1-20</b> of <b>2,420</b> listings
+            </p>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => setIsTableView(true)}
+                className={`flex items-center p-2 rounded-md transition ${
+                  isTableView ? "bg-gray-300" : "hover:bg-gray-200"
+                }`}
+              >
+                <FaTable size={16} />
+              </button>
+
+              <button
+                onClick={() => setIsTableView(false)}
+                className={`flex items-center p-2 rounded-md transition ${
+                  !isTableView ? "bg-gray-300" : "hover:bg-gray-200"
+                }`}
+              >
+                <FaThLarge size={16} />
+              </button>
+            </div>
           </div>
         </div>
       </section>
