@@ -13,7 +13,7 @@ import JapanFlag from "./assets/JapanFlag.svg";
 function App() {
   return (
     <>
-      <nav className="flex justify-between align-middle fixed w-screen top-0 left-0 shadow-sm p-32 py-0">
+      <nav className="flex justify-between align-middle fixed w-screen top-0 left-0 shadow-sm p-32 py-0 z-50">
         <img src={cosmoLogo} alt="Logo" className="w-32 my-3" />
         <div className="navLinks w-1/2 flex items-center">
           <a href="#" rel="noopener noreferrer" className="flex items-center font-bold h-full text-yellow-600 border-b-4 border-b-yellow-600">Car Stock</a>
@@ -53,6 +53,15 @@ function App() {
           </div>
         </div>
       </nav>
+
+      <section className="fixed top-0 left-0 w-screen h-screen bg-slate-50 px-32 pt-28">
+        <div className="w-full flex items-center justify-between">
+          <h1 className="text-3xl text-neutral-900 font-bold">Cars For Sale</h1>
+          <div>
+            <p>Showing 1-20 of 2,420 listings</p>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
