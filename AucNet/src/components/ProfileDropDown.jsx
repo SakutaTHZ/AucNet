@@ -39,16 +39,6 @@ function ProfileDropDown() {
             <button
               className="flex items-center gap-1 w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
             >
-              <MdOutlineShoppingCart size={20} />My basket
-            </button>
-            <button
-              className="flex items-center gap-1 w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-            >
-              <MdFavoriteBorder size={20} />Favorites
-            </button>
-            <button
-              className="flex items-center gap-1 w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-            >
               <MdLogout size={20}/>Sign out
             </button>
           </div>

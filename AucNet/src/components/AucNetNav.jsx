@@ -28,7 +28,7 @@ function AucNetNav() {
             <input
               type="text"
               placeholder="Search by Make or Model"
-              className="pl-10 pr-4 py-2 rounded-md w-72 bg-gray-200 outline-none"
+              className="pl-10 pr-4 py-2 rounded-md w-72 bg-gray-50 outline-none"
             />
             <FaSearch className="absolute left-3 top-3.5 text-gray-600" />
           </div>

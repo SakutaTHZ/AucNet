@@ -1,17 +1,12 @@
 import { useState } from "react";
 import "./App.css";
-import {
-  MdOutlineDirectionsCar,
-  MdOutlineDateRange,
-  MdBorderAll,
-  MdTune,
-  MdFavoriteBorder,
-} from "react-icons/md";
-import { FaSearch, FaListUl } from "react-icons/fa";
-import { TbEngine, TbRoad } from "react-icons/tb";
+import { MdBorderAll, MdTune, MdClose } from "react-icons/md";
+import { FaListUl, FaChevronDown } from "react-icons/fa";
 import CustomDropdown from "./components/DropDown";
 import AucNetNav from "./components/AucNetNav";
 import AucNetCard from "./components/AucNetCard";
+import RangeSlider from "./components/RangeSlider";
+import FilterOptionDropDown from "./components/FilterOptionDropDown";
 
 function App() {
   // Toggle view
@@ -33,6 +28,27 @@ function App() {
     "Mileage low to high",
     "Mileage high to low",
   ];
+  const makeBrandData = [
+    { name: "Acura", count: 14 },
+    { name: "Alfa Romeo", count: 53 },
+    { name: "Aston Martin", count: 74 },
+    { name: "Audi", count: 23 },
+    { name: "Bentley", count: 34 },
+    { name: "BMW", count: 43 },
+  ];
+  const modelData = [
+    { name: "Skyline", count: 14 },
+    { name: "Marcede", count: 53 },
+    { name: "Nissan", count: 74 },
+    { name: "Toyota", count: 23 },
+    { name: "Mitsubis", count: 34 },
+    { name: "VolksWagon", count: 43 },
+    { name: "Honda", count: 54 },
+    { name: "Audi", count: 66 },
+    { name: "Lexus", count: 12 },
+    { name: "Mazda", count: 31 },
+    { name: "Others", count: 812 },
+  ];
   // select box
 
   const cards = Array.from({ length: 20 });
@@ -47,59 +63,83 @@ function App() {
             <h1 className="text-3xl text-neutral-900 font-bold">
               Cars For Sale
             </h1>
-            <div className="flex gap-2 items-center">
-              <p>
-                Showing <b>1-20</b> of <b>2,420</b> listings
-              </p>
-              <div className="flex items-center space-x-2 border-l border-l-gray-300 pl-3">
-                <button
-                  onClick={() => setIsTableView(false)}
-                  className={`flex items-center p-2 rounded-md transition ${
-                    !isTableView
-                      ? "bg-amber-200 border border-yellow-400"
-                      : "hover:bg-amber-100"
-                  }`}
-                >
-                  <MdBorderAll size={18} />
-                </button>
-                <button
-                  onClick={() => setIsTableView(true)}
-                  className={`flex items-center p-2 rounded-md transition ${
-                    isTableView
-                      ? "bg-amber-200 border border-yellow-400"
-                      : "hover:bg-amber-100"
-                  }`}
-                >
-                  <FaListUl size={16} />
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="w-full flex items-center justify-between gap-4">
-            <button className="flex gap-1 items-center border border-gray-300 py-2.5 px-6 rounded-3xl shadow-sm">
-              <MdTune size={18} />
-              Filters
-            </button>
-            <div className="relative w-full">
-              <input
-                type="text"
-                placeholder="Search by Make or Model"
-                className="pl-10 pr-4 py-2 rounded-md w-full outline-none border border-gray-300"
-              />
-              <FaSearch className="absolute left-3 top-3.5 text-gray-600" />
-            </div>
-            <CustomDropdown
-              options={options}
-              customClass="my-custom-class"
-              optionClass="my-option-class"
-            />
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full h-full mt-8">
-          {cards.map((_, index) => (
-            <AucNetCard key={index} />
-          ))}
+        <div className="mt-6 lg:flex">
+          {/* Left Sticky Box */}
+          <div className="leftBox sticky top-24 w-64 flex flex-col z-50 rounded-md shadow-lg h-fit">
+            <div className="w-64 flex gap-1 justify-between items-center py-2.5 px-4 border-b border-b-gray-200">
+              <p className="text-lg font-bold">Filter Options</p>
+              <button className="clearAll text-yellow-600 font-semibold">
+                Clear all
+              </button>
+            </div>
+            <FilterOptionDropDown
+              boxName="Make/Brand"
+              listData={makeBrandData}
+              customClass={"makeBrand border-b border-b-gray-200"}
+              placeholder={"Search Make/Brand"}
+            />
+            <FilterOptionDropDown
+              boxName="Model"
+              listData={modelData}
+              customClass={"model border-b border-b-gray-200"}
+              placeholder={"Search Model"}
+            />
+            <RangeSlider min={1900} max={2025} boxName={'Registration Year'}/>
+          </div>
+
+          {/* Right Scrollable Content */}
+          <div className="flex-1 flex flex-col gap-6 mt-6 lg:mt-0 lg:ml-6">
+            <div className="flex gap-2 w-full items-center justify-between">
+              <div className="flex items-center gap-2">
+                <button className="flex items-center gap-2 border p-2 px-3 rounded-3xl">
+                  <MdTune size={18} />
+                  Filters
+                </button>
+                <p>
+                  Showing <b>1-20</b> of <b>2,420</b> listings
+                </p>
+              </div>
+              <div className="flex gap-2 items-center">
+                <CustomDropdown
+                  options={options}
+                  customClass="my-custom-class"
+                  optionClass="my-option-class"
+                />
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => setIsTableView(false)}
+                    className={`flex items-center p-2 rounded-md transition ${
+                      !isTableView
+                        ? "bg-amber-200 border border-yellow-400"
+                        : "hover:bg-amber-100"
+                    }`}
+                  >
+                    <MdBorderAll size={18} />
+                  </button>
+                  <button
+                    onClick={() => setIsTableView(true)}
+                    className={`flex items-center p-2 rounded-md transition ${
+                      isTableView
+                        ? "bg-amber-200 border border-yellow-400"
+                        : "hover:bg-amber-100"
+                    }`}
+                  >
+                    <FaListUl size={16} />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Cards Container */}
+            <div className="rightBox grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full h-full">
+              {cards.map((_, index) => (
+                <AucNetCard key={index} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </>
