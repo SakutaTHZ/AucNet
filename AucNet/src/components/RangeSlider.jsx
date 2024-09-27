@@ -53,7 +53,7 @@ const RangeSlider = ({boxName,min,max}) => {
             step="1"
             value={minValue}
             onChange={handleMinSlider}
-            className="slider-thumb h-2 bg-blue-500 rounded-lg w-full translate-x-2 appearance-none focus:outline-none"
+            className="slider-thumb h-2 bg-blue-200 rounded-lg w-full translate-x-2 appearance-none focus:outline-none"
           />
           {/* Max Slider */}
           <input
@@ -63,7 +63,7 @@ const RangeSlider = ({boxName,min,max}) => {
             step="1"
             value={maxValue}
             onChange={handleMaxSlider}
-            className="slider-thumb h-2 bg-blue-500 rounded-lg w-full -translate-x-2 appearance-none focus:outline-none"
+            className="slider-thumb h-2 bg-blue-200 rounded-lg w-full -translate-x-2 appearance-none focus:outline-none"
           />
         </div>
       </div>
