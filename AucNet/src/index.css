@@ -11,6 +11,8 @@
   color: #00122A;
   background-color: white;
 
+  --cosmo-yellow:#FFC158;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -23,7 +25,60 @@ body {
   place-items: center;
 }
 
+.rangeSlider {
+  width: 100%;
+  -webkit-appearance :none;
+  -moz-appearance :none;
+  appearance :none;
+  background: none;
+  cursor: pointer;
+}
+.rangeSlider::-webkit-slider-runnable-track {
+  background: rgb(224, 224, 224);
+  border-radius: 20px;
+  height: 0.4rem;
+  z-index: 5;
+}
+.rangeSlider::-moz-range-track {
+  background: rgb(224, 224, 224);
+  border-radius: 20px;
+  height: 0.4rem;
+  z-index: 5;
+}
+.rangeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -3px;
+  background-color: var(--cosmo-yellow);
+  height: 15px;
+  aspect-ratio: 1;   
+  border-radius: 50%; 
+  border: 1px solid transparent;
+  outline: 3px solid transparent;
+  z-index: 10;
+  transition: .5s ease-in-out;
+}
+.rangeSlider::-moz-range-thumb {
+  border: none; /*Removes extra border that FF applies*/
+  background-color: var(--cosmo-yellow);
+  height: 15px;
+  aspect-ratio: 1;   
+  border-radius: 50%; 
+}
+.rangeSlider:focus {
+  outline: none;
+}
+.rangeSlider:focus::-webkit-slider-thumb,.rangeSlider:hover::-webkit-slider-thumb {
+  border: 1px solid white;
+  outline: 2px solid var(--cosmo-yellow);
+  outline-offset: 0.125rem;
+}
 
+.rangeSlider:focus::-moz-range-thumb,.rangeSlider:hover::-moz-range-thumb {
+  border: 1px solid white;
+  outline: 2px solid var(--cosmo-yellow);
+  outline-offset: 0.125rem;     
+}
 
 /* @media (prefers-color-scheme: light) {
   :root {

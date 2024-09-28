@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const RangeSlider = ({boxName,min,max}) => {
+const RangeSlider = ({boxName,min,max,customClass}) => {
     const halfPoint= Math.round((min+max)/2);
   const [minValue, setMinValue] = useState(min);
   const [maxValue, setMaxValue] = useState(max);
@@ -24,7 +24,7 @@ const RangeSlider = ({boxName,min,max}) => {
   };
 
   return (
-    <div className="px-4 py-2 bg-gray-50 rounded-lg shadow-md max-w-md mx-auto">
+    <div className={`px-4 py-2 bg-gray-50 ${customClass}`}>
       {/* Slider Label */}
       <div className="flex flex-col gap-2 mb-4">
         <label className="font-bold">{boxName}</label>
@@ -33,18 +33,18 @@ const RangeSlider = ({boxName,min,max}) => {
             type="number"
             value={minValue}
             onChange={handleMinChange}
-            className="w-24 p-1 border border-gray-300 rounded-md text-center"
+            className="w-24 p-1 border bg-white border-gray-300 rounded-md text-center"
           />
           <span>to</span>
           <input
             type="number"
             value={maxValue}
             onChange={handleMaxChange}
-            className="w-24 p-1 border border-gray-300 rounded-md text-center"
+            className="w-24 p-1 border bg-white border-gray-300 rounded-md text-center"
           />
         </div>
 
-        <div className="relative mt-4 hue-rotate-[190deg] opacity-80 flex items-center gap-2">
+        <div className="relative mt-2 flex items-center gap-2">
           {/* Min Slider */}
           <input
             type="range"
@@ -53,7 +53,7 @@ const RangeSlider = ({boxName,min,max}) => {
             step="1"
             value={minValue}
             onChange={handleMinSlider}
-            className="slider-thumb h-2 bg-blue-200 rounded-lg w-full translate-x-2 appearance-none focus:outline-none"
+            className="rangeSlider rounded-lg w-full translate-x-1.5 appearance-none"
           />
           {/* Max Slider */}
           <input
@@ -63,7 +63,7 @@ const RangeSlider = ({boxName,min,max}) => {
             step="1"
             value={maxValue}
             onChange={handleMaxSlider}
-            className="slider-thumb h-2 bg-blue-200 rounded-lg w-full -translate-x-2 appearance-none focus:outline-none"
+            className="rangeSlider rounded-lg w-full -translate-x-1.5 appearance-none focus:outline-none"
           />
         </div>
       </div>

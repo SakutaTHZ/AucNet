@@ -87,7 +87,12 @@ function App() {
               customClass={"model border-b border-b-gray-200"}
               placeholder={"Search Model"}
             />
-            <RangeSlider min={1900} max={2025} boxName={'Registration Year'}/>
+            <RangeSlider min={1900} max={2025} boxName={'Registration Year'}
+              customClass={"makeBrand border-b border-b-gray-200"}/>
+            <RangeSlider min={0} max={10000} boxName={'Mileage km'}
+              customClass={"makeBrand border-b border-b-gray-200"}/>
+            <RangeSlider min={0} max={99999} boxName={'Price ¥'}
+              customClass={"makeBrand border-b border-b-gray-200"}/>
           </div>
 
           {/* Right Scrollable Content */}
