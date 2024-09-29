@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaChevronDown } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { LuUndoDot } from "react-icons/lu";
 
@@ -39,14 +39,21 @@ function FilterOptionDropDown({ boxName="Data", listData, customClass, placehold
   };
 
   return (
-    <div className={`flex flex-col gap-2 px-4 py-2.5 ${customClass}`}>
-      <div className={`flex items-center justify-between w-full`}>
+    <div className={`flex flex-col gap-1 px-4 py-2.5 ${customClass}`}>
+      <div className={`flex items-center justify-between w-full`} 
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
         <b>{boxName}</b>
-        <FaChevronDown
-          size={14}
-          className="text-gray-400 cursor-pointer"
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        />
+        {isDropdownOpen ? (
+          <FaChevronDown
+            size={14}
+            className="text-gray-400 cursor-pointer rotate-180 transition-all duration-500"
+          />
+        ):(
+          <FaChevronDown
+            size={14}
+            className="text-gray-400 cursor-pointer transition-all duration-500"
+          />
+        )}
       </div>
 
       {isDropdownOpen && (

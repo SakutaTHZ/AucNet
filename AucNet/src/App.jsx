@@ -139,7 +139,7 @@ function App() {
             </div>
 
             {/* Cards Container */}
-            <div className="rightBox grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full h-full">
+            <div className="rightBox grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full h-full">
               {cards.map((_, index) => (
                 <AucNetCard key={index} />
               ))}

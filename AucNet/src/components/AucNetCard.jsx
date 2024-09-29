@@ -10,7 +10,7 @@ const AucNetCard = () => {
   };
 
   return (
-    <div className="card flex flex-col w-full hover:bg-slate-100 cursor-pointer border border-slate-100 h-fit p-0 rounded-xl overflow-hidden shadow-md">
+    <div className="card transition-all flex flex-col w-full hover:bg-slate-100 cursor-pointer border border-slate-100 h-fit p-0 rounded-xl overflow-hidden shadow-md hover:shadow-lg">
       <div className="imageBox relative w-full flex items-center h-54">
         <img src="https://cdn.jdpower.com/Average%20Weight%20Of%20A%20Car.jpg" alt="image" />
         <button
@@ -26,17 +26,17 @@ const AucNetCard = () => {
           )}
         </button>
       </div>
-      <div className="flex p-3 border-b border-gray-200">
-        <div className="flex flex-col w-full justify-start items-start">
+      <div className="flex w-full justify-start items-end p-3 border-b border-gray-200">
+        <div className="flex flex-col w-full gap-1 justify-start items-start">
           <p className="text-lg font-medium">Audi A1 Sportback</p>
-          <p>1.4 TFSI</p>
+          <p className='text-base text-gray-600'>1.4 TFSI</p>
         </div>
-        <div className="flex items-center text-2xl font-bold">
+        <div className="flex items-center text-xl font-bold">
           ¥555,000
         </div>
       </div>
-      <div className="flex flex-wrap p-3">
-        <div className="flex items-center gap-1 w-1/2 text-gray-500 py-1">
+      <div className="flex flex-wrap p-3 gap-.5 box-border">
+        <div className="flex items-center gap-.5 w-1/2 text-gray-500 py-1">
           <MdOutlineDirectionsCar size={20} /> Hatchback
         </div>
         <div className="flex items-center gap-1 w-1/2 text-gray-500 py-1">
