@@ -7,11 +7,17 @@ import AucNetNav from "./components/AucNetNav";
 import AucNetCard from "./components/AucNetCard";
 import RangeSlider from "./components/RangeSlider";
 import FilterOptionDropDown from "./components/FilterOptionDropDown";
+import FilterClearDropDown from "./components/FilterClearDropDown";
+import AucNetRow from "./components/AucNetRow";
 
 function App() {
   // Toggle view
   const [isTableView, setIsTableView] = useState(true);
+  const [isFilterOn,setIsFilterOn] = useState(true);
 
+  const toggleFilter = () =>{
+    setIsFilterOn(!isFilterOn);
+  }
   const toggleView = () => {
     setIsTableView(!isTableView);
   };
@@ -49,15 +55,52 @@ function App() {
     { name: "Mazda", count: 31 },
     { name: "Others", count: 812 },
   ];
+  const fuelType = [
+    { name: "Petrol", count: 14 },
+    { name: "Disel", count: 53 },
+    { name: "Electric", count: 74 },
+    { name: "Hybrid(Petrol/Electric)", count: 23 },
+  ];
+  const bodyType = [
+    { name: "Sedan", count: 14 },
+    { name: "HatchBack", count: 53 },
+    { name: "SUV(Sport Utility Vehicle)", count: 23 },
+    { name: "Coupe", count: 17 },
+    { name: "Convertible", count: 43 },
+    { name: "Wagon", count: 5 },
+  ];
+  const transmission = [
+    { name: "Automatic", count: 53 },
+    { name: "Manual", count: 74 },
+  ];
+  const exteriorColor = [
+    { name: "Black", count: 14 },
+    { name: "Blue", count: 53 },
+    { name: "Brown", count: 74 },
+    { name: "Beige", count: 23 },
+    { name: "Gray", count: 34 },
+    { name: "Green", count: 43 },
+    { name: "Others", count: 54 },
+  ];
+  const seats = [
+    { name: "2 seats", count: 14 },
+    { name: "3 seats", count: 53 },
+    { name: "4 seats", count: 74 },
+    { name: "5 seats", count: 23 },
+  ];
   // select box
 
   const cards = Array.from({ length: 20 });
+
+  const handleClearAll = () => {
+    window.location.reload();
+  };
 
   return (
     <>
       <AucNetNav />
 
-      <div className="w-full h-fit px-32 pt-28 bg-slate-50">
+      <div className="w-full h-fit min-h-screen px-32 pt-28 bg-slate-50">
         <div className="flex flex-col gap-8">
           <div className="w-full flex items-center justify-between">
             <h1 className="text-3xl text-neutral-900 font-bold">
@@ -66,12 +109,14 @@ function App() {
           </div>
         </div>
 
-        <div className="mt-6 lg:flex">
+        <div className="mt-6 lg:flex z-10 transition-all">
           {/* Left Sticky Box */}
-          <div className="leftBox sticky top-24 w-64 flex flex-col z-50 rounded-md shadow-lg h-fit">
+          {isFilterOn && (
+          <div className={`leftBox mr-6 animate-slideUp transition-all sticky top-24 w-64 flex flex-col rounded-md shadow-lg h-fit`}
+          style={{animationFillMode: 'forwards',}}>
             <div className="w-64 flex gap-1 justify-between items-center py-2.5 px-4 border-b border-b-gray-200">
               <p className="text-lg font-bold">Filter Options</p>
-              <button className="clearAll text-yellow-600 font-semibold">
+              <button className="clearAll text-yellow-600 font-semibold" onClick={handleClearAll}>
                 Clear all
               </button>
             </div>
@@ -90,16 +135,23 @@ function App() {
             <RangeSlider min={1900} max={2025} boxName={'Registration Year'}
               customClass={"makeBrand border-b border-b-gray-200"}/>
             <RangeSlider min={0} max={10000} boxName={'Mileage km'}
-              customClass={"makeBrand border-b border-b-gray-200"}/>
+              customClass={"mileage border-b border-b-gray-200"}/>
             <RangeSlider min={0} max={99999} boxName={'Price ¥'}
-              customClass={"makeBrand border-b border-b-gray-200"}/>
+              customClass={"price border-b border-b-gray-200"}/>
+
+            <FilterClearDropDown customClass={"fuelType border-b border-b-gray-200"} boxName="Fuel Type" listData={fuelType}/>
+            <FilterClearDropDown customClass={"bodyType border-b border-b-gray-200"} boxName="Body Type" listData={bodyType}/>
+            <FilterClearDropDown customClass={"transmission border-b border-b-gray-200"} boxName="Transmission" listData={transmission}/>
+            <FilterClearDropDown customClass={"exteriorColor border-b border-b-gray-200"} boxName="Exterior Color" listData={exteriorColor}/>
+            <FilterClearDropDown customClass={"seats border-b border-b-gray-200"} boxName="Seats" listData={seats}/>
           </div>
+          )}
 
           {/* Right Scrollable Content */}
-          <div className="flex-1 flex flex-col gap-6 mt-6 lg:mt-0 lg:ml-6">
-            <div className="flex gap-2 w-full items-center justify-between">
-              <div className="flex items-center gap-2">
-                <button className="flex items-center gap-2 border p-2 px-3 rounded-3xl">
+          <div className="flex-1 flex flex-col gap-6 mt-6 lg:mt-0 transition-all">
+            <div className="flex gap-2 w-full items-center justify-between transition-all">
+              <div className="flex items-center gap-2 transition-all">
+                <button className="flex items-center gap-2 border p-2 px-3 rounded-3xl" onClick={()=> toggleFilter()}>
                   <MdTune size={18} />
                   Filters
                 </button>
@@ -139,11 +191,30 @@ function App() {
             </div>
 
             {/* Cards Container */}
-            <div className="rightBox grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full h-full">
+            {isTableView ? (
+              <div className="rightBox transition-all flex flex-col gap-3 w-full h-full">
               {cards.map((_, index) => (
-                <AucNetCard key={index} />
+                <div>
+                  <AucNetRow key={index}
+                  customClass={`opacity-0 delay-${index === 0 ? 0 : index === cards.length - 1 ? 10 : index}`}
+                   style={{ animationDelay: `${index === 0 ? '0s' : `${index * 0.1}s`}`,
+                   animationFillMode: 'forwards',}}/>
+                </div>
               ))}
-            </div>
+            </div> 
+            ) : (
+              
+            <div className="rightBox transition-all grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full h-full">
+            {cards.map((_, index) => (
+              <div>
+                <AucNetCard key={index}
+                customClass={`opacity-0 delay-${index === 0 ? 0 : index === cards.length - 1 ? 10 : index}`}
+                 style={{ animationDelay: `${index === 0 ? '0s' : `${index * 0.1}s`}`,
+                 animationFillMode: 'forwards',}}/>
+              </div>
+            ))}
+          </div> 
+            )}
           </div>
         </div>
       </div>

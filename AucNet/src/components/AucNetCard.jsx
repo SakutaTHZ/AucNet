@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MdFavoriteBorder, MdOutlineDirectionsCar, MdOutlineDateRange } from 'react-icons/md';
 import { TbEngine, TbRoad } from 'react-icons/tb';
 
-const AucNetCard = () => {
+const AucNetCard = ({customClass,style}) => {
   const [isFavorite, setIsFavorite] = useState(false); // State to manage favorite status
 
   const toggleFavorite = () => {
@@ -10,7 +10,7 @@ const AucNetCard = () => {
   };
 
   return (
-    <div className="card transition-all flex flex-col w-full hover:bg-slate-100 cursor-pointer border border-slate-100 h-fit p-0 rounded-xl overflow-hidden shadow-md hover:shadow-lg">
+    <div className={`card animate-slideUp transition-all flex flex-col w-full hover:bg-slate-100 cursor-pointer border border-slate-100 h-fit p-0 rounded-xl overflow-hidden shadow-md hover:shadow-lg ${customClass}`} style={style}>
       <div className="imageBox relative w-full flex items-center h-54">
         <img src="https://cdn.jdpower.com/Average%20Weight%20Of%20A%20Car.jpg" alt="image" />
         <button
@@ -26,7 +26,7 @@ const AucNetCard = () => {
           )}
         </button>
       </div>
-      <div className="flex w-full justify-start items-end p-3 border-b border-gray-200">
+      <div className="flex w-full justify-start items-start p-3 border-b border-gray-200">
         <div className="flex flex-col w-full gap-1 justify-start items-start">
           <p className="text-lg font-medium">Audi A1 Sportback</p>
           <p className='text-base text-gray-600'>1.4 TFSI</p>

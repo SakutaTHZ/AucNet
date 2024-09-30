@@ -18,7 +18,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+#root{
+  width:100%;
+  overflow-y:hidden;
+}
 body {
   margin: 0;
   display: flex;

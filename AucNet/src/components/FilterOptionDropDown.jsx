@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { LuUndoDot } from "react-icons/lu";
 
@@ -77,7 +77,7 @@ function FilterOptionDropDown({ boxName="Data", listData, customClass, placehold
                       type="checkbox"
                       checked={checkedItems.includes(item.name)}
                       onChange={() => handleCheckboxChange(item)}
-                      className="form-checkbox h-3 w-3 hue-rotate-[185deg] cursor-pointer"
+                      className="form-checkbox h-3 w-3 hue-rotate-[185deg] opacity-80 cursor-pointer"
                     />
                     <span>{item.name}</span>
                   </label>
