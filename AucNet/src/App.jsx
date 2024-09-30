@@ -112,7 +112,7 @@ function App() {
         <div className="mt-6 lg:flex z-10 transition-all">
           {/* Left Sticky Box */}
           {isFilterOn && (
-          <div className={`leftBox mr-6 animate-slideUp transition-all sticky top-24 w-64 flex flex-col rounded-md shadow-lg h-fit`}
+          <div className={`leftBox mr-6 animate-slideUp transition-all sticky top-24 w-64 flex flex-col rounded-md shadow-lg h-fit z-10`}
           style={{animationFillMode: 'forwards',}}>
             <div className="w-64 flex gap-1 justify-between items-center py-2.5 px-4 border-b border-b-gray-200">
               <p className="text-lg font-bold">Filter Options</p>
@@ -192,7 +192,7 @@ function App() {
 
             {/* Cards Container */}
             {isTableView ? (
-              <div className="rightBox transition-all flex flex-col gap-3 w-full h-full">
+              <div className="rightBox flex flex-col gap-3 w-full h-full">
               {cards.map((_, index) => (
                 <div>
                   <AucNetRow key={index}

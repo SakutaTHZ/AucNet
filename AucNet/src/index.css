@@ -20,7 +20,6 @@
 }
 #root{
   width:100%;
-  overflow-y:hidden;
 }
 body {
   margin: 0;
