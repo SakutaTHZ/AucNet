@@ -1,31 +1,38 @@
-import React, { useState } from "react";
-import { FaChevronDown,FaPencilAlt  } from "react-icons/fa";
+import React, { useState, ChangeEvent } from "react";
+import { FaChevronDown } from "react-icons/fa";
 
-const RangeSlider = ({ boxName, min, max, customClass }) => {
+interface RangeSliderProps {
+  boxName: string;
+  min: number;
+  max: number;
+  customClass?: string;
+}
+
+const RangeSlider: React.FC<RangeSliderProps> = ({ boxName, min, max, customClass }) => {
   const halfPoint = Math.round((min + max) / 2);
   const [minValue, setMinValue] = useState(min);
   const [maxValue, setMaxValue] = useState(max);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
 
-  const handleMinChange = (e) => {
+  const handleMinChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = Math.min(Number(e.target.value), maxValue - 1);
     setMinValue(value);
     setIsEdited(true);
   };
 
-  const handleMaxChange = (e) => {
+  const handleMaxChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = Math.max(Number(e.target.value), minValue + 1);
     setMaxValue(value);
     setIsEdited(true);
   };
 
-  const handleMinSlider = (e) => {
+  const handleMinSlider = (e: ChangeEvent<HTMLInputElement>) => {
     setMinValue(Number(e.target.value));
     setIsEdited(true);
   };
 
-  const handleMaxSlider = (e) => {
+  const handleMaxSlider = (e: ChangeEvent<HTMLInputElement>) => {
     setMaxValue(Number(e.target.value));
     setIsEdited(true);
   };
@@ -37,24 +44,19 @@ const RangeSlider = ({ boxName, min, max, customClass }) => {
         <label className="font-bold flex items-center justify-between">
           <p className="flex gap-2 items-center">
             {boxName}
-            {isEdited &&( 
+            {isEdited && (
               <span className="bg-yellow-400 h-2 w-2 rounded-full"></span>
-            )}  
+            )}
           </p>
-          {isDropdownOpen ? (
-            <FaChevronDown
-              size={14}
-              className="text-gray-400 cursor-pointer rotate-180 transition-all duration-500"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            />
-          ) : (
-            <FaChevronDown
-              size={14}
-              className="text-gray-400 cursor-pointer transition-all duration-500"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            />
-          )}
+          <FaChevronDown
+            size={14}
+            className={`text-gray-400 cursor-pointer transition-all duration-500 ${
+              isDropdownOpen ? "rotate-180" : ""
+            }`}
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          />
         </label>
+
         {isDropdownOpen && (
           <div className="flex flex-col gap-1 mb-2">
             <div className="flex items-center gap-2">

@@ -1,31 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { LuUndoDot } from "react-icons/lu";
 
-function FilterOptionDropDown({ boxName="Data", listData, customClass, placeholder="Search here" }) {
+interface ListDataItem {
+  name: string;
+  count: number;
+}
+
+interface FilterOptionDropDownProps {
+  boxName?: string;
+  listData: ListDataItem[];
+  customClass?: string;
+  placeholder?: string;
+}
+
+const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
+  boxName = "Data",
+  listData,
+  customClass,
+  placeholder = "Search here",
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [checkedItems, setCheckedItems] = useState([]);
+  const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showAllChecked, setShowAllChecked] = useState(false);
 
   // Function to handle input change
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
   // Handle checkbox change
-  const handleCheckboxChange = (item) => {
-    if (checkedItems.includes(item.name)) {
-      setCheckedItems(checkedItems.filter((checked) => checked !== item.name));
-    } else {
-      setCheckedItems([...checkedItems, item.name]);
-    }
+  const handleCheckboxChange = (item: ListDataItem) => {
+    setCheckedItems((prev) =>
+      prev.includes(item.name)
+        ? prev.filter((checked) => checked !== item.name)
+        : [...prev, item.name]
+    );
   };
 
   // Remove item from checked list
-  const handleRemoveCheckedItem = (item) => {
-    setCheckedItems(checkedItems.filter((checked) => checked !== item));
+  const handleRemoveCheckedItem = (item: string) => {
+    setCheckedItems((prev) => prev.filter((checked) => checked !== item));
   };
 
   // Filter the listData based on the search term
@@ -40,20 +57,17 @@ function FilterOptionDropDown({ boxName="Data", listData, customClass, placehold
 
   return (
     <div className={`flex flex-col gap-1 px-4 py-2.5 ${customClass}`}>
-      <div className={`flex items-center justify-between w-full`} 
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+      <div
+        className="flex items-center justify-between w-full"
+        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+      >
         <b>{boxName}</b>
-        {isDropdownOpen ? (
-          <FaChevronDown
-            size={14}
-            className="text-gray-400 cursor-pointer rotate-180 transition-all duration-500"
-          />
-        ):(
-          <FaChevronDown
-            size={14}
-            className="text-gray-400 cursor-pointer transition-all duration-500"
-          />
-        )}
+        <FaChevronDown
+          size={14}
+          className={`text-gray-400 cursor-pointer transition-all duration-500 ${
+            isDropdownOpen ? "rotate-180" : ""
+          }`}
+        />
       </div>
 
       {isDropdownOpen && (
@@ -143,6 +157,6 @@ function FilterOptionDropDown({ boxName="Data", listData, customClass, placehold
       )}
     </div>
   );
-}
+};
 
 export default FilterOptionDropDown;

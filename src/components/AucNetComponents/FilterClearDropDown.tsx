@@ -1,19 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 
-function FilterClearDropDown({ customClass, boxName = "Data", listData }) {
+interface ListDataItem {
+  name: string;
+  count: number;
+}
+
+interface FilterClearDropDownProps {
+  customClass?: string;
+  boxName?: string;
+  listData: ListDataItem[];
+}
+
+const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
+  customClass,
+  boxName = "Data",
+  listData,
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [checkedItems, setCheckedItems] = useState([]);
+  const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showAllChecked, setShowAllChecked] = useState(false);
-  const [selectAll, setSelectAll] = useState(false); // State for select all
+  const [selectAll, setSelectAll] = useState(false);
 
-  // Handle search term change
-  const handleSearchChange = (e) => setSearchTerm(e.target.value);
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setSearchTerm(e.target.value);
 
-  // Handle checkbox change
-  const handleCheckboxChange = (item) => {
+  const handleCheckboxChange = (item: ListDataItem) => {
     setCheckedItems((prev) =>
       prev.includes(item.name)
         ? prev.filter((checked) => checked !== item.name)
@@ -21,23 +35,19 @@ function FilterClearDropDown({ customClass, boxName = "Data", listData }) {
     );
   };
 
-  // Remove checked item
-  const handleRemoveCheckedItem = (item) => {
+  const handleRemoveCheckedItem = (item: string) => {
     setCheckedItems((prev) => prev.filter((checked) => checked !== item));
   };
 
-  // Select all/none toggle
   const handleSelectAllChange = () => {
     setCheckedItems(selectAll ? [] : listData.map((item) => item.name));
     setSelectAll(!selectAll);
   };
 
-  // Filter listData based on search term
   const filteredData = listData.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Toggle show more/less for checked items
   const toggleShowAllChecked = () => setShowAllChecked(!showAllChecked);
 
   return (
@@ -59,10 +69,13 @@ function FilterClearDropDown({ customClass, boxName = "Data", listData }) {
         <div className="flex flex-wrap gap-2">
           <div className="w-full pt-2 flex justify-between">
             <p className="text-gray-600 font-semibold text-sm">All {boxName}</p>
-            <label class="inline-flex items-center cursor-pointer">
-              <input type="checkbox" value="" class="sr-only peer" 
-              onChange={handleSelectAllChange}/>
-              <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none  rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-yellow-500"></div>
+            <label className="inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                onChange={handleSelectAllChange}
+              />
+              <div className="relative w-9 h-5 bg-gray-200 rounded-full peer-checked:bg-yellow-500 peer-checked:after:translate-x-full peer-focus:outline-none after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all" />
             </label>
           </div>
           <div className="brand-list w-full">
@@ -135,6 +148,6 @@ function FilterClearDropDown({ customClass, boxName = "Data", listData }) {
       )}
     </div>
   );
-}
+};
 
 export default FilterClearDropDown;

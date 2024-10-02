@@ -1,22 +1,12 @@
 import React, { useState } from 'react';
-import {
-    MdOutlineShoppingCart,
-    MdOutlinePersonOutline,
-    MdFavoriteBorder,
-    MdLogout,
-  } from "react-icons/md";
+import { MdOutlinePersonOutline, MdLogout } from "react-icons/md";
 import { FaChevronDown } from "react-icons/fa";
 
-function ProfileDropDown() {
-  const [isOpen, setIsOpen] = useState(false);
+const ProfileDropDown: React.FC = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
-  };
-
-  // Function to handle button clicks and navigate to respective pages
-  const handleNavigation = (path) => {
-    setIsOpen(false); // Close the dropdown after navigating
   };
 
   return (
@@ -46,6 +36,6 @@ function ProfileDropDown() {
       )}
     </div>
   );
-}
+};
 
 export default ProfileDropDown;
