@@ -11,7 +11,16 @@ import AucNetRow from "../../components/AucNetComponents/AucNetRow";
 import ScrollToTopButton from "../../components/ScrollToTop";
 import Pagination from "../../components/AucNetComponents/Pagination";
 
+import { useNavigate } from "react-router-dom";
+
 const App: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleCardClick = (cardData: any) => {
+    console.log(cardData + "Card clicked");
+    navigate("/details", { state: { card: cardData } });
+  };
+
   // Toggle view
   const [isTableView, setIsTableView] = useState(false);
   const [isFilterOn, setIsFilterOn] = useState(false);
@@ -20,6 +29,30 @@ const App: React.FC = () => {
     setIsFilterOn(!isFilterOn);
   };
 
+  const generateCardData = () => {
+    const carNames = ["A3 Sportback", "TT Coupe", "Ranger", "Fit", "CR-V"];
+    const carTypes = ["Sedan", "Hatchback", "SUV", "Convertible", "MiniVan"];
+    const engines = ["1.4 TSLI", "V6", "flat-6", "Rx-7", "EV engine"];
+    const imageLink = [
+      "https://cdn.jdpower.com/Average%20Weight%20Of%20A%20Car.jpg",
+      "https://cdn.jdpower.com/ArticleImages/JDP_2025%20Volkswagen%20Taos%20SEL%20Green%20Front%20Quarter%20View.jpg",
+      "https://cdn.jdpower.com/ArticleImages/JDP_2025%20Chrysler%20Voyager%20LX%20Red%20Front%20Quarter%20VIew.jpg",
+      "https://cdn.jdpower.com/ArticleImages/JDP_2025%20Toyota%20Highlander%20Limited%2025th%20Edition%20Hybrid%20Front%20Quarter%20View.jpg",
+      "https://cdn.jdpower.com/ArticleImages/JDP_2025%20Volvo%20XC90%20Front%20Quarter%20View%20Action.jpg",
+    ];
+
+    const cardData = {
+      name: carNames[Math.floor(Math.random() * carNames.length)],
+      type: carTypes[Math.floor(Math.random() * carTypes.length)],
+      link: imageLink[Math.floor(Math.random() * imageLink.length)],
+      engineType: engines[Math.floor(Math.random() * engines.length)],
+      price: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
+      enginePower: Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
+      mileage: Math.floor(Math.random() * (999999 - 1000 + 1)) + 1000,
+      year: Math.floor(Math.random() * (2025 - 1980 + 1)) + 1980,
+    };
+    return cardData;
+  };
   const options = [
     "Most relevant",
     "Date latest to oldest",
@@ -91,14 +124,14 @@ const App: React.FC = () => {
     { name: "5 seats", count: 23 },
   ];
 
-  const cards = Array.from({ length: 20 });
+  const cards = Array.from({ length: 20 }, generateCardData);
 
   const handleClearAll = () => {
     window.location.reload();
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 20; // Example total pages
+  const totalPages = 20;
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -245,7 +278,7 @@ const App: React.FC = () => {
             {/* Cards Container */}
             {isTableView ? (
               <div className="rightBox flex flex-col gap-3 w-full h-full">
-                {cards.map((_, index) => (
+                {cards.map((cardData, index) => (
                   <AucNetRow
                     key={index}
                     customClass={`opacity-0 delay-${
@@ -257,12 +290,14 @@ const App: React.FC = () => {
                       }`,
                       animationFillMode: "forwards",
                     }}
+                    carData={cardData}
+                    onClick={() => handleCardClick(cardData)} // Pass card data on click
                   />
                 ))}
               </div>
             ) : (
               <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full h-full">
-                {cards.map((_, index) => (
+                {cards.map((cardData, index) => (
                   <AucNetCard
                     key={index}
                     customClass={`opacity-0 delay-${
@@ -274,6 +309,8 @@ const App: React.FC = () => {
                       }`,
                       animationFillMode: "forwards",
                     }}
+                    carData={cardData}
+                    onClick={() => handleCardClick(cardData)} // Pass card data on click
                   />
                 ))}
               </div>
