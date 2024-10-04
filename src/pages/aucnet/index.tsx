@@ -40,12 +40,14 @@ const App: React.FC = () => {
       "https://cdn.jdpower.com/ArticleImages/JDP_2025%20Toyota%20Highlander%20Limited%2025th%20Edition%20Hybrid%20Front%20Quarter%20View.jpg",
       "https://cdn.jdpower.com/ArticleImages/JDP_2025%20Volvo%20XC90%20Front%20Quarter%20View%20Action.jpg",
     ];
+    const carStatus = ["checkavailability", "unavailable", "orderconfirmed", "canceled", "purchased"];
 
     const cardData = {
       name: carNames[Math.floor(Math.random() * carNames.length)],
       type: carTypes[Math.floor(Math.random() * carTypes.length)],
       link: imageLink[Math.floor(Math.random() * imageLink.length)],
       engineType: engines[Math.floor(Math.random() * engines.length)],
+      status: carStatus[Math.floor(Math.random() * carStatus.length)],
       price: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
       enginePower: Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
       mileage: Math.floor(Math.random() * (999999 - 1000 + 1)) + 1000,

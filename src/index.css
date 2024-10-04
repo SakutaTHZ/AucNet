@@ -85,6 +85,57 @@ body {
   outline-offset: 0.125rem;     
 }
 
+.carDetailsBox{
+  .dataRow{
+    position:relative;
+    align-items:center;
+    justify-content:center;
+    .description::before{
+      content:'';
+      position:absolute;
+      left:-4.5px;
+      top:50%;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:grey;
+    }
+  }
+  .dataRow:first-of-type{
+    background:#00000005;
+    border-radius:10px 10px 10px 0;
+  }
+  .dataRow:not(:first-of-type){
+    color:#00000060;
+    p{
+      color:#00000060;
+    }
+  }
+  .dataRow::before{
+    content:'';
+    position:absolute;
+    left:0px;
+    top:50%;
+    width:2px;
+    height:50%;
+    background:gray;
+  }
+  .dataRow:last-of-type::before{
+    display:none;
+  }
+  .dataRow::after{
+    content:'';
+    position:absolute;
+    left:0px;
+    bottom:50%;
+    width:2px;
+    height:50%;
+    background:gray;
+  }
+  .dataRow:first-of-type::after{
+    display:none;
+  }
+}
 /* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

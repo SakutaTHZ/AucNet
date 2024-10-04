@@ -8,10 +8,11 @@ import {
   MdOutlineRemoveRedEye,
 } from "react-icons/md";
 import { TbEngine, TbRoad, TbHeart } from "react-icons/tb";
-import { IoCarOutline,IoTime,IoShieldCheckmark } from "react-icons/io5";
-import { PiSealCheckFill } from "react-icons/pi";
 
 import ScrollToTopButton from "../../components/ScrollToTop";
+import CarStatusBox from "../../components/AucNetComponents/CarStatusBox";
+import StatusBullet from "../../components/AucNetComponents/StatusBullet";
+import { IoCalendar, IoCalendarClearOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
 
 const DetailsPage = () => {
   const location = useLocation();
@@ -20,7 +21,7 @@ const DetailsPage = () => {
   const [activeSection, setActiveSection] = useState<string>("Car Stock");
 
   // Create refs for each section to scroll to
-  const carStockRef = useRef<HTMLDivElement>(null);
+  const carOverView = useRef<HTMLDivElement>(null);
   const carFeaturesRef = useRef<HTMLDivElement>(null);
   const sellingPointsRef = useRef<HTMLDivElement>(null);
   const commentsRef = useRef<HTMLDivElement>(null);
@@ -32,7 +33,7 @@ const DetailsPage = () => {
     // Scroll to the section
     switch (section) {
       case "Car Stock":
-        carStockRef.current?.scrollIntoView({ behavior: "smooth" });
+        carOverView.current?.scrollIntoView({ behavior: "smooth" });
         break;
       case "Car Features":
         carFeaturesRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -62,8 +63,12 @@ const DetailsPage = () => {
         </div>
 
         <div>
-          <div className="flex text-3xl font-bold">
+          <div className="flex text-3xl gap-4 font-bold">
             {cardData.name} {cardData.engineType}
+            <StatusBullet
+              status={cardData.status}
+              customClass="font-semibold"
+            />
           </div>
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
             <div className="flex flex-wrap py-3 gap-4 gap-y-1 justify-start">
@@ -155,55 +160,196 @@ const DetailsPage = () => {
           </div>
         </div>
 
-        <div className="flex pb-24">
+        <div className="flex flex-col-reverse md:flex-row gap-8 pb-24">
           <div className="topicSection w-2/3">
             {/* Sections to scroll to */}
-            <div ref={carStockRef} className="section">
-              <h2>Car Stock Section</h2>
-              <p>Details about car stock go here...</p>
+            <div
+              ref={carOverView}
+              className="section border-b border-b-gray-200 pb-4"
+            >
+              <h2 className="text-2xl font-bold">Overview</h2>
+              <div className="carData flex flex-wrap gap-y-4 py-4">
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCalendarClearOutline size={20} />
+                  <p>
+                    Exterior: <span>Beige Color</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCalendarClearOutline size={20} />
+                  <p>
+                    Interior: <span>Midnight Black</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCalendarClearOutline size={20} />
+                  <p>
+                    Registration year: <span>2021</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCalendarClearOutline size={20} />
+                  <p>
+                    Vin: <span>2GNWO32TE0928372</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCalendarClearOutline size={20} />
+                  <p>
+                    <span>233</span> km
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCalendarClearOutline size={20} />
+                  <p>
+                    <span>Hatchback</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCalendarClearOutline size={20} />
+                  <p>
+                    Fuel type: <span>Petrol</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCalendarClearOutline size={20} />
+                  <p>Automatic transmission</p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCalendarClearOutline size={20} />
+                  <p>
+                    <span>2,340</span> cc
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCalendarClearOutline size={20} />
+                  <p>
+                    <span>Front wheel drive</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCalendarClearOutline size={20} />
+                  <p>
+                    <span>Osaka, Japan</span>
+                  </p>
+                </div>
+              </div>
+              <button className="bg-gray-200 px-4 py-1 rounded-md font-semibold">
+                View all details
+              </button>
+
+              <div className="w-full p-3 md:p-6 flex gap-2 items-center justify-between border border-gray-200 rounded-md mt-4">
+                <div className="flex gap-4 items-center justify-center">
+                  <div className="w-12 h-12 flex items-center justify-center shadow-md rounded-full text-lg font-semibold bg-amber-100 text-amber-900">
+                    4.5
+                  </div>
+                  <div>
+                    <p className="text-lg font-semibold">
+                      AIS Inspection Total Score
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      0 Accident . Repainted . Correction needed
+                    </p>
+                  </div>
+                </div>
+
+                <button className="bg-gray-50 hover:bg-amber-100 px-4 py-1 rounded-md font-semibold transition-all">
+                  View all details
+                </button>
+              </div>
             </div>
-            <div ref={carFeaturesRef} className="section">
-              <h2>Car Features Section</h2>
-              <p>Details about car features go here...</p>
+
+            <div
+              ref={carFeaturesRef}
+              className="section border-b border-b-gray-200 py-4"
+            >
+              <h2 className="text-2xl font-bold">Car Features</h2>
+              <div className="carFeatures flex flex-wrap gap-y-4 py-4">
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCheckmarkCircleOutline size={20} />
+                  <p>
+                    <span>Air condition </span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCheckmarkCircleOutline size={20} />
+                  <p>
+                    <span>Keyless Entry</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCheckmarkCircleOutline size={20} />
+                  <p>
+                    <span>Air-bag</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCheckmarkCircleOutline size={20} />
+                  <p>
+                    <span>Smart key</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCheckmarkCircleOutline size={20} />
+                  <p>
+                    <span>ABS</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCheckmarkCircleOutline size={20} />
+                  <p>
+                    <span>Back Camera</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCheckmarkCircleOutline size={20} />
+                  <p>
+                    <span>Sunroof</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCheckmarkCircleOutline size={20} />
+                  <p>ETC</p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCheckmarkCircleOutline size={20} />
+                  <p>
+                    <span>Aluminium wheel</span>
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 py-1 w-1/2">
+                  <IoCheckmarkCircleOutline size={20} />
+                  <p>
+                    <span>Leather seat</span>
+                  </p>
+                </div>
+              </div>
+              
+              <button className="bg-gray-200 px-4 py-1 rounded-md font-semibold">
+                View all features
+              </button>
             </div>
-            <div ref={sellingPointsRef} className="section">
-              <h2>Selling Points Section</h2>
+            <div
+              ref={sellingPointsRef}
+              className="section border-b border-b-gray-200"
+            >
+              <h2 className="text-2xl font-bold">Selling Points</h2>
               <p>Details about selling points go here...</p>
             </div>
-            <div ref={commentsRef} className="section">
-              <h2>Comments Section</h2>
+            <div
+              ref={commentsRef}
+              className="section border-b border-b-gray-200"
+            >
+              <h2 className="text-2xl font-bold">Comments</h2>
               <p>Comments go here...</p>
             </div>
           </div>
 
-          <div className="w-1/3 flex flex-col gap-3">
-            <div className="itemCard flex flex-col gap-4 rounded-md shadow-md p-6">
-              <div className="hidden bulletCard text-sm flex gap-1 items-center bg-blue-200 shadow-sm w-fit px-3 py-1 rounded-md">
-                <div className="relative">
-                    <IoTime size={10} className="absolute -right-0.5 -top-0.5"/>
-                    <IoCarOutline size={20} />
-                </div>
-                Purchased
-              </div>
-              <p className="text-xl font-medium">{cardData.name} {cardData.engineType}</p>
-              <p className="text-3xl font-bold">¥{cardData.price.toLocaleString()}</p>
-
-              <div className="flex flex-col gap-1">
-                <p className="flex gap-1 items-center"><IoShieldCheckmark size={20} className="text-gray-500"/> Secure payment</p>
-                <p className="flex gap-1 items-center"><PiSealCheckFill size={20} className="text-gray-500"/> Certified seller</p>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <button className="bg-amber-400 py-2 font-bold rounded-md">Check availability</button>
-                <p className="text-gray-500 text-center">Admin team will check the availability of the selected car.</p>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-4 border-2 border-dashed border-gray-200 text-gray-500 rounded-md p-6">
-              <p>Declarations of Precautions</p>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi fugiat iusto fuga itaque, adipisci, modi in facere, veniam quas voluptatibus error distinctio nemo esse hic natus quia sint est! Repudiandae.</p>
-            </div>
-          </div>
+          <CarStatusBox
+            cardData={cardData}
+            customClass=""
+            status={cardData.status}
+          />
         </div>
       </div>
 
