@@ -12,7 +12,11 @@ import { TbEngine, TbRoad, TbHeart } from "react-icons/tb";
 import ScrollToTopButton from "../../components/ScrollToTop";
 import CarStatusBox from "../../components/AucNetComponents/CarStatusBox";
 import StatusBullet from "../../components/AucNetComponents/StatusBullet";
-import { IoCalendar, IoCalendarClearOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
+import {
+  IoCalendar,
+  IoCalendarClearOutline,
+  IoCheckmarkCircleOutline,
+} from "react-icons/io5";
 
 const DetailsPage = () => {
   const location = useLocation();
@@ -161,7 +165,7 @@ const DetailsPage = () => {
         </div>
 
         <div className="flex flex-col-reverse md:flex-row gap-8 pb-24">
-          <div className="topicSection w-2/3">
+          <div className="topicSection w-full md:w-2/3">
             {/* Sections to scroll to */}
             <div
               ref={carOverView}
@@ -324,32 +328,39 @@ const DetailsPage = () => {
                   </p>
                 </div>
               </div>
-              
+
               <button className="bg-gray-200 px-4 py-1 rounded-md font-semibold">
                 View all features
               </button>
             </div>
             <div
               ref={sellingPointsRef}
-              className="section border-b border-b-gray-200"
+              className="section border-b border-b-gray-200 py-4"
             >
               <h2 className="text-2xl font-bold">Selling Points</h2>
-              <p>Details about selling points go here...</p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Similique accusantium maiores fugiat quidem ipsa ullam iusto
+                perspiciatis odit nam. Culpa assumenda sint saepe accusantium
+                eligendi tenetur doloribus fugit id magnam.
+              </p>
             </div>
             <div
               ref={commentsRef}
-              className="section border-b border-b-gray-200"
+              className="section border-b border-b-gray-200 py-4"
             >
-              <h2 className="text-2xl font-bold">Comments</h2>
+              <h2 className="text-2xl font-bold">Comments (<span className="commentCount">2</span>)</h2>
               <p>Comments go here...</p>
             </div>
           </div>
 
-          <CarStatusBox
-            cardData={cardData}
-            customClass=""
-            status={cardData.status}
-          />
+          <div className="w-full md:w-1/3">
+            <CarStatusBox
+              cardData={cardData}
+              customClass="md:w-full md:sticky md:top-24"
+              status={cardData.status}
+            />
+          </div>
         </div>
       </div>
 

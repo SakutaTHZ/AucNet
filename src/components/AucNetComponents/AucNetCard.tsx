@@ -1,6 +1,7 @@
 import React, { useState, CSSProperties } from 'react';
 import { MdFavoriteBorder, MdOutlineDirectionsCar, MdOutlineDateRange } from 'react-icons/md';
 import { TbEngine, TbRoad } from 'react-icons/tb';
+import StatusBullet from './StatusBullet';
 
 interface AucNetCardProps {
   customClass?: string;
@@ -23,7 +24,8 @@ const AucNetCard: React.FC<AucNetCardProps> = ({ customClass, style,carData, onC
       onClick={onClick}
     >
       <div className="imageBox relative w-full flex items-center overflow-hidden h-56">
-        <img src={carData.link} className='w-full' alt="image" />
+        <img src={carData.link} className='h-full' alt="image" />
+        <StatusBullet customClass='absolute top-1 left-1 text-xs rounded-xl font-semibold' status={carData.status}/>
         <button
           onClick={toggleFavorite}
           className={`bg-gray-900 bg-opacity-20 p-1.5 rounded-full absolute top-2 right-2 backdrop-blur-sm transition-all ${
