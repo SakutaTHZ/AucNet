@@ -1,5 +1,12 @@
 import { useLocation } from "react-router-dom";
-import { useState, useRef } from "react";
+import {
+  useState,
+  useRef,
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+} from "react";
 import AucNetNav from "../../components/AucNetComponents/AucNetNav";
 import {
   MdOutlineDirectionsCar,
@@ -13,10 +20,10 @@ import ScrollToTopButton from "../../components/ScrollToTop";
 import CarStatusBox from "../../components/AucNetComponents/CarStatusBox";
 import StatusBullet from "../../components/AucNetComponents/StatusBullet";
 import {
-  IoCalendar,
   IoCalendarClearOutline,
   IoCheckmarkCircleOutline,
 } from "react-icons/io5";
+import { GoReply } from "react-icons/go";
 
 const DetailsPage = () => {
   const location = useLocation();
@@ -337,7 +344,7 @@ const DetailsPage = () => {
               ref={sellingPointsRef}
               className="section border-b border-b-gray-200 py-4"
             >
-              <h2 className="text-2xl font-bold">Selling Points</h2>
+              <h2 className="text-2xl font-bold pb-4">Selling Points</h2>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Similique accusantium maiores fugiat quidem ipsa ullam iusto
@@ -349,8 +356,53 @@ const DetailsPage = () => {
               ref={commentsRef}
               className="section border-b border-b-gray-200 py-4"
             >
-              <h2 className="text-2xl font-bold">Comments (<span className="commentCount">2</span>)</h2>
-              <p>Comments go here...</p>
+              <h2 className="text-2xl font-bold pb-4">
+                Comments (<span className="commentCount">2</span>)
+              </h2>
+              <div className="commentBox flex flex-col gap-4 border p-4 mb-4 pr-1 rounded-lg">
+                {cardData.comments.length == 0 ? (
+                  <p className="text-gray-400">No comments yet.</p>
+                ) : (
+                  cardData.comments.map((comment: any, index: any) => (
+                    <div className="comment">
+                      <div className="flex items-center gap-2">
+                        <img
+                          src={cardData.link}
+                          className="w-10 aspect-square bg-center bg-fixed bg-cover rounded-full"
+                          alt="profile"
+                        />
+                        <p className="font-semibold text-gray-900">
+                          {comment.name}
+                        </p>
+                        <p className="text-sm  text-gray-400">{comment.time}</p>
+                      </div>
+                      <div className="px-12 py-2">
+                        {comment.comment}
+                      </div>
+                      <div className="px-12 py-2">
+                      <button className="flex gap-2 items-center text-nowrap rounded-md text-gray-400 hover:text-gray-700  transition-all">
+                      <GoReply />Reply
+                      </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+              <div className="flex gap-3">
+                <img
+                  src={cardData.link}
+                  className="h-10 aspect-square bg-center bg-fixed bg-cover rounded-full"
+                  alt="profile"
+                />
+                <input
+                  type="text"
+                  className="bg-white border rounded-md px-2 w-full"
+                  placeholder="Enter Comment"
+                />
+                <button className="bg-amber-400 text-nowrap px-4 py-1 rounded-md font-semibold transition-all">
+                  Submit
+                </button>
+              </div>
             </div>
           </div>
 

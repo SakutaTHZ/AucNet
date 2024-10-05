@@ -40,7 +40,13 @@ const App: React.FC = () => {
       "https://cdn.jdpower.com/ArticleImages/JDP_2025%20Toyota%20Highlander%20Limited%2025th%20Edition%20Hybrid%20Front%20Quarter%20View.jpg",
       "https://cdn.jdpower.com/ArticleImages/JDP_2025%20Volvo%20XC90%20Front%20Quarter%20View%20Action.jpg",
     ];
-    const carStatus = ["checkavailability", "unavailable", "orderconfirmed", "canceled", "purchased"];
+    const carStatus = [
+      "checkavailability",
+      "unavailable",
+      "orderconfirmed",
+      "canceled",
+      "purchased",
+    ];
 
     const cardData = {
       name: carNames[Math.floor(Math.random() * carNames.length)],
@@ -52,6 +58,16 @@ const App: React.FC = () => {
       enginePower: Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
       mileage: Math.floor(Math.random() * (999999 - 1000 + 1)) + 1000,
       year: Math.floor(Math.random() * (2025 - 1980 + 1)) + 1980,
+      comments: [
+        {
+          name: "John Doe",
+          comment: `Lorem ipsum odor amet, consectetuer adipiscing elit. Facilisi curabitur himenaeos id dis sem fusce elit non. Phasellus volutpat at ullamcorper interdum, interdum nulla nulla. Mi consequat primis tortor a vehicula taciti erat est? Quisque ipsum phasellus nostra posuere aliquet auctor ante. Mi pharetra eget donec phasellus lectus. Eu fusce metus interdum habitant vitae proin pretium egestas sociosqu. Natoque volutpat placerat; metus gravida ut ex adipiscing. Maecenas magnis orci velit facilisi amet, porta commodo.
+Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac molestie nulla conubia arcu nisi. Diam etiam magnis euismod placerat cubilia sapien dictumst. Elit efficitur ornare tempor nec tincidunt tristique tempor. Ornare massa viverra class ullamcorper purus nec. Odio dolor vestibulum pulvinar fermentum eu luctus. Orci primis rutrum viverra vehicula vivamus hac. Scelerisque dolor eros cubilia metus taciti ridiculus nisi. Etiam dui cras amet amet iaculis molestie laoreet.`,
+          time: "12 minutes ago",
+        },
+        { name: "Kelly Kim", comment: "I would Buy this", time: "1 week ago" },
+        { name: "Talia", comment: "Love the design", time: "1 day ago" },
+      ],
     };
     return cardData;
   };
