@@ -69,10 +69,6 @@ const DetailsPage = () => {
 
       setComments([...comments, newCommentData]);
       setNewComment("");
-
-      setTimeout(() => {
-        commentsRef.current?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
     }
   };
 
@@ -143,7 +139,7 @@ const DetailsPage = () => {
         </div>
 
         <div>
-          <div className="w-full h-10 titles flex gap-6 text-gray-600 border-b border-b-gray-200">
+          <div className="w-full h-10 titles flex gap-6 text-gray-600">
             <a
               onClick={() => handleLinkClick("Car Stock")}
               className={`flex text-ellipsis truncate w-1/4 md:w-auto justify-left items-center pb-2 cursor-pointer transition-all ${
