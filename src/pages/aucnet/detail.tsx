@@ -406,7 +406,11 @@ const DetailsPage = () => {
           />
           <button
             onClick={handleAddComment} // Add the new comment on click
-            className="bg-amber-400 text-nowrap px-4 py-1 rounded-md font-semibold transition-all"
+            className={`bg-amber-400 text-nowrap px-4 py-1 rounded-md font-semibold transition-all ${
+              newComment.trim() === ""
+                ? "bg-gray-200 cursor-not-allowed" 
+                : "bg-amber-400 cursor-pointer"
+            }`}
             disabled={newComment.trim() === ""} // Disable the button if input is empty
           >
             Submit
