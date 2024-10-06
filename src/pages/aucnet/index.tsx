@@ -11,15 +11,7 @@ import AucNetRow from "../../components/AucNetComponents/AucNetRow";
 import ScrollToTopButton from "../../components/ScrollToTop";
 import Pagination from "../../components/AucNetComponents/Pagination";
 
-import { useNavigate } from "react-router-dom";
-
 const App: React.FC = () => {
-  const navigate = useNavigate();
-
-  const handleCardClick = (cardData: any) => {
-    console.log(cardData + "Card clicked");
-    navigate("/details", { state: { card: cardData } });
-  };
 
   // Toggle view
   const [isTableView, setIsTableView] = useState(false);
@@ -64,9 +56,15 @@ const App: React.FC = () => {
           comment: `Lorem ipsum odor amet, consectetuer adipiscing elit. Facilisi curabitur himenaeos id dis sem fusce elit non. Phasellus volutpat at ullamcorper interdum, interdum nulla nulla. Mi consequat primis tortor a vehicula taciti erat est? Quisque ipsum phasellus nostra posuere aliquet auctor ante. Mi pharetra eget donec phasellus lectus. Eu fusce metus interdum habitant vitae proin pretium egestas sociosqu. Natoque volutpat placerat; metus gravida ut ex adipiscing. Maecenas magnis orci velit facilisi amet, porta commodo.
 Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac molestie nulla conubia arcu nisi. Diam etiam magnis euismod placerat cubilia sapien dictumst. Elit efficitur ornare tempor nec tincidunt tristique tempor. Ornare massa viverra class ullamcorper purus nec. Odio dolor vestibulum pulvinar fermentum eu luctus. Orci primis rutrum viverra vehicula vivamus hac. Scelerisque dolor eros cubilia metus taciti ridiculus nisi. Etiam dui cras amet amet iaculis molestie laoreet.`,
           time: "12 minutes ago",
+          reply:[
+            { name: "Kelly Kim", comment: "Nice Car", time: "1 week ago" },
+            { name: "Talia", comment: "Would recommend", time: "1 day ago" },
+          ]
         },
-        { name: "Kelly Kim", comment: "I would Buy this", time: "1 week ago" },
-        { name: "Talia", comment: "Love the design", time: "1 day ago" },
+        { name: "Kelly Kim", comment: "I would Buy this", time: "1 week ago",reply:[
+          { name: "Talia", comment: "I think there are some ...", time: "1 day ago" },
+        ] },
+        { name: "Talia", comment: "Love the design", time: "1 day ago",reply:[] },
       ],
     };
     return cardData;
@@ -309,7 +307,6 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
                       animationFillMode: "forwards",
                     }}
                     carData={cardData}
-                    onClick={() => handleCardClick(cardData)} // Pass card data on click
                   />
                 ))}
               </div>
@@ -328,7 +325,6 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
                       animationFillMode: "forwards",
                     }}
                     carData={cardData}
-                    onClick={() => handleCardClick(cardData)} // Pass card data on click
                   />
                 ))}
               </div>

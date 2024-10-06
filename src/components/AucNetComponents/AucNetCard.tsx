@@ -2,6 +2,7 @@ import React, { useState, CSSProperties } from 'react';
 import { MdFavoriteBorder, MdOutlineDirectionsCar, MdOutlineDateRange } from 'react-icons/md';
 import { TbEngine, TbRoad } from 'react-icons/tb';
 import StatusBullet from './StatusBullet';
+import { useNavigate } from 'react-router-dom';
 
 interface AucNetCardProps {
   customClass?: string;
@@ -11,6 +12,13 @@ interface AucNetCardProps {
 }
 
 const AucNetCard: React.FC<AucNetCardProps> = ({ customClass, style,carData, onClick }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = (cardData: any) => {
+    console.log('clicked')
+    navigate("/details", { state: { card: cardData } });
+  };
+  
   const [isFavorite, setIsFavorite] = useState<boolean>(false); // State to manage favorite status
 
   const toggleFavorite = () => {
@@ -21,10 +29,10 @@ const AucNetCard: React.FC<AucNetCardProps> = ({ customClass, style,carData, onC
     <div
       className={`card animate-slideUp transition-all flex flex-col w-full hover:bg-slate-100 cursor-pointer border border-slate-100 h-fit p-0 rounded-xl overflow-hidden shadow-md hover:shadow-lg ${customClass}`}
       style={style}
-      onClick={onClick}
+      onClick={() => (onClick ? onClick() : handleCardClick(carData))}
     >
-      <div className="imageBox relative w-full flex items-center overflow-hidden h-56">
-        <img src={carData.link} className='h-full' alt="image" />
+      <div className="imageBox relative w-full flex items-center justify-center overflow-hidden h-56">
+        <img src={carData.link} className='w-full' alt="image" />
         <StatusBullet customClass='absolute top-1 left-1 text-xs rounded-xl font-semibold' status={carData.status}/>
         <button
           onClick={toggleFavorite}

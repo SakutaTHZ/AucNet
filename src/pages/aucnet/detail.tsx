@@ -1,13 +1,7 @@
 import { useLocation } from "react-router-dom";
-import {
-  useState,
-  useRef,
-  JSXElementConstructor,
-  ReactElement,
-  ReactNode,
-  ReactPortal,
-} from "react";
+import { useState, useRef } from "react";
 import AucNetNav from "../../components/AucNetComponents/AucNetNav";
+import CommentBox from "../../components/AucNetComponents/CommentBox";
 import {
   MdOutlineDirectionsCar,
   MdOutlineDateRange,
@@ -15,6 +9,7 @@ import {
   MdOutlineRemoveRedEye,
 } from "react-icons/md";
 import { TbEngine, TbRoad, TbHeart } from "react-icons/tb";
+import AucNetCard from "../../components/AucNetComponents/AucNetCard";
 
 import ScrollToTopButton from "../../components/ScrollToTop";
 import CarStatusBox from "../../components/AucNetComponents/CarStatusBox";
@@ -23,7 +18,6 @@ import {
   IoCalendarClearOutline,
   IoCheckmarkCircleOutline,
 } from "react-icons/io5";
-import { GoReply } from "react-icons/go";
 
 const DetailsPage = () => {
   const location = useLocation();
@@ -171,7 +165,7 @@ const DetailsPage = () => {
           </div>
         </div>
 
-        <div className="flex flex-col-reverse md:flex-row gap-8 pb-24">
+        <div className="flex flex-col-reverse md:flex-row gap-8 pb-24 border-b border-b-gray-200">
           <div className="topicSection w-full md:w-2/3">
             {/* Sections to scroll to */}
             <div
@@ -361,30 +355,16 @@ const DetailsPage = () => {
               </h2>
               <div className="commentBox flex flex-col gap-4 border p-4 mb-4 pr-1 rounded-lg">
                 {cardData.comments.length == 0 ? (
-                  <p className="text-gray-400">No comments yet.</p>
+                  <p className="text-gray-400">
+                    Ask anything. Admin will reply you soon
+                  </p>
                 ) : (
                   cardData.comments.map((comment: any, index: any) => (
-                    <div className="comment">
-                      <div className="flex items-center gap-2">
-                        <img
-                          src={cardData.link}
-                          className="w-10 aspect-square bg-center bg-fixed bg-cover rounded-full"
-                          alt="profile"
-                        />
-                        <p className="font-semibold text-gray-900">
-                          {comment.name}
-                        </p>
-                        <p className="text-sm  text-gray-400">{comment.time}</p>
-                      </div>
-                      <div className="px-12 py-2">
-                        {comment.comment}
-                      </div>
-                      <div className="px-12 py-2">
-                      <button className="flex gap-2 items-center text-nowrap rounded-md text-gray-400 hover:text-gray-700  transition-all">
-                      <GoReply />Reply
-                      </button>
-                      </div>
-                    </div>
+                    <CommentBox
+                      key={index}
+                      customClass="border-b border-b-gray-200"
+                      commentData={comment}
+                    />
                   ))
                 )}
               </div>
@@ -414,8 +394,20 @@ const DetailsPage = () => {
             />
           </div>
         </div>
-      </div>
 
+        <div className="recommendations pb-8">
+          <h1 className="text-3xl pb-4 font-bold">Recommended for you</h1>
+          <div className="flex gap-4">
+            {(() => {
+              const items = [];
+              for (let i = 0; i < 3; i++) {
+                items.push(<AucNetCard key={i} customClass={``} carData={cardData} />);
+              }
+              return items;
+            })()}
+          </div>
+        </div>
+      </div>
       <ScrollToTopButton />
     </>
   );

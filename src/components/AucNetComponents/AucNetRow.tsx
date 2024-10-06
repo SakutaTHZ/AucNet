@@ -5,6 +5,7 @@ import {
   MdOutlineDateRange,
 } from "react-icons/md";
 import { TbEngine, TbRoad } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 
 interface AucNetRowProps {
   customClass?: string;
@@ -16,6 +17,12 @@ interface AucNetRowProps {
 const AucNetRow: React.FC<AucNetRowProps> = ({ customClass, style,carData, onClick }) => {
   const [isFavorite, setIsFavorite] = useState(false); // State to manage favorite status
 
+  const navigate = useNavigate();
+
+  const handleCardClick = (cardData: any) => {
+    navigate("/details", { state: { card: cardData } });
+  };
+
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite); // Toggle favorite status
   };
@@ -26,7 +33,7 @@ const AucNetRow: React.FC<AucNetRowProps> = ({ customClass, style,carData, onCli
       <div
         className={`md:hidden card animate-slideLeft transition-all flex flex-col w-full hover:bg-slate-100 cursor-pointer border border-slate-100 h-fit p-0 rounded-xl overflow-hidden shadow-md hover:shadow-lg ${customClass}`}
         style={style}
-        onClick={onClick}
+        onClick={() => (onClick ? onClick() : handleCardClick(carData))}
       >
         <div className="flex h-full  border-b border-gray-200">
           {/* Image Box */}
