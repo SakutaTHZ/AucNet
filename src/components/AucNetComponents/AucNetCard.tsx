@@ -8,10 +8,11 @@ interface AucNetCardProps {
   customClass?: string;
   style?: CSSProperties;
   carData?:any;
+  showStatus?:boolean;
   onClick?: () => void;
 }
 
-const AucNetCard: React.FC<AucNetCardProps> = ({ customClass, style,carData, onClick }) => {
+const AucNetCard: React.FC<AucNetCardProps> = ({ customClass, style,carData,showStatus=false, onClick }) => {
   const navigate = useNavigate();
 
   const handleCardClick = (cardData: any) => {
@@ -29,11 +30,11 @@ const AucNetCard: React.FC<AucNetCardProps> = ({ customClass, style,carData, onC
     <div
       className={`card animate-slideUp transition-all flex flex-col w-full hover:bg-slate-100 cursor-pointer border border-slate-100 h-fit p-0 rounded-xl overflow-hidden shadow-md hover:shadow-lg ${customClass}`}
       style={style}
-      onClick={() => (onClick ? onClick() : handleCardClick(carData))}
     >
-      <div className="imageBox relative w-full flex items-center justify-center overflow-hidden h-56">
-        <img src={carData.link} className='w-full' alt="image" />
-        <StatusBullet customClass='absolute top-1 left-1 text-xs rounded-xl font-semibold' status={carData.status}/>
+      <div className="imageBox relative w-full flex items-start justify-center overflow-hidden h-48" >
+        <img src={carData.link} className='w-full' alt="image" 
+      onClick={() => (onClick ? onClick() : handleCardClick(carData))}/>
+        <StatusBullet customClass={`absolute top-1 left-1 text-xs rounded-xl font-semibold ${showStatus?'block':'hidden'}`} status={carData.status}/>
         <button
           onClick={toggleFavorite}
           className={`bg-gray-900 bg-opacity-20 p-1.5 rounded-full absolute top-2 right-2 backdrop-blur-sm transition-all ${
@@ -47,7 +48,8 @@ const AucNetCard: React.FC<AucNetCardProps> = ({ customClass, style,carData, onC
           )}
         </button>
       </div>
-      <div className="flex w-full justify-start items-start p-3 border-b border-gray-200">
+      <div className="flex w-full justify-start items-start p-3 border-b border-gray-200" 
+      onClick={() => (onClick ? onClick() : handleCardClick(carData))}>
         <div className="flex flex-col w-full gap-1 justify-start items-start">
           <p className="text-lg font-medium">{carData.name}</p>
           <p className="text-base text-gray-600">{carData.engineType}</p>

@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom";
 import { useState, useRef } from "react";
-import AucNetNav from "../../components/AucNetComponents/AucNetNav";
 import CommentBox from "../../components/AucNetComponents/CommentBox";
 import {
   MdOutlineDirectionsCar,
@@ -74,7 +73,7 @@ const DetailsPage = () => {
 
   return (
     <>
-      <AucNetNav />
+
       <div className="flex flex-col gap-6 w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-28 bg-slate-50">
         <div className="flex items-center gap-1 font-medium">
           <a href="/home" className="text-gray-500">
@@ -122,14 +121,46 @@ const DetailsPage = () => {
         </div>
 
         <div className="relative w-full flex flex-col md:flex-row gap-3">
-          <div className="mainImage w-full md:w-1/2">
+          <div className="animate-slideRight mainImage w-full md:w-1/2">
             <img src={cardData.link} alt="image" className="rounded-lg" />
           </div>
           <div className="secondaryImages w-full md:w-1/2 grid grid-cols-4 md:grid-cols-2 gap-3">
-            <img src={cardData.link} alt="image" className="rounded-lg" />
-            <img src={cardData.link} alt="image" className="rounded-lg" />
-            <img src={cardData.link} alt="image" className="rounded-lg" />
-            <img src={cardData.link} alt="image" className="rounded-lg" />
+            <img
+              src={cardData.link}
+              alt="image"
+              className="rounded-lg animate-slideRight opacity-0  delay-100"
+              style={{
+                animationDelay: `.25s`,
+                animationFillMode: "forwards",
+              }}
+            />
+            <img
+              src={cardData.link}
+              alt="image"
+              className="rounded-lg animate-slideRight opacity-0  delay-150"
+              style={{
+                animationDelay: `.5s`,
+                animationFillMode: "forwards",
+              }}
+            />
+            <img
+              src={cardData.link}
+              alt="image"
+              className="rounded-lg animate-slideRight opacity-0  delay-200"
+              style={{
+                animationDelay: `.75s`,
+                animationFillMode: "forwards",
+              }}
+            />
+            <img
+              src={cardData.link}
+              alt="image"
+              className="rounded-lg animate-slideRight opacity-0  delay-250"
+              style={{
+                animationDelay: `1s`,
+                animationFillMode: "forwards",
+              }}
+            />
           </div>
           <button className="absolute flex gap-2 items-center bg-white bg-opacity-75 hover:bg-opacity-100 shadow-md px-2 py-1 rounded-md right-2 md:right-4 top-2 md:top-auto md:bottom-4 transition-all">
             <MdOutlineRemoveRedEye size={20} />
@@ -365,55 +396,56 @@ const DetailsPage = () => {
               </p>
             </div>
             <div>
-      <div
-        ref={commentsRef}
-        className="section border-b border-b-gray-200 py-4"
-      >
-        <h2 className="text-2xl font-bold pb-4">
-          Comments (<span className="commentCount">{comments.length}</span>)
-        </h2>
-        <div className="commentBox flex flex-col gap-4 border p-4 mb-4 pr-1 rounded-lg">
-          {comments.length === 0 ? (
-            <p className="text-gray-400">
-              Ask anything. Admin will reply to you soon.
-            </p>
-          ) : (
-            comments.map((comment: any, index: any) => (
-              <CommentBox
-                key={index}
-                customClass="border-b border-b-gray-200"
-                commentData={comment}
-              />
-            ))
-          )}
-        </div>
-        <div className="flex gap-3">
-          <img
-            src={cardData.link} // Placeholder for the profile image
-            className="h-10 aspect-square bg-center bg-fixed bg-cover rounded-full"
-            alt="profile"
-          />
-          <input
-            type="text"
-            className="bg-white border rounded-md px-2 w-full"
-            placeholder="Enter Comment"
-            value={newComment}
-            onChange={handleInputChange} // Track the input value
-          />
-          <button
-            onClick={handleAddComment} // Add the new comment on click
-            className={`bg-amber-400 text-nowrap px-4 py-1 rounded-md font-semibold transition-all ${
-              newComment.trim() === ""
-                ? "bg-gray-200 cursor-not-allowed" 
-                : "bg-amber-400 cursor-pointer"
-            }`}
-            disabled={newComment.trim() === ""} // Disable the button if input is empty
-          >
-            Submit
-          </button>
-        </div>
-      </div>
-    </div>
+              <div
+                ref={commentsRef}
+                className="section border-b border-b-gray-200 py-4"
+              >
+                <h2 className="text-2xl font-bold pb-4">
+                  Comments (
+                  <span className="commentCount">{comments.length}</span>)
+                </h2>
+                <div className="commentBox flex flex-col gap-4 border p-4 mb-4 pr-1 rounded-lg">
+                  {comments.length === 0 ? (
+                    <p className="text-gray-400">
+                      Ask anything. Admin will reply to you soon.
+                    </p>
+                  ) : (
+                    comments.map((comment: any, index: any) => (
+                      <CommentBox
+                        key={index}
+                        customClass="border-b border-b-gray-200"
+                        commentData={comment}
+                      />
+                    ))
+                  )}
+                </div>
+                <div className="flex gap-3">
+                  <img
+                    src={cardData.link} // Placeholder for the profile image
+                    className="w-12 md:w-12 aspect-square bg-center bg-fixed bg-cover rounded-full"
+                    alt="profile"
+                  />
+                  <input
+                    type="text"
+                    className="h-12 bg-white border rounded-md px-2 w-full"
+                    placeholder="Enter Comment"
+                    value={newComment}
+                    onChange={handleInputChange} // Track the input value
+                  />
+                  <button
+                    onClick={handleAddComment} // Add the new comment on click
+                    className={`bg-amber-400 text-nowrap px-4 py-1 rounded-md font-semibold transition-all ${
+                      newComment.trim() === ""
+                        ? "bg-gray-200 cursor-not-allowed"
+                        : "bg-amber-400 cursor-pointer"
+                    }`}
+                    disabled={newComment.trim() === ""} // Disable the button if input is empty
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="w-full md:w-1/3">
@@ -427,11 +459,13 @@ const DetailsPage = () => {
 
         <div className="recommendations pb-8">
           <h1 className="text-3xl pb-4 font-bold">Recommended for you</h1>
-          <div className="flex gap-4">
+          <div className="flex flex-col md:flex-row gap-4">
             {(() => {
               const items = [];
               for (let i = 0; i < 3; i++) {
-                items.push(<AucNetCard key={i} customClass={``} carData={cardData} />);
+                items.push(
+                  <AucNetCard key={i} customClass={``} carData={cardData} />
+                );
               }
               return items;
             })()}

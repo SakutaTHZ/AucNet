@@ -41,7 +41,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({
       <div className="flex items-center gap-2">
         <img
           src="https://cdn.jdpower.com/Average%20Weight%20Of%20A%20Car.jpg"
-          className="w-10 aspect-square bg-center bg-fixed bg-cover rounded-full"
+          className="w-7 md:w-9 aspect-square bg-center bg-fixed bg-cover rounded-full"
           alt="profile"
         />
         <p className="font-semibold text-gray-900">{commentData.name}</p>
@@ -52,7 +52,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({
       {!isReply && (
         <>
           {!showReplyBox && (
-            <div className="px-12 py-2">
+            <div className="px-12 py-2 mb-2">
               <button
                 onClick={toggleReplyBox}
                 className="flex gap-2 items-center text-nowrap rounded-md text-gray-400 hover:text-gray-700 transition-all"

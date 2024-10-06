@@ -10,15 +10,19 @@ import {
 } from "react-router-dom";
 import Home from "./pages/aucnet/index";
 import Detail from "./pages/aucnet/detail";
+import Basket from "./pages/aucnet/basket";
+import AucNetNav from "./components/AucNetComponents/AucNetNav";
 
 const App: React.FC = () => {
   const location = useLocation(); // Get the current location
 
   return (
     <>
+      <AucNetNav basketCount={20} favouriteCount={20} notiCount={125}/>
+
       <div
         className={`w-screen min-h-screen flex flex-col justify-center items-center ${
-          location.pathname === "/home" || location.pathname === "/details"
+          location.pathname === "/home" || location.pathname === "/details"  || location.pathname === "/basket"
             ? "hidden"
             : "bg-gradient-to-br from-yellow-200 via-yellow-200 to-amber-300"
         }`}
@@ -34,6 +38,7 @@ const App: React.FC = () => {
         {/* Route to the Home component when "/home" is visited */}
         <Route path="/home" element={<Home />} />
         <Route path="/details" element={<Detail />} />
+        <Route path="/basket" element={<Basket />} />
       </Routes>
     </>
   );

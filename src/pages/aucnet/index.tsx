@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { MdBorderAll, MdTune } from "react-icons/md";
 import { FaListUl } from "react-icons/fa";
 import CustomDropdown from "../../components/AucNetComponents/DropDown";
-import AucNetNav from "../../components/AucNetComponents/AucNetNav";
 import AucNetCard from "../../components/AucNetComponents/AucNetCard";
 import RangeSlider from "../../components/AucNetComponents/RangeSlider";
 import FilterOptionDropDown from "../../components/AucNetComponents/FilterOptionDropDown";
@@ -69,6 +68,7 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
     };
     return cardData;
   };
+  
   const options = [
     "Most relevant",
     "Date latest to oldest",
@@ -155,7 +155,6 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
 
   return (
     <>
-      <AucNetNav />
 
       <div className="w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-28 bg-slate-50">
         <div className="flex flex-col gap-8">

@@ -8,14 +8,43 @@ import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
 import cosmoLogo from "../../assets/CosmoLogo.svg";
 import JapanFlag from "../../assets/JapanFlag.svg";
 import ProfileDropDown from "./ProfileDropDown";
+import { useNavigate } from "react-router-dom";
 
-const AucNetNav: React.FC = () => {
+interface AucNetNavProps {
+  isAdmin?: boolean;
+  basketCount?: number;
+  favouriteCount?: number;
+  notiCount?: number;
+  onClick?: () => void;
+}
+
+const overHundoCheck = (num: number) => {
+  if (num >= 100) {
+    return "99+";
+  }
+  return num;
+};
+
+const AucNetNav: React.FC<AucNetNavProps> = ({
+  isAdmin = "",
+  basketCount = 0,
+  favouriteCount = 0,
+  notiCount = 0,
+  onClick,
+}) => {
   // State to handle burger menu toggle
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   // Function to toggle the menu
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  
+  const navigate = useNavigate();
+
+  const handleButtonClick = (location:any) => {
+    return navigate(`/${location}`);
   };
 
   return (
@@ -31,7 +60,7 @@ const AucNetNav: React.FC = () => {
 
       {/* Main Menu */}
       <div
-        className={`animate-slideLeft md:animate-appear burgerNavs px-8 pb-4 md:pb-0 md:px-0 flex-col md:flex-row gap-5 w-full justify-between md:flex md:pl-4 absolute md:static top-16 left-0 md:left-auto bg-white md:bg-transparent md:w-full transition-all duration-300 ease-in-out shadow-lg md:shadow-none z-40 ${
+        className={`burgerNavs px-8 pb-4 md:pb-0 md:px-0 flex-col md:flex-row gap-5 w-full justify-between md:flex md:pl-4 absolute md:static top-16 left-0 md:left-auto bg-white md:bg-transparent md:w-full transition-all duration-300 ease-in-out shadow-lg md:shadow-none z-40 ${
           isMenuOpen ? "flex" : "hidden"
         } md:flex`}
       >
@@ -43,13 +72,16 @@ const AucNetNav: React.FC = () => {
           >
             Car Stock
           </a>
-          <a
-            href="/home"
-            rel="noopener noreferrer"
-            className="flex w-full md:w-auto md:h-full justify-center items-center font-bold"
-          >
-            Flow
-          </a>
+
+          {isAdmin && (
+            <a
+              href="/home"
+              rel="noopener noreferrer"
+              className="flex w-full md:w-auto md:h-full justify-center items-center font-bold"
+            >
+              Flow
+            </a>
+          )}
         </div>
 
         <div className="flex flex-col md:flex-row items-center gap-4">
@@ -63,24 +95,36 @@ const AucNetNav: React.FC = () => {
           </div>
           <div className="flex mt-4 md:mt-0 gap-8 w-full md:w-auto justify-between">
             <div className="flex gap-4 px-4">
-              <button>
+              <button className="relative" onClick={() => (onClick ? onClick() : handleButtonClick('basket'))}>
                 <MdOutlineShoppingCart size={24} />
+                {basketCount != 0 && (
+                  <span className="absolute bottom-5 bg-red-600 text-white rounded-full px-1 text-xs">
+                    {overHundoCheck(basketCount)}
+                  </span>
+                )}
               </button>
-              <button>
+              <button className="relative">
                 <MdFavoriteBorder size={24} />
+                {favouriteCount!=0&&(
+                <span className="absolute bottom-5 bg-red-600 text-white rounded-full px-1 text-xs">
+                  {overHundoCheck(favouriteCount)}
+                </span>
+                )}
               </button>
               <button className="relative">
                 <MdOutlineNotifications size={24} />
+                {notiCount!=0&&(
                 <span className="absolute bottom-5 bg-red-600 text-white rounded-full px-1 text-xs">
-                  99+
+                  {overHundoCheck(notiCount)}
                 </span>
+                )}
               </button>
             </div>
             <div className="flex justify-center">
               <img src={JapanFlag} alt="Flag" className="pr-1" />
               <span className="text-nowrap">11:42 am</span>
             </div>
-            <ProfileDropDown/>
+            <ProfileDropDown />
           </div>
         </div>
       </div>
