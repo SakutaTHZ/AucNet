@@ -21,21 +21,18 @@ import {
 
 const DetailsPage = () => {
   const location = useLocation();
-  const cardData = location.state?.card; // Access the passed card data
+  const cardData = location.state?.card;
 
   const [activeSection, setActiveSection] = useState<string>("Car Stock");
 
-  // Create refs for each section to scroll to
   const carOverView = useRef<HTMLDivElement>(null);
   const carFeaturesRef = useRef<HTMLDivElement>(null);
   const sellingPointsRef = useRef<HTMLDivElement>(null);
   const commentsRef = useRef<HTMLDivElement>(null);
 
-  // Function to handle the click and scroll to the appropriate section
   const handleLinkClick = (section: string) => {
     setActiveSection(section);
 
-    // Scroll to the section
     switch (section) {
       case "Car Stock":
         carOverView.current?.scrollIntoView({ behavior: "smooth" });
@@ -51,6 +48,31 @@ const DetailsPage = () => {
         break;
       default:
         break;
+    }
+  };
+
+  const [comments, setComments] = useState(cardData.comments || []);
+  const [newComment, setNewComment] = useState("");
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewComment(e.target.value);
+  };
+
+  const handleAddComment = () => {
+    if (newComment.trim() !== "") {
+      const newCommentData = {
+        name: "You",
+        time: new Date().toLocaleString(),
+        comment: newComment,
+        reply: [],
+      };
+
+      setComments([...comments, newCommentData]);
+      setNewComment("");
+
+      setTimeout(() => {
+        commentsRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
     }
   };
 
@@ -346,44 +368,52 @@ const DetailsPage = () => {
                 eligendi tenetur doloribus fugit id magnam.
               </p>
             </div>
-            <div
-              ref={commentsRef}
-              className="section border-b border-b-gray-200 py-4"
-            >
-              <h2 className="text-2xl font-bold pb-4">
-                Comments (<span className="commentCount">2</span>)
-              </h2>
-              <div className="commentBox flex flex-col gap-4 border p-4 mb-4 pr-1 rounded-lg">
-                {cardData.comments.length == 0 ? (
-                  <p className="text-gray-400">
-                    Ask anything. Admin will reply you soon
-                  </p>
-                ) : (
-                  cardData.comments.map((comment: any, index: any) => (
-                    <CommentBox
-                      key={index}
-                      customClass="border-b border-b-gray-200"
-                      commentData={comment}
-                    />
-                  ))
-                )}
-              </div>
-              <div className="flex gap-3">
-                <img
-                  src={cardData.link}
-                  className="h-10 aspect-square bg-center bg-fixed bg-cover rounded-full"
-                  alt="profile"
-                />
-                <input
-                  type="text"
-                  className="bg-white border rounded-md px-2 w-full"
-                  placeholder="Enter Comment"
-                />
-                <button className="bg-amber-400 text-nowrap px-4 py-1 rounded-md font-semibold transition-all">
-                  Submit
-                </button>
-              </div>
-            </div>
+            <div>
+      <div
+        ref={commentsRef}
+        className="section border-b border-b-gray-200 py-4"
+      >
+        <h2 className="text-2xl font-bold pb-4">
+          Comments (<span className="commentCount">{comments.length}</span>)
+        </h2>
+        <div className="commentBox flex flex-col gap-4 border p-4 mb-4 pr-1 rounded-lg">
+          {comments.length === 0 ? (
+            <p className="text-gray-400">
+              Ask anything. Admin will reply to you soon.
+            </p>
+          ) : (
+            comments.map((comment: any, index: any) => (
+              <CommentBox
+                key={index}
+                customClass="border-b border-b-gray-200"
+                commentData={comment}
+              />
+            ))
+          )}
+        </div>
+        <div className="flex gap-3">
+          <img
+            src={cardData.link} // Placeholder for the profile image
+            className="h-10 aspect-square bg-center bg-fixed bg-cover rounded-full"
+            alt="profile"
+          />
+          <input
+            type="text"
+            className="bg-white border rounded-md px-2 w-full"
+            placeholder="Enter Comment"
+            value={newComment}
+            onChange={handleInputChange} // Track the input value
+          />
+          <button
+            onClick={handleAddComment} // Add the new comment on click
+            className="bg-amber-400 text-nowrap px-4 py-1 rounded-md font-semibold transition-all"
+            disabled={newComment.trim() === ""} // Disable the button if input is empty
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
           </div>
 
           <div className="w-full md:w-1/3">

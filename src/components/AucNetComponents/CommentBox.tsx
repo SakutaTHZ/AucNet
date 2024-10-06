@@ -12,18 +12,28 @@ const CommentBox: React.FC<CommentBoxProps> = ({
   commentData,
   isReply = false,
 }) => {
-  // State to manage reply box visibility
   const [showReplyBox, setShowReplyBox] = useState(false);
-  
-  // State to track reply input field
   const [replyText, setReplyText] = useState("");
+  const [replies, setReplies] = useState(commentData.reply || []);
 
-  // Function to toggle the reply box
   const toggleReplyBox = () => setShowReplyBox(!showReplyBox);
 
-  // Handle input change
   const handleReplyInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setReplyText(e.target.value);
+  };
+
+  const handleAddReply = () => {
+    if (replyText.trim() !== "") {
+      const newReply = {
+        name: "You",
+        time: new Date().toLocaleString(),
+        comment: replyText,
+        reply: []
+      };
+      setReplies([...replies, newReply]);
+      setReplyText("");
+      setShowReplyBox(false);
+    }
   };
 
   return (
@@ -42,7 +52,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({
       {!isReply && (
         <>
           {!showReplyBox && (
-            <div className="px-12 py-2 mb-2">
+            <div className="px-12 py-2">
               <button
                 onClick={toggleReplyBox}
                 className="flex gap-2 items-center text-nowrap rounded-md text-gray-400 hover:text-gray-700 transition-all"
@@ -67,17 +77,18 @@ const CommentBox: React.FC<CommentBoxProps> = ({
                   className="bg-white border rounded-md px-2 w-full"
                   placeholder="Enter Comment"
                   value={replyText}
-                  onChange={handleReplyInputChange} // Track the input change
+                  onChange={handleReplyInputChange} 
                 />
               </div>
               <div className="flex gap-3 justify-end w-full">
                 <button
+                  onClick={handleAddReply}
                   className={`text-nowrap px-4 py-1 rounded-md font-semibold transition-all ${
                     replyText.trim() === ""
-                      ? "bg-gray-200 cursor-not-allowed" // Disabled styles when input is empty
-                      : "bg-amber-400 cursor-pointer" // Active styles when input has text
+                      ? "bg-gray-300 cursor-not-allowed" 
+                      : "bg-amber-400 cursor-pointer"
                   }`}
-                  disabled={replyText.trim() === ""} // Disable button when input is empty
+                  disabled={replyText.trim() === ""} 
                 >
                   Reply
                 </button>
@@ -93,13 +104,12 @@ const CommentBox: React.FC<CommentBoxProps> = ({
         </>
       )}
 
-      {/* Render replies recursively */}
-      {commentData.reply?.length !== 0 &&
-        commentData.reply?.map((comment: any, index: any) => (
+      {replies.length > 0 &&
+        replies.map((reply: any, index: any) => (
           <CommentBox
             key={index}
             customClass="pl-12 pb-4"
-            commentData={comment}
+            commentData={reply}
             isReply={true}
           />
         ))}
