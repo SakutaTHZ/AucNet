@@ -7,8 +7,8 @@ import RangeSlider from "../../components/AucNetComponents/RangeSlider";
 import FilterOptionDropDown from "../../components/AucNetComponents/FilterOptionDropDown";
 import FilterClearDropDown from "../../components/AucNetComponents/FilterClearDropDown";
 import AucNetRow from "../../components/AucNetComponents/AucNetRow";
-import ScrollToTopButton from "../../components/ScrollToTop";
 import Pagination from "../../components/AucNetComponents/Pagination";
+import { useLocation } from "react-router-dom";
 
 const App: React.FC = () => {
 
@@ -19,55 +19,10 @@ const App: React.FC = () => {
   const toggleFilter = () => {
     setIsFilterOn(!isFilterOn);
   };
-
-  const generateCardData = () => {
-    const carNames = ["A3 Sportback", "TT Coupe", "Ranger", "Fit", "CR-V"];
-    const carTypes = ["Sedan", "Hatchback", "SUV", "Convertible", "MiniVan"];
-    const engines = ["1.4 TSLI", "V6", "flat-6", "Rx-7", "EV engine"];
-    const imageLink = [
-      "https://cdn.jdpower.com/Average%20Weight%20Of%20A%20Car.jpg",
-      "https://cdn.jdpower.com/ArticleImages/JDP_2025%20Volkswagen%20Taos%20SEL%20Green%20Front%20Quarter%20View.jpg",
-      "https://cdn.jdpower.com/ArticleImages/JDP_2025%20Chrysler%20Voyager%20LX%20Red%20Front%20Quarter%20VIew.jpg",
-      "https://cdn.jdpower.com/ArticleImages/JDP_2025%20Toyota%20Highlander%20Limited%2025th%20Edition%20Hybrid%20Front%20Quarter%20View.jpg",
-      "https://cdn.jdpower.com/ArticleImages/JDP_2025%20Volvo%20XC90%20Front%20Quarter%20View%20Action.jpg",
-    ];
-    const carStatus = [
-      "checkavailability",
-      "unavailable",
-      "orderconfirmed",
-      "canceled",
-      "purchased",
-    ];
-
-    const cardData = {
-      name: carNames[Math.floor(Math.random() * carNames.length)],
-      type: carTypes[Math.floor(Math.random() * carTypes.length)],
-      link: imageLink[Math.floor(Math.random() * imageLink.length)],
-      engineType: engines[Math.floor(Math.random() * engines.length)],
-      status: carStatus[Math.floor(Math.random() * carStatus.length)],
-      price: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
-      enginePower: Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
-      mileage: Math.floor(Math.random() * (999999 - 1000 + 1)) + 1000,
-      year: Math.floor(Math.random() * (2025 - 1980 + 1)) + 1980,
-      comments: [
-        {
-          name: "John Doe",
-          comment: `Lorem ipsum odor amet, consectetuer adipiscing elit. Facilisi curabitur himenaeos id dis sem fusce elit non. Phasellus volutpat at ullamcorper interdum, interdum nulla nulla. Mi consequat primis tortor a vehicula taciti erat est? Quisque ipsum phasellus nostra posuere aliquet auctor ante. Mi pharetra eget donec phasellus lectus. Eu fusce metus interdum habitant vitae proin pretium egestas sociosqu. Natoque volutpat placerat; metus gravida ut ex adipiscing. Maecenas magnis orci velit facilisi amet, porta commodo.
-Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac molestie nulla conubia arcu nisi. Diam etiam magnis euismod placerat cubilia sapien dictumst. Elit efficitur ornare tempor nec tincidunt tristique tempor. Ornare massa viverra class ullamcorper purus nec. Odio dolor vestibulum pulvinar fermentum eu luctus. Orci primis rutrum viverra vehicula vivamus hac. Scelerisque dolor eros cubilia metus taciti ridiculus nisi. Etiam dui cras amet amet iaculis molestie laoreet.`,
-          time: "12 minutes ago",
-          reply:[
-            { name: "Kelly Kim", comment: "Nice Car", time: "1 week ago" },
-            { name: "Talia", comment: "Would recommend", time: "1 day ago" },
-          ]
-        },
-        { name: "Kelly Kim", comment: "I would Buy this", time: "1 week ago",reply:[
-          { name: "Talia", comment: "I think there are some ...", time: "1 day ago" },
-        ] },
-        { name: "Talia", comment: "Love the design", time: "1 day ago",reply:[] },
-      ],
-    };
-    return cardData;
-  };
+  
+  const location = useLocation();
+  
+  const cards = location.state?.cards || [];
   
   const options = [
     "Most relevant",
@@ -139,8 +94,6 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
     { name: "4 seats", count: 74 },
     { name: "5 seats", count: 23 },
   ];
-
-  const cards = Array.from({ length: 20 }, generateCardData);
 
   const handleClearAll = () => {
     window.location.reload();
@@ -256,7 +209,7 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
                   Filters
                 </button>
                 <p>
-                  Showing <b>1-20</b> of <b>2,420</b> listings
+                  Showing <b>1-20</b> of <b>{cards.length}</b> listings
                 </p>
               </div>
               <div className="flex gap-2 items-center">
@@ -293,7 +246,7 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
             {/* Cards Container */}
             {isTableView ? (
               <div className="rightBox flex flex-col gap-3 w-full h-full">
-                {cards.map((cardData, index) => (
+                {cards.map((cardData:any, index:number) => (
                   <AucNetRow
                     key={index}
                     customClass={`opacity-0 delay-${
@@ -306,12 +259,13 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
                       animationFillMode: "forwards",
                     }}
                     carData={cardData}
+                    showStatus={cardData.isBasket?true:false}
                   />
                 ))}
               </div>
             ) : (
               <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full h-full">
-                {cards.map((cardData, index) => (
+                {cards.map((cardData:any, index:number) => (
                   <AucNetCard
                     key={index}
                     customClass={`opacity-0 delay-${
@@ -324,6 +278,7 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
                       animationFillMode: "forwards",
                     }}
                     carData={cardData}
+                    showStatus={cardData.isBasket?true:false}
                   />
                 ))}
               </div>
@@ -336,8 +291,6 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
           </div>
         </div>
       </div>
-
-      <ScrollToTopButton />
     </>
   );
 };

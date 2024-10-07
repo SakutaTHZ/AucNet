@@ -5,7 +5,7 @@ import {
   MdOutlineDateRange,
 } from "react-icons/md";
 import { TbEngine, TbRoad } from "react-icons/tb";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import StatusBullet from "./StatusBullet";
 
 interface AucNetRowProps {
@@ -23,13 +23,15 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
   showStatus = false,
   onClick,
 }) => {
-  const [isFavorite, setIsFavorite] = useState(false); // State to manage favorite status
+  const [isFavorite, setIsFavorite] = useState(carData.isFavourite); // State to manage favorite status
 
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  const cards = location.state?.cards || [];
 
   const handleCardClick = (cardData: any) => {
-    console.log("clicked");
-    navigate("/details", { state: { card: cardData } });
+    navigate("/details", { state: { card: cardData ,cards: cards} });
   };
 
   const toggleFavorite = () => {

@@ -2,7 +2,7 @@ import React, { useState, CSSProperties } from 'react';
 import { MdFavoriteBorder, MdOutlineDirectionsCar, MdOutlineDateRange } from 'react-icons/md';
 import { TbEngine, TbRoad } from 'react-icons/tb';
 import StatusBullet from './StatusBullet';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface AucNetCardProps {
   customClass?: string;
@@ -14,13 +14,16 @@ interface AucNetCardProps {
 
 const AucNetCard: React.FC<AucNetCardProps> = ({ customClass, style,carData,showStatus=false, onClick }) => {
   const navigate = useNavigate();
+  
+  const location = useLocation();
+  
+  const cards = location.state?.cards || [];
 
   const handleCardClick = (cardData: any) => {
-    console.log('clicked')
-    navigate("/details", { state: { card: cardData } });
+    navigate("/details", { state: { card: cardData ,cards: cards} });
   };
   
-  const [isFavorite, setIsFavorite] = useState<boolean>(false); // State to manage favorite status
+  const [isFavorite, setIsFavorite] = useState<boolean>(carData.isFavourite); // State to manage favorite status
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite); // Toggle favorite status
@@ -31,7 +34,7 @@ const AucNetCard: React.FC<AucNetCardProps> = ({ customClass, style,carData,show
       className={`card animate-slideUp transition-all flex flex-col w-full hover:bg-slate-100 cursor-pointer border border-slate-100 h-fit p-0 rounded-xl overflow-hidden shadow-md hover:shadow-lg ${customClass}`}
       style={style}
     >
-      <div className="imageBox relative w-full flex items-start justify-center overflow-hidden h-48" >
+      <div className="imageBox relative w-full flex items-start justify-center overflow-hidden h-56" >
         <img src={carData.link} className='w-full' alt="image" 
       onClick={() => (onClick ? onClick() : handleCardClick(carData))}/>
         <StatusBullet customClass={`absolute top-1 left-1 text-xs rounded-xl font-semibold ${showStatus?'block':'hidden'}`} status={carData.status}/>

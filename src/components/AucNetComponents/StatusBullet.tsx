@@ -20,7 +20,7 @@ const StatusBullet: React.FC<StatusBulletProps> = ({
             <IoTime size={10} className="absolute -right-0.5 -top-0.5" />
             <IoCarOutline size={20} />
           </div>
-          <p>Checking Availability</p>
+          <p className="text-nowrap">Checking Availability</p>
         </div>
       ) : status === "unavailable" ? (
         <div
@@ -29,7 +29,7 @@ const StatusBullet: React.FC<StatusBulletProps> = ({
             <IoCloseCircle  size={10} className="absolute -right-0.5 -top-0.5" />
             <IoCarOutline size={20} />
           </div>
-          <p>Unavailable</p>
+          <p className="text-nowrap">Unavailable</p>
         </div>
       ) : status === "orderconfirmed" ? (
         <div
@@ -37,7 +37,7 @@ const StatusBullet: React.FC<StatusBulletProps> = ({
           <div className="relative">
             <TbCalendarCheck size={20} />
           </div>
-          <p>Order Confirmed</p>
+          <p className="text-nowrap">Order Confirmed</p>
         </div>
       ) : status === "canceled" ? (
         <div
@@ -45,7 +45,7 @@ const StatusBullet: React.FC<StatusBulletProps> = ({
           <div className="relative">
             <TbCalendarCancel size={20} />
           </div>
-          <p>Order Cancelled</p>
+          <p className="text-nowrap">Order Cancelled</p>
         </div>
       ) : status === "purchased" ? (
         <div
@@ -54,7 +54,7 @@ const StatusBullet: React.FC<StatusBulletProps> = ({
             <IoTime size={10} className="absolute -right-0.5 -top-0.5" />
             <IoCarOutline size={20} />
           </div>
-          <p>Purchased</p>
+          <p className="text-nowrap">Purchased</p>
         </div>
       ) : (
         <>

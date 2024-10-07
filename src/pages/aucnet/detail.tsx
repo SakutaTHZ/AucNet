@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useRef } from "react";
 import CommentBox from "../../components/AucNetComponents/CommentBox";
 import {
@@ -6,17 +6,22 @@ import {
   MdOutlineDateRange,
   MdOutlineShare,
   MdOutlineRemoveRedEye,
+  MdOutlineStar,
+  MdOutlineStarBorder,
+  MdOutlineStarHalf,
 } from "react-icons/md";
 import { TbEngine, TbRoad, TbHeart } from "react-icons/tb";
 import AucNetCard from "../../components/AucNetComponents/AucNetCard";
 
-import ScrollToTopButton from "../../components/ScrollToTop";
 import CarStatusBox from "../../components/AucNetComponents/CarStatusBox";
 import StatusBullet from "../../components/AucNetComponents/StatusBullet";
 import {
   IoCalendarClearOutline,
+  IoCheckmarkCircle,
   IoCheckmarkCircleOutline,
 } from "react-icons/io5";
+import Popup from "../../components/AucNetComponents/PopUp";
+import { GoDotFill } from "react-icons/go";
 
 const DetailsPage = () => {
   const location = useLocation();
@@ -71,14 +76,32 @@ const DetailsPage = () => {
     }
   };
 
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const openPopup = () => setIsPopupOpen(true);
+  const closePopup = () => setIsPopupOpen(false);
+
+  const [isFeaturePopupOpen, setIsFeaturePopupOpen] = useState(false);
+
+  const openFeaturePopup = () => setIsFeaturePopupOpen(true);
+  const closeFeaturePopup = () => setIsFeaturePopupOpen(false);
+
+  const [isAISPopupOpen, setIsAISPopupOpen] = useState(false);
+
+  const openAISPopup = () => setIsAISPopupOpen(true);
+  const closeAISPopup = () => setIsAISPopupOpen(false);
+  
+  const cards = location.state?.cards || [];
+  console.log(cards)
+  
   return (
     <>
-
       <div className="flex flex-col gap-6 w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-28 bg-slate-50">
         <div className="flex items-center gap-1 font-medium">
-          <a href="/home" className="text-gray-500">
+          <Link to="/home"
+            state={{ cards }} className="text-gray-500">
             Car Sale /
-          </a>
+          </Link>
           <p className="text-blue-950 font-semibold">
             {cardData.name} {cardData.engineType}
           </p>
@@ -89,7 +112,7 @@ const DetailsPage = () => {
             {cardData.name} {cardData.engineType}
             <StatusBullet
               status={cardData.status}
-              customClass="font-semibold"
+              customClass="font-semibold hidden"
             />
           </div>
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
@@ -122,42 +145,46 @@ const DetailsPage = () => {
 
         <div className="relative w-full flex flex-col md:flex-row gap-3">
           <div className="animate-slideRight mainImage w-full md:w-1/2">
-            <img src={cardData.link} alt="image" className="rounded-lg" />
+            <img
+              src={cardData.link}
+              alt="image"
+              className="rounded-lg w-full"
+            />
           </div>
           <div className="secondaryImages w-full md:w-1/2 grid grid-cols-4 md:grid-cols-2 gap-3">
             <img
               src={cardData.link}
               alt="image"
-              className="rounded-lg animate-slideRight opacity-0  delay-100"
+              className="rounded-lg animate-slideRight opacity-0 w-full delay-100"
               style={{
-                animationDelay: `.25s`,
+                animationDelay: `.15s`,
                 animationFillMode: "forwards",
               }}
             />
             <img
               src={cardData.link}
               alt="image"
-              className="rounded-lg animate-slideRight opacity-0  delay-150"
+              className="rounded-lg animate-slideRight opacity-0  w-full delay-150"
               style={{
-                animationDelay: `.5s`,
+                animationDelay: `.30s`,
                 animationFillMode: "forwards",
               }}
             />
             <img
               src={cardData.link}
               alt="image"
-              className="rounded-lg animate-slideRight opacity-0  delay-200"
+              className="rounded-lg animate-slideRight opacity-0  w-full delay-200"
               style={{
-                animationDelay: `.75s`,
+                animationDelay: `.45s`,
                 animationFillMode: "forwards",
               }}
             />
             <img
               src={cardData.link}
               alt="image"
-              className="rounded-lg animate-slideRight opacity-0  delay-250"
+              className="rounded-lg animate-slideRight opacity-0  w-full delay-250"
               style={{
-                animationDelay: `1s`,
+                animationDelay: `.60s`,
                 animationFillMode: "forwards",
               }}
             />
@@ -224,73 +251,159 @@ const DetailsPage = () => {
               <h2 className="text-2xl font-bold">Overview</h2>
               <div className="carData flex flex-wrap gap-y-4 py-4">
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline size={20} />
+                  <IoCalendarClearOutline
+                    size={20}
+                    className="shrink-0 mt-2 md:mt-0"
+                  />
                   <p>
                     Exterior: <span>Beige Color</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline size={20} />
+                  <IoCalendarClearOutline
+                    size={20}
+                    className="shrink-0 mt-2 md:mt-0"
+                  />
                   <p>
                     Interior: <span>Midnight Black</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline size={20} />
+                  <IoCalendarClearOutline
+                    size={20}
+                    className="shrink-0 mt-2 md:mt-0"
+                  />
                   <p>
                     Registration year: <span>2021</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline size={20} />
+                  <IoCalendarClearOutline
+                    size={20}
+                    className="shrink-0 mt-2 md:mt-0"
+                  />
                   <p>
                     Vin: <span>2GNWO32TE0928372</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline size={20} />
+                  <IoCalendarClearOutline
+                    size={20}
+                    className="shrink-0 mt-2 md:mt-0"
+                  />
                   <p>
                     <span>233</span> km
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline size={20} />
+                  <IoCalendarClearOutline
+                    size={20}
+                    className="shrink-0 mt-2 md:mt-0"
+                  />
                   <p>
                     <span>Hatchback</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline size={20} />
+                  <IoCalendarClearOutline
+                    size={20}
+                    className="shrink-0 mt-2 md:mt-0"
+                  />
                   <p>
                     Fuel type: <span>Petrol</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline size={20} />
+                  <IoCalendarClearOutline
+                    size={20}
+                    className="shrink-0 mt-2 md:mt-0"
+                  />
                   <p>Automatic transmission</p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline size={20} />
+                  <IoCalendarClearOutline
+                    size={20}
+                    className="shrink-0 mt-2 md:mt-0"
+                  />
                   <p>
                     <span>2,340</span> cc
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline size={20} />
+                  <IoCalendarClearOutline
+                    size={20}
+                    className="shrink-0 mt-2 md:mt-0"
+                  />
                   <p>
                     <span>Front wheel drive</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline size={20} />
+                  <IoCalendarClearOutline
+                    size={20}
+                    className="shrink-0 mt-2 md:mt-0"
+                  />
                   <p>
                     <span>Osaka, Japan</span>
                   </p>
                 </div>
               </div>
-              <button className="bg-gray-200 px-4 py-1 rounded-md font-semibold">
+              <button
+                onClick={openPopup}
+                className="bg-gray-200 px-4 py-1 rounded-md font-semibold"
+              >
                 View all details
               </button>
+              <Popup
+                isOpen={isPopupOpen}
+                onClose={closePopup}
+                title="Vehicle Overview"
+                customClass="m-2"
+                content={
+                  <div className="grid grid-cols-2 gap-x-4 md:gap-x-28 gap-y-5 py-4 px-0 md:px-2 border-t border-t-gray-200">
+                    <div className="flex items-start gap-2">
+                      <GoDotFill size={10} className="shrink-0 mt-2" />
+                      <p>
+                        Serial number : <span>3448395218</span>
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <GoDotFill size={10} className="shrink-0 mt-2" />
+                      <p>
+                        Seating capacity : <span>5</span>
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <GoDotFill size={10} className="shrink-0 mt-2" />
+                      Right hand drive
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <GoDotFill size={10} className="shrink-0 mt-2" />
+                      <p>
+                        Number of doors : <span>4</span>
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <GoDotFill size={10} className="shrink-0 mt-2" />
+                      <p>
+                        Max loading : <span>500</span> kg
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <GoDotFill size={10} className="shrink-0 mt-2" />
+                      <p>
+                        Total gears : <span>8</span>
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <GoDotFill size={10} className="shrink-0 mt-2" />
+                      <p>
+                        Car dimension : <span>42L x 234W x 243H</span>
+                      </p>
+                    </div>
+                  </div>
+                }
+              />
 
               <div className="w-full p-3 md:p-6 flex gap-2 items-center justify-between border border-gray-200 rounded-md mt-4">
                 <div className="flex gap-4 items-center justify-center">
@@ -307,12 +420,191 @@ const DetailsPage = () => {
                   </div>
                 </div>
 
-                <button className="bg-gray-50 hover:bg-amber-100 px-4 py-1 rounded-md font-semibold transition-all">
+                <button
+                  className="bg-gray-50 hover:bg-amber-100 px-4 py-1 rounded-md font-semibold transition-all"
+                  onClick={openAISPopup}
+                >
                   View all details
                 </button>
+
+                <Popup
+                  title="AIS Inspection"
+                  isOpen={isAISPopupOpen}
+                  onClose={closeAISPopup}
+                  customClass="mx-2"
+                  content={
+                    <div className="flex flex-col md:gap-x-28 gap-y-3 py-4 px-0 border-t border-t-gray-200">
+                      <div className="flex items-center gap-2">
+                        <p className="w-48 font-semibold text-gray-600">
+                          AIS Total Score
+                        </p>
+                        <div className="flex items-center gap-2">
+                          <div className="stars flex items-center gap-2">
+                            <MdOutlineStar
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                            <MdOutlineStar
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                            <MdOutlineStar
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                            <MdOutlineStarHalf
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                            <MdOutlineStarBorder
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                          </div>
+                          <span className="font-semibold">3.5</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <p className="w-48 font-semibold text-gray-600">
+                          AIS Interior Score
+                        </p>
+                        <div className="flex items-center gap-2">
+                          <div className="stars flex items-center gap-2">
+                            <MdOutlineStar
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                            <MdOutlineStar
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                            <MdOutlineStar
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                            <MdOutlineStarHalf
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                            <MdOutlineStarBorder
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                          </div>
+                          <span className="font-semibold">3.5</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <p className="w-48 font-semibold text-gray-600">
+                          AIS Exterior Score
+                        </p>
+                        <div className="flex items-center gap-2">
+                          <div className="stars flex items-center gap-2">
+                            <MdOutlineStar
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                            <MdOutlineStar
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                            <MdOutlineStar
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                            <MdOutlineStarHalf
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                            <MdOutlineStarBorder
+                              size={20}
+                              className="shrink-0 text-yellow-500"
+                            />
+                          </div>
+                          <span className="font-semibold">3.5</span>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col md:flex-row items-start gap-2">
+                        <p className="w-48 font-semibold text-gray-600">
+                          Inspector Comment
+                        </p>
+                        <p className="max-w-96">
+                          Lorem, ipsum dolor sit amet consectetur adipisicing
+                          elit. In atque excepturi laborum magni consequatur,
+                          architecto earum reprehenderit quibusdam quod soluta
+                          dolores numquam explicabo quos. Voluptatibus
+                          perferendis vel reprehenderit iste nihil?
+                        </p>
+                      </div>
+
+                      <div className="flex items-start gap-2">
+                        <p className="w-48 font-semibold text-gray-600">
+                          Inspected Date
+                        </p>
+                        <p className="max-w-96">24 June 2021</p>
+                      </div>
+                      <div className="flex items-start gap-2 mb-2">
+                        <p className="w-48 font-semibold text-gray-600">
+                          Inspected Expired Date
+                        </p>
+                        <p className="max-w-96">24 June 2025</p>
+                      </div>
+
+                      <div className="border-t border-t-gray-200 py-4">
+                        <p className="text-2xl font-bold">Condition Details</p>
+                        <div className="grid grid-cols-2 gap-x-4 md:gap-x-28 gap-y-5 pt-6">
+                          <div className="flex items-center gap-2">
+                            <IoCheckmarkCircle
+                              size={20}
+                              className="shrink-0 text-green-600"
+                            />
+                            <p>No Accident History</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <IoCheckmarkCircle
+                              size={20}
+                              className="shrink-0 text-green-600"
+                            />
+                            <p>No Accident History</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <IoCheckmarkCircle
+                              size={20}
+                              className="shrink-0 text-green-600"
+                            />
+                            <p>No Accident History</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <IoCheckmarkCircle
+                              size={20}
+                              className="shrink-0 text-green-600"
+                            />
+                            <p>No Accident History</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <IoCheckmarkCircle
+                              size={20}
+                              className="shrink-0 text-green-600"
+                            />
+                            <p>No Accident History</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <IoCheckmarkCircle
+                              size={20}
+                              className="shrink-0 text-green-600"
+                            />
+                            <p>No Accident History</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                />
               </div>
             </div>
-
             <div
               ref={carFeaturesRef}
               className="section border-b border-b-gray-200 py-4"
@@ -320,68 +612,181 @@ const DetailsPage = () => {
               <h2 className="text-2xl font-bold">Car Features</h2>
               <div className="carFeatures flex flex-wrap gap-y-4 py-4">
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCheckmarkCircleOutline size={20} />
+                  <IoCheckmarkCircleOutline
+                    size={20}
+                    className="shrink-0 text-yellow-500"
+                  />
                   <p>
                     <span>Air condition </span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCheckmarkCircleOutline size={20} />
+                  <IoCheckmarkCircleOutline
+                    size={20}
+                    className="shrink-0 text-yellow-500"
+                  />
                   <p>
                     <span>Keyless Entry</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCheckmarkCircleOutline size={20} />
+                  <IoCheckmarkCircleOutline
+                    size={20}
+                    className="shrink-0 text-yellow-500"
+                  />
                   <p>
                     <span>Air-bag</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCheckmarkCircleOutline size={20} />
+                  <IoCheckmarkCircleOutline
+                    size={20}
+                    className="shrink-0 text-yellow-500"
+                  />
                   <p>
                     <span>Smart key</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCheckmarkCircleOutline size={20} />
+                  <IoCheckmarkCircleOutline
+                    size={20}
+                    className="shrink-0 text-yellow-500"
+                  />
                   <p>
                     <span>ABS</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCheckmarkCircleOutline size={20} />
+                  <IoCheckmarkCircleOutline
+                    size={20}
+                    className="shrink-0 text-yellow-500"
+                  />
                   <p>
                     <span>Back Camera</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCheckmarkCircleOutline size={20} />
+                  <IoCheckmarkCircleOutline
+                    size={20}
+                    className="shrink-0 text-yellow-500"
+                  />
                   <p>
                     <span>Sunroof</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCheckmarkCircleOutline size={20} />
+                  <IoCheckmarkCircleOutline
+                    size={20}
+                    className="shrink-0 text-yellow-500"
+                  />
                   <p>ETC</p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCheckmarkCircleOutline size={20} />
+                  <IoCheckmarkCircleOutline
+                    size={20}
+                    className="shrink-0 text-yellow-500"
+                  />
                   <p>
                     <span>Aluminium wheel</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCheckmarkCircleOutline size={20} />
+                  <IoCheckmarkCircleOutline
+                    size={20}
+                    className="shrink-0 text-yellow-500"
+                  />
                   <p>
                     <span>Leather seat</span>
                   </p>
                 </div>
               </div>
 
-              <button className="bg-gray-200 px-4 py-1 rounded-md font-semibold">
+              <button
+                className="bg-gray-200 px-4 py-1 rounded-md font-semibold"
+                onClick={openFeaturePopup}
+              >
                 View all features
               </button>
+              <Popup
+                isOpen={isFeaturePopupOpen}
+                onClose={closeFeaturePopup}
+                title="Car Features"
+                customClass="m-2"
+                content={
+                  <div className="grid grid-cols-2 gap-x-12 md:gap-x-28 gap-y-5 py-4 px-0 md:px-2 border-t border-t-gray-200">
+                    <div className="flex items-center gap-2">
+                      <IoCheckmarkCircleOutline
+                        size={20}
+                        className="shrink-0 text-yellow-500"
+                      />
+                      <p>Air conditioning</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <IoCheckmarkCircleOutline
+                        size={20}
+                        className="shrink-0 text-yellow-500"
+                      />
+                      <p>Keyless entry</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <IoCheckmarkCircleOutline
+                        size={20}
+                        className="shrink-0 text-yellow-500"
+                      />
+                      Air-bag
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <IoCheckmarkCircleOutline
+                        size={20}
+                        className="shrink-0 text-yellow-500"
+                      />
+                      <p>Smart key</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <IoCheckmarkCircleOutline
+                        size={20}
+                        className="shrink-0 text-yellow-500"
+                      />
+                      <p>ABS</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <IoCheckmarkCircleOutline
+                        size={20}
+                        className="shrink-0 text-yellow-500"
+                      />
+                      <p>Back camera</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <IoCheckmarkCircleOutline
+                        size={20}
+                        className="shrink-0 text-yellow-500"
+                      />
+                      <p>Sunroof</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <IoCheckmarkCircleOutline
+                        size={20}
+                        className="shrink-0 text-yellow-500"
+                      />
+                      <p>ETC</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <IoCheckmarkCircleOutline
+                        size={20}
+                        className="shrink-0 text-yellow-500"
+                      />
+                      <p>Aluminium wheel</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <IoCheckmarkCircleOutline
+                        size={20}
+                        className="shrink-0 text-yellow-500"
+                      />
+                      <p>Leather seat</p>
+                    </div>
+                  </div>
+                }
+              />
             </div>
             <div
               ref={sellingPointsRef}
@@ -472,7 +877,6 @@ const DetailsPage = () => {
           </div>
         </div>
       </div>
-      <ScrollToTopButton />
     </>
   );
 };
