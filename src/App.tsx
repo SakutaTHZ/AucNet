@@ -14,6 +14,7 @@ import Basket from "./pages/aucnet/basket";
 import Favourites from "./pages/aucnet/favourites";
 import AucNetNav from "./components/AucNetComponents/AucNetNav";
 import ScrollToTopButton from "./components/ScrollToTop";
+import Notifications from "./pages/aucnet/notifications";
 
 const App: React.FC = () => {
   const location = useLocation(); // Get the current location
@@ -84,13 +85,13 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
   const cards = Array.from({ length: 200 }, generateCardData);
 
   const generateNotifications = () => {
-    const type = Math.floor(Math.random() * 1)
+    const type = Math.floor(Math.random() * 10)
     const notification ={
-      isRead :Math.floor(Math.random() * 1)==1 ?true:false,
+      isRead :Math.floor(Math.random() * 10)%2==0 ?true:false,
       image: imageLink[Math.floor(Math.random() * imageLink.length)],
       time: new Date().toLocaleString(),
-      replyType: type,
-      message: type == 0 ? adminComment[Math.floor(Math.random() * adminComment.length)]:normalComment[Math.floor(Math.random() * normalComment.length)],
+      replyType: type%2==0 ?true:false,
+      message: type%2==0  ? adminComment[Math.floor(Math.random() * adminComment.length)]:normalComment[Math.floor(Math.random() * normalComment.length)],
     }
     return notification
   }
@@ -105,7 +106,7 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
 
       <div
         className={`w-screen min-h-screen flex flex-col justify-center items-center ${
-          location.pathname === "/home" || location.pathname === "/details"  || location.pathname === "/basket"|| location.pathname === "/favourites"
+          location.pathname === "/home" || location.pathname === "/details"  || location.pathname === "/basket"|| location.pathname === "/favourites" || location.pathname === "/notifications"
             ? "hidden"
             : "bg-gradient-to-br from-yellow-200 via-yellow-200 to-amber-300"
         }`}
@@ -123,6 +124,7 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
         <Route path="/details" element={<Detail />} />
         <Route path="/basket" element={<Basket />} />
         <Route path="/favourites" element={<Favourites />} />
+        <Route path="/notifications" element={<Notifications />} />
       </Routes>
     </>
   );

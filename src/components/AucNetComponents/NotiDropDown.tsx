@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
-import { MdOutlineNotifications } from "react-icons/md";
-import { Link, useLocation } from "react-router-dom";
+import { MdOutlineDirectionsCar, MdOutlineNotifications } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 interface NotiDropDownProps {
   notifications?: any;
@@ -16,10 +16,6 @@ const overHundoCheck = (num: number) => {
 
 const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const location = useLocation();
-
-  const cards = location.state?.cards || [];
 
   const recentUnreadNotifications = notifications.slice(0, 3); // Get only the 3 most recent unread ones
 
@@ -46,8 +42,8 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications }) => {
           <div className="w-full flex items-center justify-between gap-3 box-border">
             <p className="text-xl font-bold">Notifications</p>
             <Link
-              to="/home"
-              state={{ cards }}
+              to="/notifications"
+              state={{ notifications }}
               className="text-yellow-800 text-nowrap"
             >
               See all
@@ -55,8 +51,11 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications }) => {
           </div>
           <div className="flex flex-col py-3">
             {recentUnreadNotifications.length > 0 ? (
-              recentUnreadNotifications.map((recentUnreadNotification:any) => (
-                <div key={recentUnreadNotification.id} className="flex gap-4 mb-4">
+              recentUnreadNotifications.map((recentUnreadNotification: any) => (
+                <div
+                  key={recentUnreadNotification.id}
+                  className={`relative flex gap-8 px-2 py-2 rounded-md w-full border-b border-b-gray-200 hover:bg-slate-100 ${recentUnreadNotification.isRead && "after:absolute after:-left-3 after:top-1/2 after:w-3 after:h-3 after:bg-yellow-400 after:rounded-full"}`}
+                >
                   <div className="relative w-28">
                     <img
                       src={recentUnreadNotification.image}
@@ -64,11 +63,23 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications }) => {
                       className="h-auto rounded-md"
                     />
                     <div className="bg-amber-200 w-fit p-1 rounded-full absolute -bottom-2 -right-2">
-                      <IoChatbubbleEllipsesOutline size={15} />
+                      {recentUnreadNotification.replyType ? (
+                        <IoChatbubbleEllipsesOutline size={15} />
+                      ) : (
+                        <MdOutlineDirectionsCar size={15} />
+                      )}
                     </div>
                   </div>
                   <div className="w-96">
-                    <p className={`${notifications.isRead ? "font-bold" : "text-gray-600"}`}>{recentUnreadNotification.message}</p>
+                    <p
+                      className={`${
+                        recentUnreadNotification.isRead
+                          ? "font-bold"
+                          : "text-gray-600"
+                      }`}
+                    >
+                      {recentUnreadNotification.message}
+                    </p>
                     <p className="text-sm text-gray-400">
                       {recentUnreadNotification.time}
                     </p>
