@@ -68,7 +68,7 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications }) => {
                     </div>
                   </div>
                   <div className="w-96">
-                    <p className={notifications.isRead ? "font-bold" : "text-gray-600"}>{recentUnreadNotification.message}</p>
+                    <p className={`${notifications.isRead ? "font-bold" : "text-gray-600"}`}>{recentUnreadNotification.message}</p>
                     <p className="text-sm text-gray-400">
                       {recentUnreadNotification.time}
                     </p>
