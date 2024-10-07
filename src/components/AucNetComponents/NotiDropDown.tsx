@@ -21,9 +21,7 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications }) => {
 
   const cards = location.state?.cards || [];
 
-  const recentUnreadNotifications = notifications
-    .filter((notifications: any) => !notifications.isRead) // Filter out read notifications
-    .slice(0, 3); // Get only the 3 most recent unread ones
+  const recentUnreadNotifications = notifications.slice(0, 3); // Get only the 3 most recent unread ones
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -70,7 +68,7 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications }) => {
                     </div>
                   </div>
                   <div className="w-96">
-                    <p className="font-semibold">{recentUnreadNotification.message}</p>
+                    <p className={notifications.isRead ? "font-bold" : "text-gray-600"}>{recentUnreadNotification.message}</p>
                     <p className="text-sm text-gray-400">
                       {recentUnreadNotification.time}
                     </p>
