@@ -3,7 +3,6 @@ import { FaListUl } from "react-icons/fa";
 import { MdBorderAll } from "react-icons/md";
 import AucNetRow from "../../components/AucNetComponents/AucNetRow";
 import AucNetCard from "../../components/AucNetComponents/AucNetCard";
-import Pagination from "../../components/AucNetComponents/Pagination";
 import { useLocation } from "react-router-dom";
 
 const MyBasket: React.FC = () => {
@@ -30,13 +29,6 @@ const MyBasket: React.FC = () => {
   const filteredCards = selectedStatus
     ? cards.filter((card:any) => card.status === selectedStatus)
     : cards;
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 1;
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
 
   return (
     <div className="flex flex-col gap-6 w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-28 bg-slate-50">
@@ -177,12 +169,6 @@ const MyBasket: React.FC = () => {
           ))}
         </div>
       )}
-
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
     </div>
   );
 };

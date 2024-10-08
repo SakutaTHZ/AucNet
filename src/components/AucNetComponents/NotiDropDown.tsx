@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { MdOutlineDirectionsCar, MdOutlineNotifications } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 interface NotiDropDownProps {
   notifications?: any;
+  onClick?: () => void;
 }
 
 const overHundoCheck = (num: number) => {
@@ -14,7 +15,8 @@ const overHundoCheck = (num: number) => {
   return num;
 };
 
-const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications }) => {
+const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications,
+  onClick }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const recentUnreadNotifications = notifications.slice(0, 3); // Get only the 3 most recent unread ones
@@ -22,6 +24,16 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications }) => {
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+
+  const navigate = useNavigate();
+  const handleCardClick = (location: any, card: any) => {
+    toggleDropdown()
+    return navigate(`/${location}`, { state: { card,cards } });
+  };
+  
+  const location = useLocation();
+  
+  const cards = location.state?.cards || [];
 
   return (
     <div className="relative flex justify-center">
@@ -38,13 +50,14 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications }) => {
 
       {/* Dropdown Menu ${notifications.status==0 ? '': ''}*/}
       {isOpen && (
-        <div className="animate-appear p-6 py-2 absolute top-6 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        <div className="animate-appear w-[100dvw] md:w-auto p-6 py-2 fixed md:absolute top-56 md:top-8 right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
           <div className="w-full flex items-center justify-between gap-3 box-border">
             <p className="text-xl font-bold">Notifications</p>
             <Link
               to="/notifications"
-              state={{ notifications }}
+              state={{ notifications, cards }}
               className="text-yellow-800 text-nowrap"
+              onClick={toggleDropdown}
             >
               See all
             </Link>
@@ -54,7 +67,13 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications }) => {
               recentUnreadNotifications.map((recentUnreadNotification: any) => (
                 <div
                   key={recentUnreadNotification.id}
-                  className={`relative flex gap-8 px-2 py-2 rounded-md w-full border-b border-b-gray-200 hover:bg-slate-100 ${recentUnreadNotification.isRead && "after:absolute after:-left-3 after:top-1/2 after:w-3 after:h-3 after:bg-yellow-400 after:rounded-full"}`}
+                  className={`relative flex gap-8 px-2 py-2 rounded-md w-full border-b border-b-gray-200 hover:bg-slate-100 ${
+                    recentUnreadNotification.isRead &&
+                    "after:absolute after:-left-4 after:top-1/2 after:w-3 after:h-3 after:bg-yellow-400 after:rounded-full"
+                  }`}
+                  onClick={() =>
+                    onClick ? onClick() : handleCardClick("details",recentUnreadNotification.toCar)
+                  }
                 >
                   <div className="relative w-28">
                     <img
@@ -64,13 +83,13 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications }) => {
                     />
                     <div className="bg-amber-200 w-fit p-1 rounded-full absolute -bottom-2 -right-2">
                       {recentUnreadNotification.replyType ? (
-                        <IoChatbubbleEllipsesOutline size={15} />
+                        <IoChatbubbleEllipsesOutline  />
                       ) : (
-                        <MdOutlineDirectionsCar size={15} />
+                        <MdOutlineDirectionsCar  />
                       )}
                     </div>
                   </div>
-                  <div className="w-96">
+                  <div className="w-full md:w-96">
                     <p
                       className={`${
                         recentUnreadNotification.isRead

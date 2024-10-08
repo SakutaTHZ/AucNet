@@ -100,10 +100,10 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
             <MdOutlineDirectionsCar size={20} /> {carData.type}
           </div>
           <div className="flex items-center gap-1 text-gray-500 py-1">
-            <TbEngine size={20} /> {carData.enginePower} cc
+            <TbEngine size={20} /> {carData.enginePower.toLocaleString()} cc
           </div>
           <div className="flex items-center gap-1 text-gray-500 py-1">
-            <TbRoad size={20} /> {carData.mileage} km
+            <TbRoad size={20} /> {carData.mileage.toLocaleString()} km
           </div>
           <div className="flex items-center gap-1 text-gray-500 py-1">
             <MdOutlineDateRange size={20} /> {carData.year}
@@ -169,10 +169,10 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
               <MdOutlineDirectionsCar size={20} /> {carData.type}
             </div>
             <div className="flex items-center gap-1 text-gray-500 py-1">
-              <TbEngine size={20} /> {carData.enginePower} cc
+              <TbEngine size={20} /> {carData.enginePower.toLocaleString()} cc
             </div>
             <div className="flex items-center gap-1 text-gray-500 py-1">
-              <TbRoad size={20} /> {carData.mileage} km
+              <TbRoad size={20} /> {carData.mileage.toLocaleString()} km
             </div>
             <div className="flex items-center gap-1 text-gray-500 py-1">
               <MdOutlineDateRange size={20} /> {carData.year}

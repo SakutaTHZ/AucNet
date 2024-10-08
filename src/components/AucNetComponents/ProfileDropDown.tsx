@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { MdOutlinePersonOutline, MdLogout } from "react-icons/md";
 import { FaChevronDown } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ProfileDropDown: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -26,11 +27,14 @@ const ProfileDropDown: React.FC = () => {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
           <div className="py-1">
-            <button
+            <Link
               className="flex items-center gap-1 w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+              to={"/"}
+              onClick={toggleDropdown}
             >
-              <MdLogout size={20}/>Sign out
-            </button>
+              <MdLogout size={20} />
+              Sign out
+            </Link>
           </div>
         </div>
       )}

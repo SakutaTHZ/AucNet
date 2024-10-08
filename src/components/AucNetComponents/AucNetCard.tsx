@@ -1,5 +1,5 @@
 import React, { useState, CSSProperties } from 'react';
-import { MdFavoriteBorder, MdOutlineDirectionsCar, MdOutlineDateRange } from 'react-icons/md';
+import { MdFavoriteBorder, MdOutlineDirectionsCar, MdOutlineDateRange, MdFavorite } from 'react-icons/md';
 import { TbEngine, TbRoad } from 'react-icons/tb';
 import StatusBullet from './StatusBullet';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -41,11 +41,11 @@ const AucNetCard: React.FC<AucNetCardProps> = ({ customClass, style,carData,show
         <button
           onClick={toggleFavorite}
           className={`bg-gray-900 bg-opacity-20 p-1.5 rounded-full absolute top-2 right-2 backdrop-blur-sm transition-all ${
-            isFavorite ? 'bg-red-500' : 'text-white'
+            isFavorite ? 'bg-red-500 shadow-md' : 'text-white'
           }`}
         >
           {isFavorite ? (
-            <MdFavoriteBorder size={24} className="text-red-500" />
+            <MdFavorite size={24} className="text-red-500" />
           ) : (
             <MdFavoriteBorder size={24} className="text-white" />
           )}
@@ -64,10 +64,10 @@ const AucNetCard: React.FC<AucNetCardProps> = ({ customClass, style,carData,show
           <MdOutlineDirectionsCar size={20} /> {carData.type}
         </div>
         <div className="flex items-center gap-1 w-1/2 text-gray-500 py-1">
-          <TbEngine size={20} /> {carData.enginePower} cc
+          <TbEngine size={20} /> {carData.enginePower.toLocaleString()} cc
         </div>
         <div className="flex items-center gap-1 w-1/2 text-gray-500 py-1">
-          <TbRoad size={20} /> {carData.mileage} km
+          <TbRoad size={20} /> {carData.mileage.toLocaleString()} km
         </div>
         <div className="flex items-center gap-1 w-1/2 text-gray-500 py-1">
           <MdOutlineDateRange size={20} /> {carData.year}

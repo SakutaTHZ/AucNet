@@ -265,7 +265,9 @@ const App: React.FC = () => {
               </div>
             ) : (
               <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full h-full">
-                {cards.map((cardData:any, index:number) => (
+                {cards
+              .slice(0, 20)
+              .map((cardData:any, index:number) => (
                   <AucNetCard
                     key={index}
                     customClass={`opacity-0 delay-${

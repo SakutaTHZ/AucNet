@@ -15,6 +15,7 @@ interface AucNetNavProps {
   basketCount?: number;
   favouriteCount?: number;
   notifications?: any;
+  customClass?:string;
   onClick?: () => void;
 }
 
@@ -30,6 +31,7 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
   basketCount = 0,
   favouriteCount = 0,
   notifications = 0,
+  customClass,
   onClick,
 }) => {
   // State to handle burger menu toggle
@@ -53,7 +55,7 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
   };
 
   return (
-    <nav className="flex bg-white justify-between gap-4 align-middle fixed w-screen top-0 left-0 shadow-sm px-8 md:px-16 lg:px-32 py-0 z-50">
+    <nav className={`flex bg-white justify-between gap-4 align-middle fixed w-screen top-0 left-0 shadow-sm px-8 md:px-16 lg:px-32 py-0 z-50 ${customClass}`}>
       <img
         src={cosmoLogo}
         alt="Logo"

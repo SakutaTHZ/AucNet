@@ -19,16 +19,15 @@ import Notifications from "./pages/aucnet/notifications";
 const App: React.FC = () => {
   const location = useLocation(); // Get the current location
 
-  
   const carNames = ["A3 Sportback", "TT Coupe", "Ranger", "Fit", "CR-V"];
   const carTypes = ["Sedan", "Hatchback", "SUV", "Convertible", "MiniVan"];
   const engines = ["1.4 TSLI", "V6", "flat-6", "Rx-7", "EV engine"];
   const imageLink = [
-    "https://cosmo-images.azureedge.net/stock/original/our_78146_b49d9285-cc91-4b89-92a6-1e4d2a9e310b.jpg?preset=bigpreview",
-    "https://cosmo-images.azureedge.net/stock/original/our_78562_81d0c245-0ad8-4f23-ba72-fb6e4e7b654a.jpg?preset=bigpreview",
-    "https://cosmo-images.azureedge.net/stock/original/our_79596_1e6432cd-8248-48b8-ab1f-0a785b8b764d.jpg?preset=bigpreview",
-    "https://cosmo-images.azureedge.net/stock/original/our_53383_754f972b-a419-4f53-8ea4-1691ce7fb661.jpg?preset=bigpreview",
-    "https://cosmo-images.azureedge.net/stock/original/our_51498_ec5f8b8d-7ca6-4eb7-a424-fd9ac0cf8403.jpg?preset=bigpreview",
+    "https://cosmo-images.azureedge.net/stock/original/our_78146_b49d9285-cc91-4b89-92a6-1e4d2a9e310b.jpg?preset=bigimage",
+    "https://cosmo-images.azureedge.net/stock/original/our_52747_7521ddc6-a312-4852-a12e-2d4a928f1b05.jpg?preset=bigimage",
+    "https://cosmo-images.azureedge.net/stock/original/our_79596_1e6432cd-8248-48b8-ab1f-0a785b8b764d.jpg?preset=bigimage",
+    "https://cosmo-images.azureedge.net/stock/original/our_53383_754f972b-a419-4f53-8ea4-1691ce7fb661.jpg?preset=bigimage",
+    "https://cosmo-images.azureedge.net/stock/original/our_51498_ec5f8b8d-7ca6-4eb7-a424-fd9ac0cf8403.jpg?preset=bigimage",
   ];
   const carStatus = [
     "checkavailability",
@@ -39,10 +38,9 @@ const App: React.FC = () => {
   ];
 
   const generateCardData = () => {
-
     const cardData = {
-      isFavourite: Math.floor(Math.random() * 10)==7 ? true : false,
-      isBasket: Math.floor(Math.random() * 10)==3 ? true : false,
+      isFavourite: Math.floor(Math.random() * 10) == 7 ? true : false,
+      isBasket: Math.floor(Math.random() * 10) == 3 ? true : false,
       name: carNames[Math.floor(Math.random() * carNames.length)],
       type: carTypes[Math.floor(Math.random() * carTypes.length)],
       link: imageLink[Math.floor(Math.random() * imageLink.length)],
@@ -58,55 +56,92 @@ const App: React.FC = () => {
           comment: `Lorem ipsum odor amet, consectetuer adipiscing elit. Facilisi curabitur himenaeos id dis sem fusce elit non. Phasellus volutpat at ullamcorper interdum, interdum nulla nulla. Mi consequat primis tortor a vehicula taciti erat est? Quisque ipsum phasellus nostra posuere aliquet auctor ante. Mi pharetra eget donec phasellus lectus. Eu fusce metus interdum habitant vitae proin pretium egestas sociosqu. Natoque volutpat placerat; metus gravida ut ex adipiscing. Maecenas magnis orci velit facilisi amet, porta commodo.
 Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac molestie nulla conubia arcu nisi. Diam etiam magnis euismod placerat cubilia sapien dictumst. Elit efficitur ornare tempor nec tincidunt tristique tempor. Ornare massa viverra class ullamcorper purus nec. Odio dolor vestibulum pulvinar fermentum eu luctus. Orci primis rutrum viverra vehicula vivamus hac. Scelerisque dolor eros cubilia metus taciti ridiculus nisi. Etiam dui cras amet amet iaculis molestie laoreet.`,
           time: "12 minutes ago",
-          reply:[
+          reply: [
             { name: "Kelly Kim", comment: "Nice Car", time: "1 week ago" },
             { name: "Talia", comment: "Would recommend", time: "1 day ago" },
-          ]
+          ],
         },
-        { name: "Kelly Kim", comment: "I would Buy this", time: "1 week ago",reply:[
-          { name: "Talia", comment: "I think there are some ...", time: "1 day ago" },
-        ] },
-        { name: "Talia", comment: "Love the design", time: "1 day ago",reply:[] },
+        {
+          name: "Kelly Kim",
+          comment: "I would Buy this",
+          time: "1 week ago",
+          reply: [
+            {
+              name: "Talia",
+              comment: "I think there are some ...",
+              time: "1 day ago",
+            },
+          ],
+        },
+        {
+          name: "Talia",
+          comment: "Love the design",
+          time: "1 day ago",
+          reply: [],
+        },
       ],
     };
     return cardData;
   };
 
-  
-  const adminComment = [
-    `Admin replied “This is the admin reply” to your comment in ${carNames[Math.floor(Math.random() * carNames.length)]} ${engines[Math.floor(Math.random() * engines.length)]} listing.`,
-    `The ${carNames[Math.floor(Math.random() * carNames.length)]} ${engines[Math.floor(Math.random() * engines.length)]} is currently unavailable. Please browse our catalog for other options.`
-  ]
-
-  const normalComment = [
-    `John Doe replied “This is the admin reply” to your comment in ${carNames[Math.floor(Math.random() * carNames.length)]} ${engines[Math.floor(Math.random() * engines.length)]} listing.`,
-  ]
-  
   const cards = Array.from({ length: 200 }, generateCardData);
 
   const generateNotifications = () => {
-    const type = Math.floor(Math.random() * 10)
-    const notification ={
-      isRead :Math.floor(Math.random() * 10)%2==0 ?true:false,
-      image: imageLink[Math.floor(Math.random() * imageLink.length)],
+    const refCar = generateCardData();
+
+    const adminComment = [
+      `Admin replied “This is the admin reply” to your comment in ${refCar.name} ${refCar.engineType} listing.`,
+      `The ${refCar.name} ${refCar.engineType} is currently unavailable. Please browse our catalog for other options.`,
+    ];
+
+    const normalComment = [
+      `John Doe replied “This is the admin reply” to your comment in ${refCar.name} ${refCar.engineType} listing.`,
+    ];
+
+    const type = Math.floor(Math.random() * 10);
+    const notification = {
+      isRead: Math.floor(Math.random() * 10) % 2 == 0 ? true : false,
+      image: refCar.link,
       time: new Date().toLocaleString(),
-      replyType: type%2==0 ?true:false,
-      message: type%2==0  ? adminComment[Math.floor(Math.random() * adminComment.length)]:normalComment[Math.floor(Math.random() * normalComment.length)],
-    }
-    return notification
-  }
+      replyType: type % 2 == 0 ? true : false,
+      message:
+        type % 2 == 0
+          ? adminComment[Math.floor(Math.random() * adminComment.length)]
+          : normalComment[Math.floor(Math.random() * normalComment.length)],
+      toCar: refCar,
+    };
+    return notification;
+  };
 
   const notifications = Array.from({ length: 12 }, generateNotifications);
 
   return (
     <>
-      <AucNetNav basketCount={20} favouriteCount={20} notifications={notifications}/>
-      
-      <ScrollToTopButton />
+      <AucNetNav
+        basketCount={20}
+        favouriteCount={20}
+        notifications={notifications}
+        customClass={
+          location.pathname === "/"
+            ? "hidden"
+            : ""
+        }
+      />
+
+      <ScrollToTopButton 
+        customClass={
+          location.pathname === "/"
+            ? "hidden"
+            : ""
+        }/>
 
       <div
         className={`w-screen min-h-screen flex flex-col justify-center items-center ${
-          location.pathname === "/home" || location.pathname === "/details"  || location.pathname === "/basket"|| location.pathname === "/favourites" || location.pathname === "/notifications"
+          location.pathname === "/home" ||
+          location.pathname === "/details" ||
+          location.pathname === "/basket" ||
+          location.pathname === "/favourites" ||
+          location.pathname === "/notifications"
             ? "hidden"
             : "bg-gradient-to-br from-yellow-200 via-yellow-200 to-amber-300"
         }`}
@@ -120,7 +155,7 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
       </div>
       <Routes>
         {/* Route to the Home component when "/home" is visited */}
-        <Route path="/home" element={<Home />}/>
+        <Route path="/home" element={<Home />} />
         <Route path="/details" element={<Detail />} />
         <Route path="/basket" element={<Basket />} />
         <Route path="/favourites" element={<Favourites />} />

@@ -20,7 +20,7 @@ import {
   IoCheckmarkCircle,
   IoCheckmarkCircleOutline,
 } from "react-icons/io5";
-import Popup from "../../components/AucNetComponents/PopUp";
+import Popup from "../../components/AucNetComponents/Popup";
 import { GoDotFill } from "react-icons/go";
 
 const DetailsPage = () => {
@@ -90,16 +90,15 @@ const DetailsPage = () => {
 
   const openAISPopup = () => setIsAISPopupOpen(true);
   const closeAISPopup = () => setIsAISPopupOpen(false);
-  
+
   const cards = location.state?.cards || [];
-  console.log(cards)
-  
+  console.log(cards);
+
   return (
     <>
       <div className="flex flex-col gap-6 w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-28 bg-slate-50">
         <div className="flex items-center gap-1 font-medium">
-          <Link to="/home"
-            state={{ cards }} className="text-gray-500">
+          <Link to="/home" state={{ cards }} className="text-gray-500">
             Car Sale /
           </Link>
           <p className="text-blue-950 font-semibold">
@@ -865,15 +864,23 @@ const DetailsPage = () => {
         <div className="recommendations pb-8">
           <h1 className="text-3xl pb-4 font-bold">Recommended for you</h1>
           <div className="flex flex-col md:flex-row gap-4">
-            {(() => {
-              const items = [];
-              for (let i = 0; i < 3; i++) {
-                items.push(
-                  <AucNetCard key={i} customClass={``} carData={cardData} />
-                );
-              }
-              return items;
-            })()}
+            {[...cards]
+              .sort(() => 0.5 - Math.random())
+              .slice(0, 3)
+              .map((cardData: any, index: number) => (
+                <AucNetCard
+                  key={index}
+                  customClass={`opacity-0 delay-${
+                    index === 0 ? 0 : index === 1 ? 100 : 200
+                  }`}
+                  style={{
+                    animationDelay: `${index === 0 ? "0s" : `${index * 0.1}s`}`,
+                    animationFillMode: "forwards",
+                  }}
+                  carData={cardData}
+                  showStatus={cardData.isBasket ? true : false}
+                />
+              ))}
           </div>
         </div>
       </div>
