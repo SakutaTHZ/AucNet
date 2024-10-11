@@ -4,6 +4,7 @@ import AucNetCard from "../../components/AucNetComponents/AucNetCard";
 import { FaListUl } from "react-icons/fa6";
 import { MdBorderAll } from "react-icons/md";
 import { useState } from "react";
+import { IoHeartOutline } from "react-icons/io5";
 
 const FavouritePage = () => {
   const [isTableView, setIsTableView] = useState(false);
@@ -12,15 +13,17 @@ const FavouritePage = () => {
 
   const cards = location.state?.cards || [];
 
-  const  favouriteCards = cards.filter((card:any) => card.isFavourite === true);
+  const favouriteCards = cards.filter((card: any) => card.isFavourite === true);
 
-  console.log(favouriteCards)
+  console.log(favouriteCards);
 
   return (
     <div className="flex flex-col gap-6 w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-28 bg-slate-50">
       <div className="flex flex-col gap-8">
         <div className="w-full flex items-center justify-between">
-          <h1 className="text-3xl text-neutral-900 font-bold">Favourite Listings</h1>
+          <h1 className="text-3xl text-neutral-900 font-bold">
+            Favourite Listings
+          </h1>
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setIsTableView(false)}
@@ -47,7 +50,14 @@ const FavouritePage = () => {
       </div>
 
       {/* Cards Container */}
-      {isTableView ? (
+      {favouriteCards == 0 ? (
+        <div className="w-full h-96 flex flex-col md:flex-row gap-3 text-xl md:text-2xl items-center justify-start md:justify-center py-5">
+          <IoHeartOutline size={30} className="text-gray-400" />
+          <p className="text-center text-gray-400 font-semibold">
+            Your favourites list is empty—time to fill it with cars you love!
+          </p>
+        </div>
+      ) : isTableView ? (
         <div className="rightBox flex flex-col gap-3 w-full h-full">
           {favouriteCards.map((cardData: any, index: number) => (
             <AucNetRow

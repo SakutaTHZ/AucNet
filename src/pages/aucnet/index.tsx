@@ -8,7 +8,8 @@ import FilterOptionDropDown from "../../components/AucNetComponents/FilterOption
 import FilterClearDropDown from "../../components/AucNetComponents/FilterClearDropDown";
 import AucNetRow from "../../components/AucNetComponents/AucNetRow";
 import Pagination from "../../components/AucNetComponents/Pagination";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { FaCarTunnel } from "react-icons/fa6";
 
 interface Model {
   name: string;
@@ -158,11 +159,14 @@ const App: React.FC = () => {
     window.location.reload();
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 20;
+  const [currentPage, setCurrentPage] = useState(location.state?.page);
+  const totalPages = cards.length / 20;
+  const navigate = useNavigate();
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+
+    return navigate(`/home`, { state: { cards, page: page } });
   };
 
   return (
@@ -278,7 +282,11 @@ const App: React.FC = () => {
                   Filters
                 </button>
                 <p>
-                  Showing <b>1-20</b> of <b>{cards.length}</b> listings
+                  Showing{" "}
+                  <b>
+                    {20 * currentPage - 20}-{20 * currentPage}
+                  </b>{" "}
+                  of <b>{cards.length}</b> listings
                 </p>
               </div>
               <div className="w-full md:w-auto flex flex-col md:flex-row gap-2 items-center">
@@ -322,46 +330,58 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* Cards Container */}
-            {isTableView ? (
+            {totalPages == 0 ? (
+              <div className="w-full h-96 flex flex-col md:flex-row gap-2 md:gap-5 text-xl md:text-2xl items-center justify-start md:justify-center py-5">
+                <FaCarTunnel size={30} className="text-gray-400"/>
+                <p className="text-center text-gray-400 font-semibold">
+                  Looks like all the cars have zoomed off. Check back soon for
+                  new arrivals!
+                </p>
+              </div>
+            ) : isTableView ? (
               <div className="rightBox flex flex-col gap-3 w-full h-full">
-                {cards.map((cardData: any, index: number) => (
-                  <AucNetRow
-                    key={index}
-                    customClass={`opacity-0 delay-${
-                      index === 0 ? 0 : index === 1 ? 100 : 200
-                    }`}
-                    style={{
-                      animationDelay: `${
-                        index === 0 ? "0s" : `${index * 0.1}s`
-                      }`,
-                      animationFillMode: "forwards",
-                    }}
-                    carData={cardData}
-                    showStatus={cardData.isBasket ? true : false}
-                  />
-                ))}
+                {cards
+                  .slice(20 * currentPage - 20, 20 * currentPage)
+                  .map((cardData: any, index: number) => (
+                    <AucNetRow
+                      key={index}
+                      customClass={`opacity-0 delay-${
+                        index === 0 ? 0 : index === 1 ? 100 : 200
+                      }`}
+                      style={{
+                        animationDelay: `${
+                          index === 0 ? "0s" : `${index * 0.1}s`
+                        }`,
+                        animationFillMode: "forwards",
+                      }}
+                      carData={cardData}
+                      showStatus={cardData.isBasket ? true : false}
+                    />
+                  ))}
               </div>
             ) : (
               <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full h-full">
-                {cards.slice(0, 20).map((cardData: any, index: number) => (
-                  <AucNetCard
-                    key={index}
-                    customClass={`opacity-0 delay-${
-                      index === 0 ? 0 : index === 1 ? 100 : 200
-                    }`}
-                    style={{
-                      animationDelay: `${
-                        index === 0 ? "0s" : `${index * 0.1}s`
-                      }`,
-                      animationFillMode: "forwards",
-                    }}
-                    carData={cardData}
-                    showStatus={cardData.isBasket ? true : false}
-                  />
-                ))}
+                {cards
+                  .slice(20 * currentPage - 20, 20 * currentPage)
+                  .map((cardData: any, index: number) => (
+                    <AucNetCard
+                      key={index}
+                      customClass={`opacity-0 delay-${
+                        index === 0 ? 0 : index === 1 ? 100 : 200
+                      }`}
+                      style={{
+                        animationDelay: `${
+                          index === 0 ? "0s" : `${index * 0.1}s`
+                        }`,
+                        animationFillMode: "forwards",
+                      }}
+                      carData={cardData}
+                      showStatus={cardData.isBasket ? true : false}
+                    />
+                  ))}
               </div>
             )}
+
             <Pagination
               totalPages={totalPages}
               currentPage={currentPage}

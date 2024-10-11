@@ -84,7 +84,7 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
     return cardData;
   };
 
-  const cards = Array.from({ length: 200 }, generateCardData);
+  const cards = Array.from({ length: 0 }, generateCardData);
 
   const generateNotifications = () => {
     const refCar = generateCardData();
@@ -146,7 +146,7 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
             : "bg-gradient-to-br from-yellow-200 via-yellow-200 to-amber-300"
         }`}
       >
-        <Link to="/home" state={{ cards,page:1 }}>
+        <Link to="/home" state={{ cards,page:2}}>
           <h1 className="text-5xl font-bold flex items-center gap-5 drop-shadow-lg text-white cursor-pointer">
             <img src={logo} className="h-16" alt="Logo" />
             AucNet

@@ -117,7 +117,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <div className="flex items-center justify-center space-x-2 pb-8">
-      {renderPagination()}
+      {totalPages !=0 && renderPagination()}
     </div>
   );
 };
