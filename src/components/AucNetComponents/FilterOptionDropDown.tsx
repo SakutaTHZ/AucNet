@@ -13,6 +13,7 @@ interface FilterOptionDropDownProps {
   listData: ListDataItem[];
   customClass?: string;
   placeholder?: string;
+  onSelectionChange?:any;
 }
 
 const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
@@ -20,6 +21,7 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
   listData,
   customClass,
   placeholder = "Search here",
+  onSelectionChange
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
@@ -33,11 +35,17 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
 
   // Handle checkbox change
   const handleCheckboxChange = (item: ListDataItem) => {
-    setCheckedItems((prev) =>
-      prev.includes(item.name)
+    setCheckedItems((prev) => {
+      const newCheckedItems = prev.includes(item.name)
         ? prev.filter((checked) => checked !== item.name)
-        : [...prev, item.name]
-    );
+        : [...prev, item.name];
+  
+      // Call onSelectionChange prop with the new checked items
+      if (onSelectionChange) {
+        onSelectionChange(newCheckedItems);
+      }
+      return newCheckedItems;
+    });
   };
 
   // Remove item from checked list

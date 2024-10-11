@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MdBorderAll, MdTune } from "react-icons/md";
-import { FaListUl } from "react-icons/fa";
+import { FaListUl, FaSearch } from "react-icons/fa";
 import CustomDropdown from "../../components/AucNetComponents/DropDown";
 import AucNetCard from "../../components/AucNetComponents/AucNetCard";
 import RangeSlider from "../../components/AucNetComponents/RangeSlider";
@@ -10,20 +10,102 @@ import AucNetRow from "../../components/AucNetComponents/AucNetRow";
 import Pagination from "../../components/AucNetComponents/Pagination";
 import { useLocation } from "react-router-dom";
 
-const App: React.FC = () => {
+interface Model {
+  name: string;
+  count: number;
+}
 
+interface MakeBrand {
+  name: string;
+  count: number;
+  models: Model[];
+}
+
+const App: React.FC = () => {
   // Toggle view
   const [isTableView, setIsTableView] = useState(false);
   const [isFilterOn, setIsFilterOn] = useState(false);
 
+  const [selectedMakes, setSelectedMakes] = useState<string[]>([]);
+  const [filteredModels, setFilteredModels] = useState<Model[]>([]);
+
+  const makeBrandData: MakeBrand[] = [
+    {
+      name: "Toyota",
+      count: 997,
+      models: [
+        { name: "Corolla", count: 52 },
+        { name: "Camry", count: 59 },
+        { name: "Prius", count: 726 },
+        { name: "Hilux", count: 55 },
+        { name: "Land Cruiser", count: 105 },
+      ],
+    },
+    {
+      name: "Nissan",
+      count: 440,
+      models: [
+        { name: "Altima", count: 40 },
+        { name: "Leaf", count: 58 },
+        { name: "X-Trail", count: 179 },
+        { name: "Skyline", count: 52 },
+        { name: "March", count: 111 },
+      ],
+    },
+    {
+      name: "Honda",
+      count: 398,
+      models: [
+        { name: "Civic", count: 120 },
+        { name: "Accord", count: 75 },
+        { name: "CR-V", count: 98 },
+        { name: "Fit", count: 45 },
+        { name: "Odyssey", count: 60 },
+      ],
+    },
+    {
+      name: "Mazda",
+      count: 250,
+      models: [
+        { name: "Mazda3", count: 40 },
+        { name: "CX-5", count: 80 },
+        { name: "MX-5", count: 25 },
+        { name: "Mazda6", count: 45 },
+        { name: "CX-30", count: 60 },
+      ],
+    },
+    {
+      name: "Ford",
+      count: 210,
+      models: [
+        { name: "Fiesta", count: 35 },
+        { name: "Focus", count: 60 },
+        { name: "Mustang", count: 25 },
+        { name: "Escape", count: 40 },
+        { name: "Explorer", count: 50 },
+      ],
+    },
+  ];
+
+  const handleMakeSelection = (selectedOptions: string[]) => {
+    setSelectedMakes(selectedOptions);
+
+    const models = makeBrandData
+      .filter((make) => selectedOptions.includes(make.name))
+      .flatMap((make) => make.models);
+
+    console.log("Filtered Models: ", models);
+    setFilteredModels(models);
+  };
+
   const toggleFilter = () => {
     setIsFilterOn(!isFilterOn);
   };
-  
+
   const location = useLocation();
-  
+
   const cards = location.state?.cards || [];
-  
+
   const options = [
     "Most relevant",
     "Date latest to oldest",
@@ -32,29 +114,6 @@ const App: React.FC = () => {
     "Price high to low",
     "Mileage low to high",
     "Mileage high to low",
-  ];
-
-  const makeBrandData = [
-    { name: "Acura", count: 14 },
-    { name: "Alfa Romeo", count: 53 },
-    { name: "Aston Martin", count: 74 },
-    { name: "Audi", count: 23 },
-    { name: "Bentley", count: 34 },
-    { name: "BMW", count: 43 },
-  ];
-
-  const modelData = [
-    { name: "Skyline", count: 14 },
-    { name: "Marcede", count: 53 },
-    { name: "Nissan", count: 74 },
-    { name: "Toyota", count: 23 },
-    { name: "Mitsubis", count: 34 },
-    { name: "VolksWagon", count: 43 },
-    { name: "Honda", count: 54 },
-    { name: "Audi", count: 66 },
-    { name: "Lexus", count: 12 },
-    { name: "Mazda", count: 31 },
-    { name: "Others", count: 812 },
   ];
 
   const fuelType = [
@@ -108,7 +167,6 @@ const App: React.FC = () => {
 
   return (
     <>
-
       <div className="w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-28 bg-slate-50">
         <div className="flex flex-col gap-8">
           <div className="w-full flex items-center justify-between">
@@ -122,7 +180,7 @@ const App: React.FC = () => {
           {/* Left Sticky Box */}
           {isFilterOn && (
             <div
-              className="leftBox mr-6 animate-slideUp transition-all inset-0 md:sticky top-24 w-full md:w-64 flex flex-col rounded-md shadow-lg h-fit z-40"
+              className="leftBox mr-6 overflow-hidden animate-slideUp transition-all inset-0 md:sticky top-24 w-full md:w-64 flex flex-col rounded-md shadow-lg h-fit z-40"
               style={{ animationFillMode: "forwards" }}
             >
               <div className="bg-slate-50 w-full flex gap-1 justify-between items-center py-2.5 px-4 border-b border-b-gray-200">
@@ -136,16 +194,27 @@ const App: React.FC = () => {
               </div>
               <FilterOptionDropDown
                 boxName="Make/Brand"
-                listData={makeBrandData}
+                listData={makeBrandData.map((make) => ({
+                  name: make.name,
+                  count: make.count,
+                }))}
                 customClass={"bg-slate-50 makeBrand border-b border-b-gray-200"}
                 placeholder={"Search Make/Brand"}
+                onSelectionChange={handleMakeSelection}
               />
-              <FilterOptionDropDown
-                boxName="Model"
-                listData={modelData}
-                customClass={"bg-slate-50 model border-b border-b-gray-200"}
-                placeholder={"Search Model"}
-              />
+              {filteredModels.length > 0 && (
+                <FilterOptionDropDown
+                  boxName="Model"
+                  listData={filteredModels.map((model) => ({
+                    name: model.name || "Unknown",
+                    count: model.count || 0,
+                  }))}
+                  customClass={
+                    "animate-slideRight bg-slate-50 model border-b border-b-gray-200"
+                  }
+                  placeholder={"Search Model"}
+                />
+              )}
               <RangeSlider
                 min={1900}
                 max={2025}
@@ -212,33 +281,43 @@ const App: React.FC = () => {
                   Showing <b>1-20</b> of <b>{cards.length}</b> listings
                 </p>
               </div>
-              <div className="flex gap-2 items-center">
-                <CustomDropdown
-                  options={options}
-                  customClass="my-custom-class"
-                  optionClass="my-option-class"
-                />
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => setIsTableView(false)}
-                    className={`flex items-center p-2 rounded-md transition ${
-                      !isTableView
-                        ? "bg-amber-200 border border-yellow-400"
-                        : "hover:bg-amber-100"
-                    }`}
-                  >
-                    <MdBorderAll size={18} />
-                  </button>
-                  <button
-                    onClick={() => setIsTableView(true)}
-                    className={`flex items-center p-2 rounded-md transition ${
-                      isTableView
-                        ? "bg-amber-200 border border-yellow-400"
-                        : "hover:bg-amber-100"
-                    }`}
-                  >
-                    <FaListUl size={16} />
-                  </button>
+              <div className="w-full md:w-auto flex flex-col md:flex-row gap-2 items-center">
+                <div className="relative w-full md:w-auto border rounded-md">
+                  <input
+                    type="text"
+                    placeholder="Search by Make or Model"
+                    className="pl-10 pr-4 py-2 rounded-md w-full md:w-72 bg-white outline-none"
+                  />
+                  <FaSearch className="absolute left-3 top-3.5 text-gray-600" />
+                </div>
+                <div className="flex gap-2 items-center w-full">
+                  <CustomDropdown
+                    options={options}
+                    customClass="my-custom-class"
+                    optionClass="my-option-class"
+                  />
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={() => setIsTableView(false)}
+                      className={`flex items-center p-2 rounded-md transition ${
+                        !isTableView
+                          ? "bg-amber-200 border border-yellow-400"
+                          : "hover:bg-amber-100"
+                      }`}
+                    >
+                      <MdBorderAll size={18} />
+                    </button>
+                    <button
+                      onClick={() => setIsTableView(true)}
+                      className={`flex items-center p-2 rounded-md transition ${
+                        isTableView
+                          ? "bg-amber-200 border border-yellow-400"
+                          : "hover:bg-amber-100"
+                      }`}
+                    >
+                      <FaListUl size={16} />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -246,7 +325,7 @@ const App: React.FC = () => {
             {/* Cards Container */}
             {isTableView ? (
               <div className="rightBox flex flex-col gap-3 w-full h-full">
-                {cards.map((cardData:any, index:number) => (
+                {cards.map((cardData: any, index: number) => (
                   <AucNetRow
                     key={index}
                     customClass={`opacity-0 delay-${
@@ -259,15 +338,13 @@ const App: React.FC = () => {
                       animationFillMode: "forwards",
                     }}
                     carData={cardData}
-                    showStatus={cardData.isBasket?true:false}
+                    showStatus={cardData.isBasket ? true : false}
                   />
                 ))}
               </div>
             ) : (
               <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full h-full">
-                {cards
-              .slice(0, 20)
-              .map((cardData:any, index:number) => (
+                {cards.slice(0, 20).map((cardData: any, index: number) => (
                   <AucNetCard
                     key={index}
                     customClass={`opacity-0 delay-${
@@ -280,7 +357,7 @@ const App: React.FC = () => {
                       animationFillMode: "forwards",
                     }}
                     carData={cardData}
-                    showStatus={cardData.isBasket?true:false}
+                    showStatus={cardData.isBasket ? true : false}
                   />
                 ))}
               </div>

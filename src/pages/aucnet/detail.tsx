@@ -9,6 +9,8 @@ import {
   MdOutlineStar,
   MdOutlineStarBorder,
   MdOutlineStarHalf,
+  MdAirlineSeatReclineNormal,
+  MdOutlineStarOutline,
 } from "react-icons/md";
 import { TbEngine, TbRoad, TbHeart } from "react-icons/tb";
 import AucNetCard from "../../components/AucNetComponents/AucNetCard";
@@ -16,12 +18,24 @@ import AucNetCard from "../../components/AucNetComponents/AucNetCard";
 import CarStatusBox from "../../components/AucNetComponents/CarStatusBox";
 import StatusBullet from "../../components/AucNetComponents/StatusBullet";
 import {
-  IoCalendarClearOutline,
+  IoCarOutline,
   IoCheckmarkCircle,
   IoCheckmarkCircleOutline,
 } from "react-icons/io5";
 import Popup from "../../components/AucNetComponents/Popup";
 import { GoDotFill } from "react-icons/go";
+import {
+  PiCalendarDots,
+  PiCarProfile,
+  PiCarProfileFill,
+  PiGasCan,
+  PiGearFine,
+  PiRoadHorizon,
+} from "react-icons/pi";
+import enginepower from "../../assets/EnginePower.svg";
+import vin from "../../assets/vin.svg";
+import { GiCarWheel, GiGearStickPattern } from "react-icons/gi";
+import { GrLocation } from "react-icons/gr";
 
 const DetailsPage = () => {
   const location = useLocation();
@@ -249,107 +263,138 @@ const DetailsPage = () => {
             >
               <h2 className="text-2xl font-bold">Overview</h2>
               <div className="carData flex flex-wrap gap-y-4 py-4">
-                <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline
+                <div
+                  className="flex items-center gap-2 py-1 w-1/2"
+                  title="Exterior"
+                >
+                  <PiCarProfile
                     size={20}
-                    className="shrink-0 mt-2 md:mt-0"
+                    className="shrink-0 mt-0 transform scale-x-[-1]"
                   />
                   <p>
-                    Exterior: <span>Beige Color</span>
+                    <span>Beige Color</span>
                   </p>
                 </div>
-                <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline
+                <div
+                  className="flex items-center gap-2 py-1 w-1/2"
+                  title="Interior"
+                >
+                  <PiCarProfileFill
                     size={20}
-                    className="shrink-0 mt-2 md:mt-0"
+                    className="shrink-0 mt-0 transform scale-x-[-1]"
                   />
                   <p>
-                    Interior: <span>Midnight Black</span>
+                    <span>Midnight Black</span>
                   </p>
                 </div>
-                <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline
-                    size={20}
-                    className="shrink-0 mt-2 md:mt-0"
-                  />
+
+                <div className="flex items-center gap-2 py-1 w-1/2" title="Vin">
+                  <img src={vin} alt="Vin" />
                   <p>
-                    Registration year: <span>2021</span>
+                    <span>2GNWO32TE0928372</span>
                   </p>
                 </div>
-                <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline
-                    size={20}
-                    className="shrink-0 mt-2 md:mt-0"
-                  />
+                <div
+                  className="flex items-center gap-2 py-1 w-1/2"
+                  title="Car Model"
+                >
+                  <IoCarOutline size={20} className="shrink-0 mt-0" />
                   <p>
-                    Vin: <span>2GNWO32TE0928372</span>
+                    <span>{cardData.engineType}</span>
                   </p>
                 </div>
-                <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline
-                    size={20}
-                    className="shrink-0 mt-2 md:mt-0"
-                  />
+                <div
+                  className="flex items-center gap-2 py-1 w-1/2"
+                  title="Engine Power"
+                >
+                  <img src={enginepower} alt="Engine Power" />
                   <p>
-                    <span>233</span> km
+                    <span>{cardData.enginePower.toLocaleString()}</span> cc
                   </p>
                 </div>
-                <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline
-                    size={20}
-                    className="shrink-0 mt-2 md:mt-0"
-                  />
+                <div
+                  className="flex items-center gap-2 py-1 w-1/2"
+                  title="Registration Year"
+                >
+                  <PiCalendarDots size={20} className="shrink-0 mt-0" />
                   <p>
-                    <span>Hatchback</span>
+                    <span>2021</span>
                   </p>
                 </div>
-                <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline
-                    size={20}
-                    className="shrink-0 mt-2 md:mt-0"
-                  />
+                <div
+                  className="flex items-center gap-2 py-1 w-1/2"
+                  title="Fuel Type"
+                >
+                  <PiGasCan size={20} className="shrink-0 mt-0" />
                   <p>
-                    Fuel type: <span>Petrol</span>
+                    <span>Petrol</span>
                   </p>
                 </div>
-                <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline
-                    size={20}
-                    className="shrink-0 mt-2 md:mt-0"
-                  />
+                <div
+                  className="flex items-center gap-2 py-1 w-1/2"
+                  title="Mileage"
+                >
+                  <PiRoadHorizon size={20} className="shrink-0 mt-0" />
+                  <p>
+                    <span>{cardData.mileage}</span> km
+                  </p>
+                </div>
+                <div
+                  className="flex items-center gap-2 py-1 w-1/2"
+                  title="Transmission"
+                >
+                  <GiGearStickPattern size={20} className="shrink-0 mt-0" />
                   <p>Automatic transmission</p>
                 </div>
-                <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline
-                    size={20}
-                    className="shrink-0 mt-2 md:mt-0"
-                  />
-                  <p>
-                    <span>2,340</span> cc
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline
-                    size={20}
-                    className="shrink-0 mt-2 md:mt-0"
-                  />
+                <div
+                  className="flex items-center gap-2 py-1 w-1/2"
+                  title="Wheel Type"
+                >
+                  <GiCarWheel size={20} className="shrink-0 mt-0" />
                   <p>
                     <span>Front wheel drive</span>
                   </p>
                 </div>
-                <div className="flex items-center gap-2 py-1 w-1/2">
-                  <IoCalendarClearOutline
-                    size={20}
-                    className="shrink-0 mt-2 md:mt-0"
-                  />
+                <div
+                  className="flex items-center gap-2 py-1 w-1/2"
+                  title="Location"
+                >
+                  <GrLocation size={20} className="shrink-0 mt-0" />
                   <p>
                     <span>Osaka, Japan</span>
+                  </p>
+                </div>
+                <div
+                  className="flex items-center gap-2 py-1 w-1/2"
+                  title="Seat"
+                >
+                  <MdAirlineSeatReclineNormal size={20} className="shrink-0 mt-0" />
+                  <p>
+                    <span>5</span> seats
+                  </p>
+                </div>
+                <div
+                  className="flex items-center gap-2 py-1 w-1/2"
+                  title="Rating"
+                >
+                  <MdOutlineStarOutline size={20} className="shrink-0 mt-0" />
+                  <p>
+                    <span>5</span> Stars
+                  </p>
+                </div>
+                <div
+                  className="flex items-center gap-2 py-1 w-1/2"
+                  title="Parts"
+                >
+                  <PiGearFine size={20} className="shrink-0 mt-0" />
+                  <p>
+                    <span>AC, PAS, PW, ABS, AB, R Key, 5-seater </span>
                   </p>
                 </div>
               </div>
               <button
                 onClick={openPopup}
-                className="bg-gray-200 px-4 py-1 rounded-md font-semibold"
+                className="bg-gray-200 px-4 py-1 rounded-md font-semibold hidden"
               >
                 View all details
               </button>

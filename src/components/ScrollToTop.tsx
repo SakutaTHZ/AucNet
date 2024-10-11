@@ -1,15 +1,23 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
 interface ScrollToTopButtonProps {
-    customClass?:string;
-  }
-  const ScrollToTopButton : React.FC<ScrollToTopButtonProps> = ({
-    customClass,
-  }) => {
+    customClass?: string;
+}
+
+const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ customClass }) => {
+    const location = useLocation();
+
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
             behavior: 'smooth',
         });
     };
+
+    useEffect(() => {
+        scrollToTop();
+    }, [location.pathname, location.search]);
 
     return (
         <button

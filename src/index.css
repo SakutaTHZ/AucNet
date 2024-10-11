@@ -136,6 +136,10 @@ body {
     display:none;
   }
 }
+.comment:last-of-type{
+  border:0;
+}
+
 /* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
