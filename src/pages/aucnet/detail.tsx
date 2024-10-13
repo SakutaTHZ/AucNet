@@ -36,6 +36,7 @@ import enginepower from "../../assets/EnginePower.svg";
 import vin from "../../assets/vin.svg";
 import { GiCarWheel, GiGearStickPattern } from "react-icons/gi";
 import { GrLocation } from "react-icons/gr";
+import PopUpMessage from "../../components/AucNetComponents/PopUpMessage";
 
 const DetailsPage = () => {
   const location = useLocation();
@@ -108,11 +109,20 @@ const DetailsPage = () => {
   const cards = location.state?.cards || [];
   console.log(cards);
 
+  const [isFavorite, setIsFavorite] = useState<boolean>(cardData.isFavourite);
+  const [showPopUp, setShowPopUp] = useState<boolean>(false);
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+    setShowPopUp(true);
+  };
+
   return (
     <>
+      {showPopUp && <PopUpMessage />}
       <div className="flex flex-col gap-6 w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-28 bg-slate-50">
         <div className="flex items-center gap-1 font-medium">
-          <Link to="/home" state={{ cards ,page:1}} className="text-gray-500">
+          <Link to="/home" state={{ cards, page: 1 }} className="text-gray-500">
             Car Sale /
           </Link>
           <p className="text-blue-950 font-semibold">
@@ -144,7 +154,12 @@ const DetailsPage = () => {
               </div>
             </div>
             <div className="flex item-center gap-2">
-              <button className="flex items-center gap-1 px-4 font-semibold hover:text-white bg-gray-200 hover:bg-red-400 py-1 rounded-md transition-all duration-500">
+              <button
+                onClick={toggleFavorite}
+                className={`flex items-center gap-1 px-4 font-semibold hover:text-white bg-gray-200 hover:bg-red-400 py-1 rounded-md transition-all duration-500 ${
+                  isFavorite ? "bg-red-400 shadow-md text-white" : "text-white"
+                }`}
+              >
                 <TbHeart size={20} />
                 Save
               </button>
@@ -368,7 +383,10 @@ const DetailsPage = () => {
                   className="flex items-center gap-2 py-1 w-1/2"
                   title="Seat"
                 >
-                  <MdAirlineSeatReclineNormal size={20} className="shrink-0 mt-0" />
+                  <MdAirlineSeatReclineNormal
+                    size={20}
+                    className="shrink-0 mt-0"
+                  />
                   <p>
                     <span>5</span> seats
                   </p>
