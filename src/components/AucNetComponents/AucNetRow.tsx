@@ -7,6 +7,7 @@ import {
 import { TbEngine, TbRoad } from "react-icons/tb";
 import { useLocation, useNavigate } from "react-router-dom";
 import StatusBullet from "./StatusBullet";
+import PopUpMessage from "./PopUpMessage";
 
 interface AucNetRowProps {
   customClass?: string;
@@ -29,28 +30,29 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
   const location = useLocation();
   
   const cards = location.state?.cards || [];
+  const [showPopUp, setShowPopUp] = useState<boolean>(false);
 
   const handleCardClick = (cardData: any) => {
     navigate("/details", { state: { card: cardData ,cards: cards} });
   };
 
   const toggleFavorite = () => {
-    setIsFavorite(!isFavorite); // Toggle favorite status
+    setIsFavorite(!isFavorite);
+    setShowPopUp(true);
   };
 
   return (
     <>
+      {showPopUp && <PopUpMessage />}
       {/* Mobile Version (shown on small screens) */}
       <div
         className={`md:hidden card animate-slideLeft transition-all flex flex-col w-full hover:bg-slate-100 cursor-pointer border border-slate-100 h-fit p-0 rounded-xl overflow-hidden shadow-md hover:shadow-lg ${customClass}`}
         style={style}
       >
         <div className="flex h-full  border-b border-gray-200">
-          {/* Image Box */}
-          <div className="imageBox relative w-3/4 overflow-hidden flex items-center">
             <button
               onClick={toggleFavorite}
-              className={`bg-gray-900 bg-opacity-20 p-1.5 rounded-full absolute top-2 left-2 backdrop-blur-sm transition-all ${
+              className={`bg-gray-900 bg-opacity-20 p-1.5 rounded-full absolute top-2 right-2 backdrop-blur-sm transition-all ${
                 isFavorite ? "bg-red-500" : "text-white"
               }`}
             >
@@ -59,6 +61,8 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
                 className={isFavorite ? "text-red-500" : "text-white"}
               />
             </button>
+          {/* Image Box */}
+          <div className="imageBox relative w-3/4 overflow-hidden flex items-center">
             <StatusBullet
               customClass={`absolute top-1 left-1 text-xs rounded-xl font-semibold ${
                 showStatus ? "block" : "hidden"

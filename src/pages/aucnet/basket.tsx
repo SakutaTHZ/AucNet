@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaListUl } from "react-icons/fa";
-import { MdBorderAll } from "react-icons/md";
+import { MdBorderAll, MdOutlineShoppingCart } from "react-icons/md";
 import AucNetRow from "../../components/AucNetComponents/AucNetRow";
 import AucNetCard from "../../components/AucNetComponents/AucNetCard";
 import { useLocation } from "react-router-dom";
@@ -156,7 +156,14 @@ const MyBasket: React.FC = () => {
         </button>
       </div>
 
-      {isTableView ? (
+      {filteredCards.length == 0 ? (
+              <div className="w-full h-96 flex flex-col md:flex-row gap-2 md:gap-5 text-xl md:text-2xl items-center justify-start md:justify-center py-5">
+                <MdOutlineShoppingCart size={30} className="text-gray-400" />
+                <p className="text-center text-gray-400 font-semibold">
+                Nothing in your basket yet... let’s find some cars to fill it up!
+                </p>
+              </div>
+            ) : isTableView ? (
         <div className="rightBox flex flex-col gap-3 w-full h-full">
           {filteredCards.map((cardData:any, index:number) => (
             <AucNetRow key={index} carData={cardData} showStatus={true} />

@@ -3,7 +3,7 @@ import {
   MdOutlineShoppingCart,
   MdFavoriteBorder,
 } from "react-icons/md";
-import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
+import {  FaBars, FaTimes } from "react-icons/fa";
 import cosmoLogo from "../../assets/CosmoLogo.svg";
 import JapanFlag from "../../assets/JapanFlag.svg";
 import ProfileDropDown from "./ProfileDropDown";
@@ -79,7 +79,7 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
         <div className="navLinks w-full py-2 flex flex-col gap-4 flex-start md:flex-row items-center md:justify-start">
           <Link
             to="/home"
-            state={{ cards }}
+            state={{ cards ,page:1}}
             className="flex w-full md:w-auto md:h-full justify-center items-center font-bold text-yellow-600 border-b-4 border-b-yellow-600"
           >
             Car Stock
@@ -88,7 +88,7 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
           {isAdmin && (
             <Link
               to="/home"
-              state={{ cards }}
+              state={{ cards ,page:1}}
               className="flex w-full md:w-auto md:h-full justify-center items-center font-bold"
             >
               Flow

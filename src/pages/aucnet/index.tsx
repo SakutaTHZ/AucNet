@@ -160,7 +160,7 @@ const App: React.FC = () => {
   };
 
   const [currentPage, setCurrentPage] = useState(location.state?.page);
-  const totalPages = cards.length / 20;
+  const totalPages = Math.round(cards.length / 20);
   const navigate = useNavigate();
 
   const handlePageChange = (page: number) => {
@@ -282,11 +282,15 @@ const App: React.FC = () => {
                   Filters
                 </button>
                 <p>
-                  Showing{" "}
-                  <b>
-                    {20 * currentPage - 20}-{20 * currentPage}
-                  </b>{" "}
-                  of <b>{cards.length}</b> listings
+                  {cards.length != 0 && (
+                    <>
+                      Showing{" "}
+                      <b>
+                        {20 * currentPage - 20}-{20 * currentPage}
+                      </b>{" "}
+                      of <b>{cards.length}</b> listings
+                    </>
+                  )}
                 </p>
               </div>
               <div className="w-full md:w-auto flex flex-col md:flex-row gap-2 items-center">
@@ -330,9 +334,9 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {totalPages == 0 ? (
+            {cards.length == 0 ? (
               <div className="w-full h-96 flex flex-col md:flex-row gap-2 md:gap-5 text-xl md:text-2xl items-center justify-start md:justify-center py-5">
-                <FaCarTunnel size={30} className="text-gray-400"/>
+                <FaCarTunnel size={30} className="text-gray-400" />
                 <p className="text-center text-gray-400 font-semibold">
                   Looks like all the cars have zoomed off. Check back soon for
                   new arrivals!

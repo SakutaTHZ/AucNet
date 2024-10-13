@@ -106,7 +106,7 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications,
                 </div>
               ))
             ) : (
-              <p>No unread notifications</p>
+              <p className="text-gray-500">No notifications yet, but we’ll beep when something exciting happens!</p>
             )}
           </div>
         </div>

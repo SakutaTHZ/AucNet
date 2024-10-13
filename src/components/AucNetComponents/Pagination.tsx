@@ -68,7 +68,7 @@ const Pagination: React.FC<PaginationProps> = ({
           }`}
           onClick={() => handlePageChange(i)}
         >
-          {i}
+          {Math.floor(i)}
         </button>
       );
     }
@@ -107,7 +107,7 @@ const Pagination: React.FC<PaginationProps> = ({
           onChange={handleInputChange}
           onKeyDown={handleInputSubmit}
           placeholder="Go to page"
-          className="border rounded-md p-1 w-20 text-center mx-3"
+          className="bg-white border rounded-md p-1 min-w-28 text-center mx-3"
         />
       );
     }

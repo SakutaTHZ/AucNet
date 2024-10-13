@@ -50,7 +50,7 @@ const FavouritePage = () => {
       </div>
 
       {/* Cards Container */}
-      {favouriteCards == 0 ? (
+      {favouriteCards.length == 0 ? (
         <div className="w-full h-96 flex flex-col md:flex-row gap-3 text-xl md:text-2xl items-center justify-start md:justify-center py-5">
           <IoHeartOutline size={30} className="text-gray-400" />
           <p className="text-center text-gray-400 font-semibold">
