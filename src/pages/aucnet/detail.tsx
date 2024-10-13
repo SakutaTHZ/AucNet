@@ -161,7 +161,7 @@ const DetailsPage = () => {
                 }`}
               >
                 <TbHeart size={20} />
-                Save
+                {isFavorite ? 'Saved': 'Save'}
               </button>
               <button className="flex items-center gap-1 px-4 font-semibold hover:bg-gray-200 py-1 rounded-md  transition-all duration-500">
                 <MdOutlineShare size={20} />

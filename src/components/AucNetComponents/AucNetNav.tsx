@@ -54,6 +54,8 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
     return navigate(`/${location}`, { state: { cards } });
   };
 
+  const activeNavClass = "text-yellow-600 bg-amber-100 md:bg-transparent md:border-b-4 md:border-b-yellow-600"
+
   return (
     <nav className={`flex bg-white justify-between gap-4 align-middle fixed w-screen top-0 left-0 shadow-sm px-8 md:px-16 lg:px-32 py-0 z-50 ${customClass}`}>
       <img
@@ -80,16 +82,16 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
           <Link
             to="/home"
             state={{ cards ,page:1}}
-            className="flex w-full md:w-auto md:h-full justify-center items-center font-bold text-yellow-600 border-b-4 border-b-yellow-600"
+            className={`flex px-2 w-full md:w-auto md:h-full justify-center items-center font-bold rounded-md md:rounded-none ${!isAdmin && activeNavClass}`}
           >
             Car Stock
           </Link>
 
           {isAdmin && (
             <Link
-              to="/home"
+              to="/admin"
               state={{ cards ,page:1}}
-              className="flex w-full md:w-auto md:h-full justify-center items-center font-bold"
+              className={`flex px-2 w-full md:w-auto md:h-full justify-center items-center font-bold rounded-md md:rounded-none ${isAdmin && activeNavClass}`}
             >
               Flow
             </Link>
@@ -100,7 +102,7 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
           <div className="flex mt-4 md:mt-0 gap-8 w-full md:w-auto justify-between">
             <div className="flex gap-4 px-4">
               <button
-                className="relative"
+                className="relative hover:text-yellow-600"
                 onClick={() =>
                   onClick ? onClick() : handleButtonClick("basket")
                 }
@@ -113,7 +115,7 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
                 )}
               </button>
               <button
-                className="relative"
+                className="relative hover:text-yellow-600"
                 onClick={() =>
                   onClick ? onClick() : handleButtonClick("favourites")
                 }

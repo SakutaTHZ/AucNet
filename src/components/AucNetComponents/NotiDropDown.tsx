@@ -39,7 +39,7 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications,
     <div className="relative flex justify-center">
       {/* Profile and Chevron */}
 
-      <button className="relative" onClick={toggleDropdown}>
+      <button className="relative hover:text-yellow-600" onClick={toggleDropdown}>
         <MdOutlineNotifications size={24} />
         {notifications.length != 0 && (
           <span className="absolute bottom-5 bg-red-600 text-white rounded-full px-1 text-xs">

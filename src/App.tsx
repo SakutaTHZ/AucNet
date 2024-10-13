@@ -15,6 +15,7 @@ import Favourites from "./pages/aucnet/favourites";
 import AucNetNav from "./components/AucNetComponents/AucNetNav";
 import ScrollToTopButton from "./components/ScrollToTop";
 import Notifications from "./pages/aucnet/notifications";
+import Admin from "./pages/aucnet/admin";
 
 const App: React.FC = () => {
   const location = useLocation(); // Get the current location
@@ -126,6 +127,7 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
             ? "hidden"
             : ""
         }
+        isAdmin={location.pathname === "/admin"}
       />
 
       <ScrollToTopButton 
@@ -141,7 +143,8 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
           location.pathname === "/details" ||
           location.pathname === "/basket" ||
           location.pathname === "/favourites" ||
-          location.pathname === "/notifications"
+          location.pathname === "/notifications" ||
+          location.pathname === "/admin"
             ? "hidden"
             : "bg-gradient-to-br from-yellow-200 via-yellow-200 to-amber-300"
         }`}
@@ -160,6 +163,7 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
         <Route path="/basket" element={<Basket />} />
         <Route path="/favourites" element={<Favourites />} />
         <Route path="/notifications" element={<Notifications />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </>
   );
