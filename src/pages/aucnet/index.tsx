@@ -307,6 +307,8 @@ const App: React.FC = () => {
                     options={options}
                     customClass="my-custom-class"
                     optionClass="my-option-class"
+                    optionBoxClass="md:w-fit right-0"
+                    buttonClass="py-2"
                   />
                   <div className="flex items-center space-x-2">
                     <button
