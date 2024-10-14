@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SearchBox from "../../components/AucNetComponents/SearchBox";
 import SuperStatusBullet from "../../components/AucNetComponents/AdminComponents/SuperStatusBullet";
+import DropDown from "../../components/AucNetComponents/DropDown";
 
 const adminPage: React.FC = () => {
   const [activeBullet, setActiveBullet] = useState<string>('All');
@@ -8,6 +9,8 @@ const adminPage: React.FC = () => {
   const handleBulletClick = (bulletTitle: string) => {
     setActiveBullet(bulletTitle);
   };
+
+  const status: string[]=[]
 
   return (
     <div className="w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-24 bg-slate-50">
@@ -33,6 +36,13 @@ const adminPage: React.FC = () => {
           customClass="border border-gray-200 h-10 bg-white w-96"
           placeholder="Free Text Filter"
         />
+      </div>
+
+      <div className="flex gap-2">
+        <div className="flex flex-col gap-1">
+          <p className="font-semibold">Status</p>
+          <DropDown options={status}/>
+        </div>
       </div>
     </div>
   );

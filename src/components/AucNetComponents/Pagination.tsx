@@ -15,6 +15,14 @@ const Pagination: React.FC<PaginationProps> = ({
 
   const handlePageChange = (page: number) => {
     onPageChange(page);
+    scrollToTop();
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +36,7 @@ const Pagination: React.FC<PaginationProps> = ({
       if (page >= 1 && page <= totalPages) {
         onPageChange(page);
       }
+      scrollToTop();
     }
   };
 
@@ -50,7 +59,11 @@ const Pagination: React.FC<PaginationProps> = ({
     // Show ellipsis if needed
     if (totalPages > 5) {
       if (currentPage > 3) {
-        paginationItems.push(<span key="ellipsis-start" className="px-3">...</span>);
+        paginationItems.push(
+          <span key="ellipsis-start" className="px-3">
+            ...
+          </span>
+        );
       }
     }
 
@@ -76,7 +89,11 @@ const Pagination: React.FC<PaginationProps> = ({
     // Show ellipsis if needed
     if (totalPages > 5) {
       if (currentPage < totalPages - 2) {
-        paginationItems.push(<span key="ellipsis-end" className="px-3">...</span>);
+        paginationItems.push(
+          <span key="ellipsis-end" className="px-3">
+            ...
+          </span>
+        );
       }
     }
 
@@ -117,7 +134,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <div className="flex items-center justify-center space-x-2 pb-8">
-      {totalPages !=0 && renderPagination()}
+      {totalPages != 0 && renderPagination()}
     </div>
   );
 };
