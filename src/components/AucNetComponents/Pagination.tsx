@@ -77,7 +77,7 @@ const Pagination: React.FC<PaginationProps> = ({
         <button
           key={i}
           className={`px-3 py-1 border rounded-md hover:bg-gray-200 ${
-            i === currentPage ? "bg-gray-300" : ""
+            i === currentPage ? "bg-yellow-100 hover:bg-yellow-200 font-semibold border-yellow-500 text-yellow-600" : ""
           }`}
           onClick={() => handlePageChange(i)}
         >
@@ -103,7 +103,7 @@ const Pagination: React.FC<PaginationProps> = ({
         <button
           key={totalPages}
           className={`px-3 py-1 border rounded-md hover:bg-gray-200 ${
-            currentPage === totalPages ? "bg-gray-300" : ""
+            currentPage === totalPages ? "bg-yellow-100 hover:bg-yellow-200 font-semibold border-yellow-500 text-yellow-600" : ""
           }`}
           onClick={() => handlePageChange(totalPages)}
         >

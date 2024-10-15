@@ -1,9 +1,15 @@
-import React, { useState, CSSProperties } from 'react';
-import { MdFavoriteBorder, MdOutlineDirectionsCar, MdOutlineDateRange, MdFavorite } from 'react-icons/md';
-import { TbEngine, TbRoad } from 'react-icons/tb';
-import StatusBullet from './StatusBullet';
-import { useLocation, useNavigate } from 'react-router-dom';
-import PopUpMessage from './PopUpMessage';
+import React, { useState, CSSProperties } from "react";
+import {
+  MdFavoriteBorder,
+  MdOutlineDirectionsCar,
+  MdOutlineDateRange,
+  MdFavorite,
+} from "react-icons/md";
+import {TbRoad } from "react-icons/tb";
+import StatusBullet from "./StatusBullet";
+import { useLocation, useNavigate } from "react-router-dom";
+import PopUpMessage from "./PopUpMessage";
+import enginepower from "../../assets/EnginePower.svg";
 
 interface AucNetCardProps {
   customClass?: string;
@@ -13,13 +19,19 @@ interface AucNetCardProps {
   onClick?: () => void;
 }
 
-const AucNetCard: React.FC<AucNetCardProps> = ({ customClass, style, carData, showStatus = false, onClick }) => {
+const AucNetCard: React.FC<AucNetCardProps> = ({
+  customClass,
+  style,
+  carData,
+  showStatus = false,
+  onClick,
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const cards = location.state?.cards || [];
 
   const handleCardClick = (cardData: any) => {
-    navigate('/details', { state: { card: cardData, cards: cards } });
+    navigate("/details", { state: { card: cardData, cards: cards } });
   };
 
   const [isFavorite, setIsFavorite] = useState<boolean>(carData.isFavourite);
@@ -38,21 +50,23 @@ const AucNetCard: React.FC<AucNetCardProps> = ({ customClass, style, carData, sh
         className={`card animate-slideUp transition-all flex flex-col w-full hover:bg-slate-100 cursor-pointer border border-slate-100 h-fit p-0 rounded-xl overflow-hidden shadow-md hover:shadow-lg ${customClass}`}
         style={style}
       >
-        <div className="imageBox relative w-full flex items-start justify-center overflow-hidden h-56">
+        <div className="imageBox relative w-full flex items-start justify-center overflow-hidden h-64">
           <img
             src={carData.link}
-            className="w-full"
+            className="w-full -translate-y-3"
             alt="image"
             onClick={() => (onClick ? onClick() : handleCardClick(carData))}
           />
           <StatusBullet
-            customClass={`absolute top-1 left-1 text-xs rounded-xl font-semibold ${showStatus ? 'block' : 'hidden'}`}
+            customClass={`absolute top-1 left-1 text-xs rounded-xl font-semibold ${
+              showStatus ? "block" : "hidden"
+            }`}
             status={carData.status}
           />
           <button
             onClick={toggleFavorite}
             className={`bg-gray-900 bg-opacity-20 p-1.5 rounded-full absolute top-2 right-2 backdrop-blur-sm transition-all ${
-              isFavorite ? 'bg-red-500 shadow-md' : 'text-white'
+              isFavorite ? "bg-red-500 shadow-md" : "text-white"
             }`}
           >
             {isFavorite ? (
@@ -70,20 +84,23 @@ const AucNetCard: React.FC<AucNetCardProps> = ({ customClass, style, carData, sh
             <p className="text-lg font-medium">{carData.name}</p>
             <p className="text-base text-gray-600">{carData.engineType}</p>
           </div>
-          <div className="flex items-center text-2xl font-bold">¥{carData.price.toLocaleString()}</div>
+          <div className="flex items-center text-2xl font-bold">
+            ¥{carData.price.toLocaleString()}
+          </div>
         </div>
         <div className="flex flex-wrap p-3 gap-.5 box-border">
           <div className="flex items-center gap-1 w-1/2 text-gray-500 py-1">
-            <MdOutlineDirectionsCar size={20} /> {carData.type}
-          </div>
-          <div className="flex items-center gap-1 w-1/2 text-gray-500 py-1">
-            <TbEngine size={20} /> {carData.enginePower.toLocaleString()} cc
+            <MdOutlineDateRange size={20} /> {carData.year}
           </div>
           <div className="flex items-center gap-1 w-1/2 text-gray-500 py-1">
             <TbRoad size={20} /> {carData.mileage.toLocaleString()} km
           </div>
           <div className="flex items-center gap-1 w-1/2 text-gray-500 py-1">
-            <MdOutlineDateRange size={20} /> {carData.year}
+            <MdOutlineDirectionsCar size={20} /> {carData.type}
+          </div>
+          <div className="flex items-center gap-1 w-1/2 text-gray-500 py-1">
+            <img src={enginepower} alt="Engine Power" className="opacity-60"/>
+            {carData.enginePower.toLocaleString()} cc
           </div>
         </div>
       </div>

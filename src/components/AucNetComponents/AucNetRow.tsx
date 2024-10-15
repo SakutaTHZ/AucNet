@@ -8,6 +8,7 @@ import { TbEngine, TbRoad } from "react-icons/tb";
 import { useLocation, useNavigate } from "react-router-dom";
 import StatusBullet from "./StatusBullet";
 import PopUpMessage from "./PopUpMessage";
+import enginepower from "../../assets/EnginePower.svg";
 
 interface AucNetRowProps {
   customClass?: string;
@@ -28,12 +29,12 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
 
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const cards = location.state?.cards || [];
   const [showPopUp, setShowPopUp] = useState<boolean>(false);
 
   const handleCardClick = (cardData: any) => {
-    navigate("/details", { state: { card: cardData ,cards: cards} });
+    navigate("/details", { state: { card: cardData, cards: cards } });
   };
 
   const toggleFavorite = () => {
@@ -50,17 +51,17 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
         style={style}
       >
         <div className="flex h-full  border-b border-gray-200">
-            <button
-              onClick={toggleFavorite}
-              className={`bg-gray-900 bg-opacity-20 p-1.5 rounded-full absolute top-2 right-2 backdrop-blur-sm transition-all ${
-                isFavorite ? "bg-red-500" : "text-white"
-              }`}
-            >
-              <MdFavoriteBorder
-                size={24}
-                className={isFavorite ? "text-red-500" : "text-white"}
-              />
-            </button>
+          <button
+            onClick={toggleFavorite}
+            className={`bg-gray-900 bg-opacity-20 p-1.5 rounded-full absolute top-2 right-2 backdrop-blur-sm transition-all ${
+              isFavorite ? "bg-red-500" : "text-white"
+            }`}
+          >
+            <MdFavoriteBorder
+              size={24}
+              className={isFavorite ? "text-red-500" : "text-white"}
+            />
+          </button>
           {/* Image Box */}
           <div className="imageBox relative w-3/4 overflow-hidden flex items-center">
             <StatusBullet
@@ -89,7 +90,7 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
                 <p className="text-base text-gray-600">{carData.engineType}</p>
               </div>
               <div className="mt-3 flex items-center text-2xl font-bold">
-                ¥{carData.price}
+                ¥{carData.price.toLocaleString()}
               </div>
             </div>
           </div>
@@ -101,16 +102,17 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
           onClick={() => (onClick ? onClick() : handleCardClick(carData))}
         >
           <div className="flex items-center gap-1 text-gray-500 py-1">
-            <MdOutlineDirectionsCar size={20} /> {carData.type}
-          </div>
-          <div className="flex items-center gap-1 text-gray-500 py-1">
-            <TbEngine size={20} /> {carData.enginePower.toLocaleString()} cc
+            <MdOutlineDateRange size={20} /> {carData.year}
           </div>
           <div className="flex items-center gap-1 text-gray-500 py-1">
             <TbRoad size={20} /> {carData.mileage.toLocaleString()} km
           </div>
           <div className="flex items-center gap-1 text-gray-500 py-1">
-            <MdOutlineDateRange size={20} /> {carData.year}
+            <img src={enginepower} alt="Engine Power" className="opacity-60" />{" "}
+            {carData.enginePower.toLocaleString()} cc
+          </div>
+          <div className="flex items-center gap-1 text-gray-500 py-1">
+            <MdOutlineDirectionsCar size={20} /> {carData.type}
           </div>
         </div>
       </div>
@@ -160,7 +162,7 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
               <p className="text-base text-gray-600">{carData.engineType}</p>
             </div>
             <div className="mt-3 md:mt-0 md:ml-auto flex items-center text-2xl font-bold">
-              ¥{carData.price}
+              ¥{carData.price.toLocaleString()}
             </div>
           </div>
 
@@ -170,16 +172,21 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
             onClick={() => (onClick ? onClick() : handleCardClick(carData))}
           >
             <div className="flex items-center gap-1 text-gray-500 py-1">
-              <MdOutlineDirectionsCar size={20} /> {carData.type}
-            </div>
-            <div className="flex items-center gap-1 text-gray-500 py-1">
-              <TbEngine size={20} /> {carData.enginePower.toLocaleString()} cc
+              <MdOutlineDateRange size={20} /> {carData.year}
             </div>
             <div className="flex items-center gap-1 text-gray-500 py-1">
               <TbRoad size={20} /> {carData.mileage.toLocaleString()} km
             </div>
             <div className="flex items-center gap-1 text-gray-500 py-1">
-              <MdOutlineDateRange size={20} /> {carData.year}
+              <img
+                src={enginepower}
+                alt="Engine Power"
+                className="opacity-60"
+              />{" "}
+              {carData.enginePower.toLocaleString()} cc
+            </div>
+            <div className="flex items-center gap-1 text-gray-500 py-1">
+              <MdOutlineDirectionsCar size={20} /> {carData.type}
             </div>
           </div>
         </div>

@@ -108,13 +108,13 @@ const App: React.FC = () => {
   const cards = location.state?.cards || [];
 
   const options = [
-    "Most relevant",
-    "Date latest to oldest",
-    "Date oldest to latest",
-    "Price low to high",
-    "Price high to low",
-    "Mileage low to high",
-    "Mileage high to low",
+    "Most Relevant",
+    "Date Latest to Oldest",
+    "Date Oldest to Latest",
+    "Price Low to High",
+    "Price High to Low",
+    "Mileage Low to High",
+    "Mileage High to Low",
   ];
 
   const fuelType = [
@@ -275,7 +275,7 @@ const App: React.FC = () => {
             <div className="flex flex-wrap gap-2 w-full items-center justify-between transition-all">
               <div className="flex items-center gap-2 transition-all">
                 <button
-                  className="flex items-center gap-2 border p-2 px-3 rounded-3xl"
+                  className="flex items-center gap-2 border p-2 px-3 rounded-3xl bg-white border-gray-300"
                   onClick={toggleFilter}
                 >
                   <MdTune size={18} />
@@ -294,7 +294,7 @@ const App: React.FC = () => {
                 </p>
               </div>
               <div className="w-full md:w-auto flex flex-col md:flex-row gap-2 items-center">
-                <div className="relative w-full md:w-auto border rounded-md">
+                <div className="relative w-full md:w-auto border rounded-md border-gray-300">
                   <input
                     type="text"
                     placeholder="Search by Make or Model"
@@ -307,7 +307,7 @@ const App: React.FC = () => {
                     options={options}
                     customClass="my-custom-class"
                     optionClass="my-option-class"
-                    optionBoxClass="md:w-fit right-0"
+                    optionBoxClass="md:w-fit right-0 z-50"
                     buttonClass="py-2"
                   />
                   <div className="flex items-center space-x-2">

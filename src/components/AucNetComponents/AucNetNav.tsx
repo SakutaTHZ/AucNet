@@ -5,7 +5,7 @@ import {
 } from "react-icons/md";
 import {  FaBars, FaTimes } from "react-icons/fa";
 import cosmoLogo from "../../assets/CosmoLogo.svg";
-import JapanFlag from "../../assets/JapanFlag.svg";
+import JPFlag from "../../assets/JPFlag.png";
 import ProfileDropDown from "./ProfileDropDown";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import NotiDropDown from "./NotiDropDown";
@@ -130,7 +130,7 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
               <NotiDropDown notifications={notifications}/>
             </div>
             <div className="flex justify-center">
-              <img src={JapanFlag} alt="Flag" className="pr-1" />
+              <img src={JPFlag} alt="Flag" className="pr-1" />
               <span className="text-nowrap">11:42 am</span>
             </div>
             <ProfileDropDown />
