@@ -99,7 +99,7 @@ const AucNetCard: React.FC<AucNetCardProps> = ({
             <MdOutlineDirectionsCar size={20} /> {carData.type}
           </div>
           <div className="flex items-center gap-1 w-1/2 text-gray-500 py-1">
-            <img src={enginepower} alt="Engine Power" className="opacity-60"/>
+            <img src={enginepower} alt="Engine Power" className="opacity-60 w-[22px]"/>
             {carData.enginePower.toLocaleString()} cc
           </div>
         </div>
