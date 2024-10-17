@@ -147,7 +147,7 @@ const DetailsPage = () => {
                 <TbEngine size={20} /> {cardData.enginePower} cc
               </div>
               <div className="flex items-center gap-1 text-gray-500 py-1">
-                <TbRoad size={20} /> {cardData.mileage} km
+                <TbRoad size={20} /> {cardData.mileage.toLocaleString()} km
               </div>
               <div className="flex items-center gap-1 text-gray-500 py-1">
                 <MdOutlineDateRange size={20} /> {cardData.year}
@@ -156,12 +156,14 @@ const DetailsPage = () => {
             <div className="flex item-center gap-2">
               <button
                 onClick={toggleFavorite}
-                className={`flex items-center gap-1 px-4 font-semibold hover:text-white bg-gray-200 hover:bg-red-400 py-1 rounded-md transition-all duration-500 ${
-                  isFavorite ? "bg-red-400 shadow-md text-white" : "text-white"
+                className={`flex items-center gap-1 px-4 font-semibold hover:text-white hover:bg-red-400 py-1 rounded-md transition-all duration-500 ${
+                  isFavorite
+                    ? "bg-red-500 shadow-md text-white"
+                    : "text-white bg-gray-400"
                 }`}
               >
                 <TbHeart size={20} />
-                {isFavorite ? 'Saved': 'Save'}
+                {isFavorite ? "Saved" : "Save"}
               </button>
               <button className="flex items-center gap-1 px-4 font-semibold hover:bg-gray-200 py-1 rounded-md  transition-all duration-500">
                 <MdOutlineShare size={20} />
@@ -172,14 +174,14 @@ const DetailsPage = () => {
         </div>
 
         <div className="relative w-full flex flex-col md:flex-row gap-3">
-          <div className="animate-slideRight mainImage w-full md:w-1/2">
+          <div className="animate-slideRight mainImage w-full md:w-5/12">
             <img
               src={cardData.link}
               alt="image"
               className="rounded-lg w-full"
             />
           </div>
-          <div className="secondaryImages w-full md:w-1/2 grid grid-cols-4 md:grid-cols-2 gap-3">
+          <div className="secondaryImages w-full md:w-7/12 grid grid-cols-4 md:grid-cols-3 items-stretch gap-4">
             <img
               src={cardData.link}
               alt="image"
@@ -213,6 +215,24 @@ const DetailsPage = () => {
               className="rounded-lg animate-slideRight opacity-0  w-full delay-250"
               style={{
                 animationDelay: `.60s`,
+                animationFillMode: "forwards",
+              }}
+            />
+            <img
+              src={cardData.link}
+              alt="image"
+              className="rounded-lg animate-slideRight opacity-0  w-full delay-250"
+              style={{
+                animationDelay: `.75s`,
+                animationFillMode: "forwards",
+              }}
+            />
+            <img
+              src={cardData.link}
+              alt="image"
+              className="rounded-lg animate-slideRight opacity-0  w-full delay-250"
+              style={{
+                animationDelay: `.90s`,
                 animationFillMode: "forwards",
               }}
             />
@@ -287,19 +307,7 @@ const DetailsPage = () => {
                     className="shrink-0 mt-0 transform scale-x-[-1]"
                   />
                   <p>
-                    <span>Beige Color</span>
-                  </p>
-                </div>
-                <div
-                  className="flex items-center gap-2 py-1 w-1/2"
-                  title="Interior"
-                >
-                  <PiCarProfileFill
-                    size={20}
-                    className="shrink-0 mt-0 transform scale-x-[-1]"
-                  />
-                  <p>
-                    <span>Midnight Black</span>
+                    <span>Beige</span>
                   </p>
                 </div>
 
@@ -307,15 +315,6 @@ const DetailsPage = () => {
                   <img src={vin} alt="Vin" />
                   <p>
                     <span>2GNWO32TE0928372</span>
-                  </p>
-                </div>
-                <div
-                  className="flex items-center gap-2 py-1 w-1/2"
-                  title="Car Model"
-                >
-                  <IoCarOutline size={20} className="shrink-0 mt-0" />
-                  <p>
-                    <span>{cardData.engineType}</span>
                   </p>
                 </div>
                 <div
@@ -336,6 +335,7 @@ const DetailsPage = () => {
                     <span>2021</span>
                   </p>
                 </div>
+
                 <div
                   className="flex items-center gap-2 py-1 w-1/2"
                   title="Fuel Type"
@@ -345,40 +345,45 @@ const DetailsPage = () => {
                     <span>Petrol</span>
                   </p>
                 </div>
+
                 <div
                   className="flex items-center gap-2 py-1 w-1/2"
                   title="Mileage"
                 >
                   <PiRoadHorizon size={20} className="shrink-0 mt-0" />
                   <p>
-                    <span>{cardData.mileage}</span> km
+                    <span>{cardData.mileage.toLocaleString()}</span> km
                   </p>
                 </div>
+
                 <div
                   className="flex items-center gap-2 py-1 w-1/2"
                   title="Transmission"
                 >
                   <GiGearStickPattern size={20} className="shrink-0 mt-0" />
-                  <p>Automatic transmission</p>
+                  <p>Automatic</p>
                 </div>
+
+                <div
+                  className="flex items-center gap-2 py-1 w-1/2"
+                  title="Rating"
+                >
+                  <MdOutlineStarOutline size={20} className="shrink-0 mt-0" />
+                  <p>
+                    <span>5</span> Stars
+                  </p>
+                </div>
+
                 <div
                   className="flex items-center gap-2 py-1 w-1/2"
                   title="Wheel Type"
                 >
                   <GiCarWheel size={20} className="shrink-0 mt-0" />
                   <p>
-                    <span>Front wheel drive</span>
+                    <span className="capitalize">Front wheel drive</span>
                   </p>
                 </div>
-                <div
-                  className="flex items-center gap-2 py-1 w-1/2"
-                  title="Location"
-                >
-                  <GrLocation size={20} className="shrink-0 mt-0" />
-                  <p>
-                    <span>Osaka, Japan</span>
-                  </p>
-                </div>
+
                 <div
                   className="flex items-center gap-2 py-1 w-1/2"
                   title="Seat"
@@ -391,22 +396,14 @@ const DetailsPage = () => {
                     <span>5</span> seats
                   </p>
                 </div>
+
                 <div
                   className="flex items-center gap-2 py-1 w-1/2"
-                  title="Rating"
+                  title="Location"
                 >
-                  <MdOutlineStarOutline size={20} className="shrink-0 mt-0" />
+                  <GrLocation size={20} className="shrink-0 mt-0" />
                   <p>
-                    <span>5</span> Stars
-                  </p>
-                </div>
-                <div
-                  className="flex items-center gap-2 py-1 w-1/2"
-                  title="Parts"
-                >
-                  <PiGearFine size={20} className="shrink-0 mt-0" />
-                  <p>
-                    <span>AC, PAS, PW, ABS, AB, R Key, 5-seater </span>
+                    <span>Osaka, Japan</span>
                   </p>
                 </div>
               </div>
@@ -414,7 +411,7 @@ const DetailsPage = () => {
                 onClick={openPopup}
                 className="bg-gray-200 px-4 py-1 rounded-md font-semibold hidden"
               >
-                View all details
+                View All Details
               </button>
               <Popup
                 isOpen={isPopupOpen}
@@ -486,7 +483,7 @@ const DetailsPage = () => {
                   className="bg-gray-50 hover:bg-amber-100 px-4 py-1 rounded-md font-semibold transition-all"
                   onClick={openAISPopup}
                 >
-                  View all details
+                  View All Details
                 </button>
 
                 <Popup
@@ -767,7 +764,7 @@ const DetailsPage = () => {
                 className="bg-gray-200 px-4 py-1 rounded-md font-semibold"
                 onClick={openFeaturePopup}
               >
-                View all features
+                View All Features
               </button>
               <Popup
                 isOpen={isFeaturePopupOpen}
@@ -925,11 +922,11 @@ const DetailsPage = () => {
         </div>
 
         <div className="recommendations pb-8">
-          <h1 className="text-3xl pb-4 font-bold">Recommended for you</h1>
+          <h1 className="text-3xl pb-4 font-bold">Recommend for you</h1>
           <div className="flex flex-col md:flex-row gap-4">
             {[...cards]
               .sort(() => 0.5 - Math.random())
-              .slice(0, 3)
+              .slice(0, 4)
               .map((cardData: any, index: number) => (
                 <AucNetCard
                   key={index}

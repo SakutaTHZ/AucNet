@@ -48,7 +48,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         key={1}
         className={`px-3 py-1 border rounded-md hover:bg-gray-200 ${
-          currentPage === 1 ? "bg-gray-300" : ""
+          currentPage === 1 ? "bg-amber-100 hover:bg-yellow-200 font-semibold border-amber-400 text-amber-500" : ""
         }`}
         onClick={() => handlePageChange(1)}
       >
@@ -77,7 +77,7 @@ const Pagination: React.FC<PaginationProps> = ({
         <button
           key={i}
           className={`px-3 py-1 border rounded-md hover:bg-gray-200 ${
-            i === currentPage ? "bg-yellow-100 hover:bg-yellow-200 font-semibold border-yellow-500 text-yellow-600" : ""
+            i === currentPage ? "bg-amber-100 hover:bg-yellow-200 font-semibold border-amber-400 text-amber-500" : ""
           }`}
           onClick={() => handlePageChange(i)}
         >
@@ -103,7 +103,7 @@ const Pagination: React.FC<PaginationProps> = ({
         <button
           key={totalPages}
           className={`px-3 py-1 border rounded-md hover:bg-gray-200 ${
-            currentPage === totalPages ? "bg-yellow-100 hover:bg-yellow-200 font-semibold border-yellow-500 text-yellow-600" : ""
+            currentPage === totalPages ? "bg-amber-100 hover:bg-yellow-200 font-semibold border-yellow-400 text-yellow-500" : ""
           }`}
           onClick={() => handlePageChange(totalPages)}
         >

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { MdOutlinePersonOutline, MdLogout } from "react-icons/md";
+import { MdLogout } from "react-icons/md";
 import { FaChevronDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { IoPersonCircleOutline } from "react-icons/io5";
 
 const ProfileDropDown: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -17,10 +18,10 @@ const ProfileDropDown: React.FC = () => {
         className="flex items-center gap-1 cursor-pointer"
         onClick={toggleDropdown}
       >
-        <div className="profile border-2 border-gray-400 rounded-full">
-          <MdOutlinePersonOutline size={24} className="text-gray-400" />
+        <div className="profile rounded-full">
+          <IoPersonCircleOutline size={30} className="text-gray-400" />
         </div>
-        <FaChevronDown size={14} className="text-gray-400" />
+        <FaChevronDown size={10} className="text-gray-400" />
       </div>
 
       {/* Dropdown Menu */}
