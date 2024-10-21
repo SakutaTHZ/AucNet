@@ -29,9 +29,10 @@ const AucNetCard: React.FC<AucNetCardProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const cards = location.state?.cards || [];
+  const recommend = [...cards].sort(() => 0.5 - Math.random()).slice(0, 4);
 
   const handleCardClick = (cardData: any) => {
-    navigate("/details", { state: { card: cardData, cards: cards } });
+    navigate("/details", { state: { card: cardData, cards: cards, recommend:recommend } });
   };
 
   const [isFavorite, setIsFavorite] = useState<boolean>(carData.isFavourite);
@@ -99,7 +100,7 @@ const AucNetCard: React.FC<AucNetCardProps> = ({
             <MdOutlineDirectionsCar size={20} /> {carData.type}
           </div>
           <div className="flex items-center gap-1 w-1/2 text-gray-500 py-1">
-            <img src={enginepower} alt="Engine Power" className="opacity-60 w-[22px]"/>
+            <img src={enginepower} alt="Engine Power" className="w-[22px]"/>
             {carData.enginePower.toLocaleString()} cc
           </div>
         </div>

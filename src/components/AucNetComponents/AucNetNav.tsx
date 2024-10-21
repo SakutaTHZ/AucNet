@@ -51,7 +51,7 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
   basketCount = cards.filter((card:any) => card.isBasket === true).length;
   favouriteCount = cards.filter((card:any) => card.isFavourite === true).length;
   const handleButtonClick = (location: any) => {
-    return navigate(`/${location}`, { state: { cards } });
+    return navigate(`/${location}`, { state: { cards ,page:1} });
   };
 
   const activeNavClass = "text-yellow-600 bg-amber-100 md:bg-transparent md:border-b-4 md:border-b-yellow-600"

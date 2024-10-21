@@ -3,8 +3,9 @@ import {
   MdFavoriteBorder,
   MdOutlineDirectionsCar,
   MdOutlineDateRange,
+  MdFavorite,
 } from "react-icons/md";
-import { TbEngine, TbRoad } from "react-icons/tb";
+import { TbRoad } from "react-icons/tb";
 import { useLocation, useNavigate } from "react-router-dom";
 import StatusBullet from "./StatusBullet";
 import PopUpMessage from "./PopUpMessage";
@@ -31,10 +32,11 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
   const location = useLocation();
 
   const cards = location.state?.cards || [];
+  const recommend = [...cards].sort(() => 0.5 - Math.random()).slice(0, 4);
   const [showPopUp, setShowPopUp] = useState<boolean>(false);
 
   const handleCardClick = (cardData: any) => {
-    navigate("/details", { state: { card: cardData, cards: cards } });
+    navigate("/details", { state: { card: cardData, cards: cards , recommend:recommend } });
   };
 
   const toggleFavorite = () => {
@@ -57,10 +59,11 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
               isFavorite ? "bg-red-500" : "text-white"
             }`}
           >
-            <MdFavoriteBorder
-              size={24}
-              className={isFavorite ? "text-red-500" : "text-white"}
-            />
+          {isFavorite ? (
+            <MdFavorite size={24} className="text-red-500" />
+          ) : (
+            <MdFavoriteBorder size={24} className="text-white" />
+          )}
           </button>
           {/* Image Box */}
           <div className="imageBox relative w-3/4 overflow-hidden flex items-center">
@@ -108,7 +111,7 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
             <TbRoad size={20} /> {carData.mileage.toLocaleString()} km
           </div>
           <div className="flex items-center gap-1 text-gray-500 py-1">
-            <img src={enginepower} alt="Engine Power" className="opacity-60" />{" "}
+            <img src={enginepower} alt="Engine Power" />{" "}
             {carData.enginePower.toLocaleString()} cc
           </div>
           <div className="flex items-center gap-1 text-gray-500 py-1">
@@ -143,10 +146,12 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
               isFavorite ? "bg-red-500" : "text-white"
             }`}
           >
-            <MdFavoriteBorder
-              size={24}
-              className={isFavorite ? "text-red-500" : "text-white"}
-            />
+            
+            {isFavorite ? (
+              <MdFavorite size={24} className="text-red-500" />
+            ) : (
+              <MdFavoriteBorder size={24} className="text-white" />
+            )}
           </button>
         </div>
 
@@ -181,7 +186,6 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
               <img
                 src={enginepower}
                 alt="Engine Power"
-                className="opacity-60"
               />{" "}
               {carData.enginePower.toLocaleString()} cc
             </div>

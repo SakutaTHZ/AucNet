@@ -3,7 +3,8 @@ import { FaListUl } from "react-icons/fa";
 import { MdBorderAll, MdOutlineShoppingCart } from "react-icons/md";
 import AucNetRow from "../../components/AucNetComponents/AucNetRow";
 import AucNetCard from "../../components/AucNetComponents/AucNetCard";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
+import Pagination from "../../components/AucNetComponents/Pagination";
 
 const MyBasket: React.FC = () => {
   const [isTableView, setIsTableView] = useState(false);
@@ -29,6 +30,18 @@ const MyBasket: React.FC = () => {
   const filteredCards = selectedStatus
     ? cards.filter((card:any) => card.status === selectedStatus)
     : cards;
+
+  //Paginations
+  const [currentPage, setCurrentPage] = useState(location.state?.page);
+  const totalPages = Math.ceil(filteredCards.length / 20);
+  console.log(totalPages+" "+filteredCards.length+ " " +(filteredCards.length / 20))
+  const navigate = useNavigate();
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+
+    return navigate(`/basket`, { state: { cards, page: page } });
+  };
 
   return (
     <div className="flex flex-col gap-6 w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-28 bg-slate-50">
@@ -61,7 +74,7 @@ const MyBasket: React.FC = () => {
       </div>
 
       <div className="filters flex flex-wrap gap-2">
-        <p className="text-gray-500">Filter by status : </p>
+        <p className="text-gray-500">Filter by Status : </p>
 
         <button
           onClick={() =>
@@ -131,7 +144,7 @@ const MyBasket: React.FC = () => {
               : "bg-gray-200 text-gray-900"
           }`}
         >
-          <p>Canceled
+          <p>Order Cancelled
             <span className="ml-1 px-2 bg-slate-50 rounded-full font-semibold">
               {statusCounts.canceled}
             </span>{" "}</p>
@@ -165,17 +178,23 @@ const MyBasket: React.FC = () => {
               </div>
             ) : isTableView ? (
         <div className="rightBox flex flex-col gap-3 w-full h-full">
-          {filteredCards.map((cardData:any, index:number) => (
+          {filteredCards.slice(20 * currentPage - 20, 20 * currentPage).map((cardData:any, index:number) => (
             <AucNetRow key={index} carData={cardData} showStatus={true} />
           ))}
         </div>
       ) : (
         <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full h-full">
-          {filteredCards.map((cardData:any, index:number) => (
+          {filteredCards.slice(20 * currentPage - 20, 20 * currentPage).map((cardData:any, index:number) => (
             <AucNetCard key={index} carData={cardData} showStatus={true} />
           ))}
         </div>
       )}
+
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

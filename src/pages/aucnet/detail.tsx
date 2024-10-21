@@ -12,31 +12,26 @@ import {
   MdAirlineSeatReclineNormal,
   MdOutlineStarOutline,
 } from "react-icons/md";
-import { TbEngine, TbRoad, TbHeart } from "react-icons/tb";
+import { TbEngine, TbRoad, TbHeart, TbHeartFilled } from "react-icons/tb";
 import AucNetCard from "../../components/AucNetComponents/AucNetCard";
 
 import CarStatusBox from "../../components/AucNetComponents/CarStatusBox";
 import StatusBullet from "../../components/AucNetComponents/StatusBullet";
-import {
-  IoCarOutline,
-  IoCheckmarkCircle,
-  IoCheckmarkCircleOutline,
-} from "react-icons/io5";
+import { IoCheckmarkCircle, IoCheckmarkCircleOutline } from "react-icons/io5";
 import Popup from "../../components/AucNetComponents/Popup";
 import { GoDotFill } from "react-icons/go";
 import {
   PiCalendarDots,
   PiCarProfile,
-  PiCarProfileFill,
   PiGasCan,
-  PiGearFine,
   PiRoadHorizon,
 } from "react-icons/pi";
-import enginepower from "../../assets/EnginePower.svg";
+import enginepower from "../../assets/images/EnginePower-navy.svg";
 import vin from "../../assets/vin.svg";
 import { GiCarWheel, GiGearStickPattern } from "react-icons/gi";
 import { GrLocation } from "react-icons/gr";
 import PopUpMessage from "../../components/AucNetComponents/PopUpMessage";
+import Gallery from "../../components/AucNetComponents/Gallery";
 
 const DetailsPage = () => {
   const location = useLocation();
@@ -96,10 +91,10 @@ const DetailsPage = () => {
   const openPopup = () => setIsPopupOpen(true);
   const closePopup = () => setIsPopupOpen(false);
 
-  const [isFeaturePopupOpen, setIsFeaturePopupOpen] = useState(false);
+  // const [isFeaturePopupOpen, setIsFeaturePopupOpen] = useState(false);
 
-  const openFeaturePopup = () => setIsFeaturePopupOpen(true);
-  const closeFeaturePopup = () => setIsFeaturePopupOpen(false);
+  // const openFeaturePopup = () => setIsFeaturePopupOpen(true);
+  // const closeFeaturePopup = () => setIsFeaturePopupOpen(false);
 
   const [isAISPopupOpen, setIsAISPopupOpen] = useState(false);
 
@@ -107,6 +102,7 @@ const DetailsPage = () => {
   const closeAISPopup = () => setIsAISPopupOpen(false);
 
   const cards = location.state?.cards || [];
+  const recommend = location.state?.recommend || [];
   console.log(cards);
 
   const [isFavorite, setIsFavorite] = useState<boolean>(cardData.isFavourite);
@@ -117,13 +113,20 @@ const DetailsPage = () => {
     setShowPopUp(true);
   };
 
+  const [showGallery,setShowGallery] = useState(false)
+
+  function toggleGallery(){
+    setShowGallery(()=>!showGallery)
+  }
+
   return (
     <>
       {showPopUp && <PopUpMessage />}
+      {showGallery && <Gallery/>}
       <div className="flex flex-col gap-6 w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-28 bg-slate-50">
         <div className="flex items-center gap-1 font-medium">
           <Link to="/home" state={{ cards, page: 1 }} className="text-gray-500">
-            Car Sale /
+            Cars for Sale /
           </Link>
           <p className="text-blue-950 font-semibold">
             {cardData.name} {cardData.engineType}
@@ -156,13 +159,17 @@ const DetailsPage = () => {
             <div className="flex item-center gap-2">
               <button
                 onClick={toggleFavorite}
-                className={`flex items-center gap-1 px-4 font-semibold hover:text-white hover:bg-red-400 py-1 rounded-md transition-all duration-500 ${
-                  isFavorite
-                    ? "bg-red-500 shadow-md text-white"
-                    : "text-white bg-gray-400"
-                }`}
+                className={`flex items-center gap-1 px-4 font-semibold hover:text-white hover:bg-red-400 py-1 rounded-md transition-all duration-500 bg-gray-100 shadow-sm`}
               >
-                <TbHeart size={20} />
+                {isFavorite ? (
+                  <TbHeartFilled
+                    size={20}
+                    className="text-red-500 hover:text-white"
+                  />
+                ) : (
+                  <TbHeart size={20} />
+                )}
+
                 {isFavorite ? "Saved" : "Save"}
               </button>
               <button className="flex items-center gap-1 px-4 font-semibold hover:bg-gray-200 py-1 rounded-md  transition-all duration-500">
@@ -174,7 +181,7 @@ const DetailsPage = () => {
         </div>
 
         <div className="relative w-full flex flex-col md:flex-row gap-3">
-          <div className="animate-slideRight mainImage w-full md:w-5/12">
+          <div className="animate-slideRight mainImage w-full md:w-5/12" onClick={toggleGallery}>
             <img
               src={cardData.link}
               alt="image"
@@ -676,7 +683,7 @@ const DetailsPage = () => {
                     className="shrink-0 text-yellow-500"
                   />
                   <p>
-                    <span>Air condition </span>
+                    <span>Air Condition </span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
@@ -694,7 +701,7 @@ const DetailsPage = () => {
                     className="shrink-0 text-yellow-500"
                   />
                   <p>
-                    <span>Air-bag</span>
+                    <span>Air-Bag</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
@@ -703,7 +710,7 @@ const DetailsPage = () => {
                     className="shrink-0 text-yellow-500"
                   />
                   <p>
-                    <span>Smart key</span>
+                    <span>Smart Key</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
@@ -746,7 +753,7 @@ const DetailsPage = () => {
                     className="shrink-0 text-yellow-500"
                   />
                   <p>
-                    <span>Aluminium wheel</span>
+                    <span>Aluminium Wheel</span>
                   </p>
                 </div>
                 <div className="flex items-center gap-2 py-1 w-1/2">
@@ -755,13 +762,13 @@ const DetailsPage = () => {
                     className="shrink-0 text-yellow-500"
                   />
                   <p>
-                    <span>Leather seat</span>
+                    <span>Leather Seat</span>
                   </p>
                 </div>
               </div>
 
-              <button
-                className="bg-gray-200 px-4 py-1 rounded-md font-semibold"
+              {/* <button
+                className="bg-gray-200 px-4 py-1 rounded-md font-semibold hidden"
                 onClick={openFeaturePopup}
               >
                 View All Features
@@ -845,7 +852,7 @@ const DetailsPage = () => {
                     </div>
                   </div>
                 }
-              />
+              /> */}
             </div>
             <div
               ref={sellingPointsRef}
@@ -898,10 +905,10 @@ const DetailsPage = () => {
                   />
                   <button
                     onClick={handleAddComment} // Add the new comment on click
-                    className={`bg-amber-400 text-nowrap px-4 py-1 rounded-md font-semibold transition-all ${
+                    className={` text-nowrap px-4 py-1 rounded-md font-semibold transition-all ${
                       newComment.trim() === ""
                         ? "bg-gray-200 cursor-not-allowed"
-                        : "bg-amber-400 cursor-pointer"
+                        : "bg-amber-200 border border-yellow-400 cursor-pointer"
                     }`}
                     disabled={newComment.trim() === ""} // Disable the button if input is empty
                   >
@@ -924,10 +931,7 @@ const DetailsPage = () => {
         <div className="recommendations pb-8">
           <h1 className="text-3xl pb-4 font-bold">Recommend for you</h1>
           <div className="flex flex-col md:flex-row gap-4">
-            {[...cards]
-              .sort(() => 0.5 - Math.random())
-              .slice(0, 4)
-              .map((cardData: any, index: number) => (
+            {recommend.map((cardData: any, index: number) => (
                 <AucNetCard
                   key={index}
                   customClass={`opacity-0 delay-${

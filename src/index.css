@@ -139,6 +139,14 @@ body {
 .comment:last-of-type{
   border:0;
 }
+.scrollBox {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollBox::-webkit-scrollbar {
+  display: none;
+}
 
 /* @media (prefers-color-scheme: light) {
   :root {

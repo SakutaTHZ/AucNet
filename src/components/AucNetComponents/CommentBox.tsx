@@ -86,7 +86,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({
                   className={`text-nowrap px-4 py-1 rounded-md font-semibold transition-all ${
                     replyText.trim() === ""
                       ? "bg-gray-300 cursor-not-allowed" 
-                      : "bg-amber-400 cursor-pointer"
+                      : "bg-amber-200 border border-yellow-400 cursor-pointer"
                   }`}
                   disabled={replyText.trim() === ""} 
                 >

@@ -1,10 +1,11 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AucNetRow from "../../components/AucNetComponents/AucNetRow";
 import AucNetCard from "../../components/AucNetComponents/AucNetCard";
 import { FaListUl } from "react-icons/fa6";
 import { MdBorderAll } from "react-icons/md";
 import { useState } from "react";
 import { IoHeartOutline } from "react-icons/io5";
+import Pagination from "../../components/AucNetComponents/Pagination";
 
 const FavouritePage = () => {
   const [isTableView, setIsTableView] = useState(false);
@@ -15,7 +16,15 @@ const FavouritePage = () => {
 
   const favouriteCards = cards.filter((card: any) => card.isFavourite === true);
 
-  console.log(favouriteCards);
+  const [currentPage, setCurrentPage] = useState(location.state?.page);
+  const totalPages = Math.ceil(favouriteCards.length / 20);
+  const navigate = useNavigate();
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+
+    return navigate(`/favourites`, { state: { cards, page: page } });
+  };
 
   return (
     <div className="flex flex-col gap-6 w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-28 bg-slate-50">
@@ -75,7 +84,7 @@ const FavouritePage = () => {
         </div>
       ) : (
         <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full h-full">
-          {favouriteCards.map((cardData: any, index: number) => (
+          {favouriteCards.slice(20 * currentPage - 20, 20 * currentPage).map((cardData: any, index: number) => (
             <AucNetCard
               key={index}
               customClass={`opacity-0 delay-${
@@ -90,6 +99,12 @@ const FavouritePage = () => {
           ))}
         </div>
       )}
+
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

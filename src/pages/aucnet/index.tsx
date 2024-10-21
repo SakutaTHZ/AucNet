@@ -160,7 +160,7 @@ const App: React.FC = () => {
   };
 
   const [currentPage, setCurrentPage] = useState(location.state?.page);
-  const totalPages = Math.round(cards.length / 20);
+  const totalPages = Math.ceil(cards.length / 20);
   const navigate = useNavigate();
 
   const handlePageChange = (page: number) => {
