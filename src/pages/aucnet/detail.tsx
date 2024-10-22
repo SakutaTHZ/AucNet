@@ -122,10 +122,10 @@ const DetailsPage = () => {
   return (
     <>
       {showPopUp && <PopUpMessage />}
-      {showGallery && <Gallery/>}
+      {showGallery && <Gallery customClass="animate-appear animate-slideUp" closeBox={toggleGallery}/>}
       <div className="flex flex-col gap-6 w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-28 bg-slate-50">
         <div className="flex items-center gap-1 font-medium">
-          <Link to="/home" state={{ cards, page: 1 }} className="text-gray-500">
+          <Link to="/home" state={{ cards, page: 1 }} className="text-gray-500p">
             Cars for Sale /
           </Link>
           <p className="text-blue-950 font-semibold">
