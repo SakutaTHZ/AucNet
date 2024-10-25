@@ -181,7 +181,7 @@ const DetailsPage = () => {
         </div>
 
         <div className="relative w-full flex flex-col md:flex-row gap-3">
-          <div className="animate-slideRight mainImage w-full md:w-5/12" onClick={toggleGallery}>
+          <div className="animate-slideRight mainImage w-full md:w-5/12">
             <img
               src={cardData.link}
               alt="image"
@@ -244,7 +244,7 @@ const DetailsPage = () => {
               }}
             />
           </div>
-          <button className="absolute flex gap-2 items-center bg-white bg-opacity-75 hover:bg-opacity-100 shadow-md px-2 py-1 rounded-md right-2 md:right-4 top-2 md:top-auto md:bottom-4 transition-all">
+          <button className="absolute flex gap-2 items-center bg-white bg-opacity-75 hover:bg-opacity-100 shadow-md px-2 py-1 rounded-md right-2 md:right-4 top-2 md:top-auto md:bottom-4 transition-all" onClick={toggleGallery}>
             <MdOutlineRemoveRedEye size={20} />
             <p className="hidden md:block">See All Photos</p>
             <p className="count font-semibold">34</p>

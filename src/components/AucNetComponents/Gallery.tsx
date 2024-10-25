@@ -1,7 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaArrowDown } from "react-icons/fa";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
-import { MdClose, MdFullscreen, MdRestore, MdZoomIn, MdZoomOut } from "react-icons/md";
+import {
+  MdClose,
+  MdFullscreen,
+  MdRestore,
+  MdZoomIn,
+  MdZoomOut,
+} from "react-icons/md";
+import screenfull from "screenfull";
 
 interface GalleryProps {
   customClass?: string;
@@ -35,7 +42,60 @@ const Gallery: React.FC<GalleryProps> = ({
     }
   }, []);
 
-  // For dragging scroll box (thumbnails)
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    if (images.length > 0) {
+      setAnimate(true);
+      const timer = setTimeout(() => setAnimate(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [currentIndex]);
+
+
+  // Add key bindings
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case "ArrowLeft":
+          setCurrentIndex(
+            currentIndex - 1 == 0 ? images.length : currentIndex - 1
+          );
+          scrollToThumbnail(currentIndex - 1 == 0 ? images.length : currentIndex - 1);
+          break;
+        case "ArrowRight":
+          setCurrentIndex(
+            currentIndex + 1 > images.length ? 1 : currentIndex + 1
+          );
+          scrollToThumbnail(currentIndex + 1 > images.length ? 1 : currentIndex + 1);
+          break;
+        case "Escape":
+          if (closeBox) closeBox();
+          break;
+        case "+":
+          handleZoomIn();
+          break;
+        case "=":
+          handleZoomIn();
+          break;
+        case "-":
+          handleZoomOut();
+          break;
+        case "0":
+          resetZoom();
+          break;
+        default:
+          break;
+      }
+    };
+
+    // Add event listener
+    window.addEventListener("keydown", handleKeyDown);
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [currentIndex, images, closeBox]);
+
   const scrollBoxRef = useRef<HTMLDivElement | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -53,32 +113,47 @@ const Gallery: React.FC<GalleryProps> = ({
     if (!isDragging || !scrollBoxRef.current) return;
 
     const x = e.pageX - scrollBoxRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // Multiply by 2 to increase drag speed
-    scrollBoxRef.current.scrollLeft = scrollLeft - walk;
+    const walk = (x - startX) * 2;
+    if (Math.abs(walk) > 5) {
+      scrollBoxRef.current.scrollLeft = scrollLeft - walk;
+    }
   };
 
   const handleMouseUpOrLeave = () => {
     setIsDragging(false);
   };
+  const handleFullscreen = () => {
+    if (screenfull.isEnabled) {
+      screenfull.toggle();
+    }
+  };
+  const scrollToThumbnail = (index: number) => {
+    const thumbnail = document.getElementById(`thumbnail-${index}`);
+    console.log("index - " + index);
+    if (thumbnail) {
+      thumbnail.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+      });
+    }
+  };
 
-  // Zoom-in and Zoom-out handlers
-  const [scale, setScale] = useState(1); // To handle zoom
-  const [translate, setTranslate] = useState({ x: 0, y: 0 }); // To handle image translation
+  const [scale, setScale] = useState(1);
+  const [translate, setTranslate] = useState({ x: 0, y: 0 });
 
   const handleZoomIn = () => {
-    setScale((prevScale) => Math.min(prevScale + 0.5, 5)); // Cap zoom at 5x
+    setScale((prevScale) => Math.min(prevScale + 0.5, 5));
   };
 
   const handleZoomOut = () => {
-    setScale((prevScale) => Math.max(prevScale - 0.5, 1)); // Minimum zoom is 1x (original size)
+    setScale((prevScale) => Math.max(prevScale - 0.5, 1));
   };
 
   const resetZoom = () => {
-    setScale(1); // Reset scale to default
-    setTranslate({ x: 0, y: 0 }); // Reset translation
+    setScale(1);
+    setTranslate({ x: 0, y: 0 });
   };
 
-  // Dragging the enlarged main image
   const [isImageDragging, setIsImageDragging] = useState(false);
   const [startImageX, setStartImageX] = useState(0);
   const [startImageY, setStartImageY] = useState(0);
@@ -102,7 +177,6 @@ const Gallery: React.FC<GalleryProps> = ({
     setIsImageDragging(false);
   };
 
-  // Toggle scrollBox
   const [showscrollBox, setShowscrollBox] = useState(true);
 
   return (
@@ -116,7 +190,10 @@ const Gallery: React.FC<GalleryProps> = ({
             {currentIndex}/{images.length}
           </p>
           <div className="flex items-center gap-2">
-            <button className="flex justify-center items-center">
+            <button
+              className="flex justify-center items-center"
+              onClick={handleFullscreen}
+            >
               <MdFullscreen size={25} />
             </button>
             <button
@@ -148,11 +225,14 @@ const Gallery: React.FC<GalleryProps> = ({
         <div className="absolute flex justify-center items-center mainImage w-full h-full z-[104] text-white">
           <button
             className={`absolute left-5 ${buttonClass}`}
-            onClick={() =>
+            onClick={() => {
               setCurrentIndex(
                 currentIndex - 1 == 0 ? images.length : currentIndex - 1
-              )
-            }
+              );
+              scrollToThumbnail(
+                currentIndex - 1 == 0 ? images.length : currentIndex - 1
+              );
+            }}
           >
             <FaArrowLeft
               size={40}
@@ -161,11 +241,14 @@ const Gallery: React.FC<GalleryProps> = ({
           </button>
           <button
             className={`absolute right-5 ${buttonClass}`}
-            onClick={() =>
+            onClick={() => {
               setCurrentIndex(
                 currentIndex + 1 > images.length ? 1 : currentIndex + 1
-              )
-            }
+              );
+              scrollToThumbnail(
+                currentIndex + 1 > images.length ? 1 : currentIndex + 1
+              );
+            }}
           >
             <FaArrowRight
               size={40}
@@ -174,17 +257,17 @@ const Gallery: React.FC<GalleryProps> = ({
           </button>
           <img
             src={images[currentIndex - 1]}
-            className="mainImage h-4/6"
+            className={`mainImage h-4/6 ${animate ? "animate-slideLeft" : ""}`}
             style={{
               transform: `scale(${scale}) translate(${translate.x}px, ${translate.y}px)`,
-              cursor: isImageDragging ? 'grabbing' : 'grab',
+              cursor: isImageDragging ? "grabbing" : "grab",
             }}
             alt="photo"
             onMouseDown={handleImageMouseDown}
             onMouseMove={handleImageMouseMove}
             onMouseUp={handleImageMouseUpOrLeave}
             onMouseLeave={handleImageMouseUpOrLeave}
-            onDragStart={(e) => e.preventDefault()} // Disable default image dragging
+            onDragStart={(e) => e.preventDefault()}
           />
         </div>
         <div
@@ -216,14 +299,18 @@ const Gallery: React.FC<GalleryProps> = ({
             {images.map((imgSrc, index) => (
               <img
                 key={index}
+                id={`thumbnail-${index}`}
                 src={imgSrc}
                 alt={`Gallery Image ${index + 1}`}
                 className={`gallery-image h-20 origin-center shadow-md ${
                   currentIndex - 1 == index &&
                   "border-2 border-transparent ring ring-white scale-110 mx-2 rounded-md"
                 }`}
-                onClick={() => setCurrentIndex(index + 1)}
-                onDragStart={(e) => e.preventDefault()} // Disable default image dragging
+                onClick={() => {
+                  setCurrentIndex(index + 1);
+                  scrollToThumbnail(index);
+                }}
+                onDragStart={(e) => e.preventDefault()}
               />
             ))}
           </div>
