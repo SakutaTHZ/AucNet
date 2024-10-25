@@ -213,7 +213,8 @@ const CarStatusBox: React.FC<CarStatusBoxProps> = ({
                   <p className="date">15 Sep 17:24</p>
                 </div>
                 <p className="description w-full text-sm text-gray-700">
-                Your order for the car has been cancelled. Please contact our support team for further assistance.
+                  Your order for the car has been cancelled. Please contact our
+                  support team for further assistance.
                 </p>
               </div>
 
@@ -251,7 +252,7 @@ const CarStatusBox: React.FC<CarStatusBoxProps> = ({
       ) : status === "purchased" ? (
         <div className={`w-full md:w-1/3 flex flex-col gap-3 ${customClass}`}>
           <div className="itemCard flex flex-col gap-4 rounded-md shadow-md p-6">
-          <StatusBullet status="purchased" customClass="font-semibold" />
+            <StatusBullet status="purchased" customClass="font-semibold" />
             <p className="text-xl font-medium">
               {cardData.name} {cardData.engineType}
             </p>

@@ -53,7 +53,7 @@ const Gallery: React.FC<GalleryProps> = ({
   }, [currentIndex]);
 
 
-  // Add key bindings
+  
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
@@ -89,10 +89,10 @@ const Gallery: React.FC<GalleryProps> = ({
       }
     };
 
-    // Add event listener
+    
     window.addEventListener("keydown", handleKeyDown);
 
-    // Remove event listener on cleanup
+    
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [currentIndex, images, closeBox]);
 

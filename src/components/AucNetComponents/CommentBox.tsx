@@ -28,7 +28,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({
         name: "You",
         time: new Date().toLocaleString(),
         comment: replyText,
-        reply: []
+        reply: [],
       };
       setReplies([...replies, newReply]);
       setReplyText("");
@@ -48,7 +48,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({
         <p className="text-sm text-gray-400">{commentData.time}</p>
       </div>
       <div className="px-12 py-2">{commentData.comment}</div>
-      
+
       {!isReply && (
         <>
           {!showReplyBox && (
@@ -77,7 +77,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({
                   className="bg-white border rounded-md px-2 w-full"
                   placeholder="Enter Comment"
                   value={replyText}
-                  onChange={handleReplyInputChange} 
+                  onChange={handleReplyInputChange}
                 />
               </div>
               <div className="flex gap-3 justify-end w-full">
@@ -85,10 +85,10 @@ const CommentBox: React.FC<CommentBoxProps> = ({
                   onClick={handleAddReply}
                   className={`text-nowrap px-4 py-1 rounded-md font-semibold transition-all ${
                     replyText.trim() === ""
-                      ? "bg-gray-300 cursor-not-allowed" 
+                      ? "bg-gray-300 cursor-not-allowed"
                       : "bg-amber-200 border border-yellow-400 cursor-pointer"
                   }`}
-                  disabled={replyText.trim() === ""} 
+                  disabled={replyText.trim() === ""}
                 >
                   Reply
                 </button>

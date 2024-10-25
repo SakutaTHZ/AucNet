@@ -84,19 +84,21 @@ const FavouritePage = () => {
         </div>
       ) : (
         <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full h-full">
-          {favouriteCards.slice(20 * currentPage - 20, 20 * currentPage).map((cardData: any, index: number) => (
-            <AucNetCard
-              key={index}
-              customClass={`opacity-0 delay-${
-                index === 0 ? 0 : index === 1 ? 100 : 200
-              }`}
-              style={{
-                animationDelay: `${index === 0 ? "0s" : `${index * 0.1}s`}`,
-                animationFillMode: "forwards",
-              }}
-              carData={cardData}
-            />
-          ))}
+          {favouriteCards
+            .slice(20 * currentPage - 20, 20 * currentPage)
+            .map((cardData: any, index: number) => (
+              <AucNetCard
+                key={index}
+                customClass={`opacity-0 delay-${
+                  index === 0 ? 0 : index === 1 ? 100 : 200
+                }`}
+                style={{
+                  animationDelay: `${index === 0 ? "0s" : `${index * 0.1}s`}`,
+                  animationFillMode: "forwards",
+                }}
+                carData={cardData}
+              />
+            ))}
         </div>
       )}
 

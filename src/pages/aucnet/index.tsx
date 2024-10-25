@@ -23,11 +23,8 @@ interface MakeBrand {
 }
 
 const App: React.FC = () => {
-  // Toggle view
   const [isTableView, setIsTableView] = useState(false);
   const [isFilterOn, setIsFilterOn] = useState(false);
-
-  const [selectedMakes, setSelectedMakes] = useState<string[]>([]);
   const [filteredModels, setFilteredModels] = useState<Model[]>([]);
 
   const makeBrandData: MakeBrand[] = [
@@ -89,8 +86,6 @@ const App: React.FC = () => {
   ];
 
   const handleMakeSelection = (selectedOptions: string[]) => {
-    setSelectedMakes(selectedOptions);
-
     const models = makeBrandData
       .filter((make) => selectedOptions.includes(make.name))
       .flatMap((make) => make.models);

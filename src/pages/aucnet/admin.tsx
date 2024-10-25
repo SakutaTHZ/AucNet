@@ -219,7 +219,10 @@ const adminPage: React.FC = () => {
             >
               <p>1</p>
             </td>
-            <td rowSpan={3} className="relative w-32 align-top border p-0 text-center">
+            <td
+              rowSpan={3}
+              className="relative w-32 align-top border p-0 text-center"
+            >
               <div className="imageContainer w-full h-full relative">
                 <img
                   className="w-full h-full object-cover"

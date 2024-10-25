@@ -5,7 +5,7 @@ interface PopupProps {
   content: ReactNode;
   isOpen: boolean;
   title?: string;
-  customClass?:string;
+  customClass?: string;
   onClose: () => void;
 }
 
@@ -31,12 +31,17 @@ const Popup: React.FC<PopupProps> = ({
       className={`fixed inset-0 bg-gray-800 backdrop-blur-sm bg-opacity-50 flex justify-center items-center z-[100]`}
       onClick={handleBackgroundClick}
     >
-      <div className={`animate-slideUp bg-white p-8 md:p-12 py-8 rounded-lg shadow-lg relative min-w-96 ${customClass}`}>
+      <div
+        className={`animate-slideUp bg-white p-8 md:p-12 py-8 rounded-lg shadow-lg relative min-w-96 ${customClass}`}
+      >
         <div className="flex items-center justify-between mb-4">
           <p className="text-2xl font-bold">{title}</p>
 
           {/* Close button */}
-          <button className="text-lg bg-gray-100 hover:bg-gray-200 text-gray-800 p-1 rounded-full transition-all" onClick={onClose}>
+          <button
+            className="text-lg bg-gray-100 hover:bg-gray-200 text-gray-800 p-1 rounded-full transition-all"
+            onClick={onClose}
+          >
             <AiOutlineClose />
           </button>
         </div>

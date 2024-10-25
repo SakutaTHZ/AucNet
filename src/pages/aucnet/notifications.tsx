@@ -1,4 +1,7 @@
-import { IoChatbubbleEllipsesOutline, IoMailOpenOutline } from "react-icons/io5";
+import {
+  IoChatbubbleEllipsesOutline,
+  IoMailOpenOutline,
+} from "react-icons/io5";
 import { MdOutlineDirectionsCar } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 interface NotificationsProps {
@@ -8,12 +11,13 @@ const Notifications: React.FC<NotificationsProps> = ({ onClick }) => {
   const location = useLocation();
 
   const notifications = location.state?.notifications || [];
-  
-  const cards = location.state?.cards.filter((card:any) => card.isBasket === true) || [];
+
+  const cards =
+    location.state?.cards.filter((card: any) => card.isBasket === true) || [];
 
   const navigate = useNavigate();
   const handleCardClick = (location: any, card: any) => {
-    return navigate(`/${location}`, { state: { card ,cards} });
+    return navigate(`/${location}`, { state: { card, cards } });
   };
 
   return (
@@ -67,7 +71,8 @@ const Notifications: React.FC<NotificationsProps> = ({ onClick }) => {
             <div className="w-full h-96 flex flex-col md:flex-row gap-3 text-xl md:text-2xl items-center justify-start md:justify-center py-5">
               <IoMailOpenOutline size={30} className="text-gray-400" />
               <p className="text-center text-gray-400 font-semibold">
-              It’s all quiet here... check back soon for updates on your auctions!
+                It’s all quiet here... check back soon for updates on your
+                auctions!
               </p>
             </div>
           )}

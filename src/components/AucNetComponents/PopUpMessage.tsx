@@ -5,7 +5,7 @@ interface PopUpMessageProps {
   customClass?: string;
 }
 
-const PopUpMessage: React.FC<PopUpMessageProps> = ({customClass}) => {
+const PopUpMessage: React.FC<PopUpMessageProps> = ({ customClass }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {

@@ -15,11 +15,13 @@ const overHundoCheck = (num: number) => {
   return num;
 };
 
-const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications,
-  onClick }) => {
+const NotiDropDown: React.FC<NotiDropDownProps> = ({
+  notifications,
+  onClick,
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const recentUnreadNotifications = notifications.slice(0, 3); // Get only the 3 most recent unread ones
+  const recentUnreadNotifications = notifications.slice(0, 3);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -27,19 +29,22 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications,
 
   const navigate = useNavigate();
   const handleCardClick = (location: any, card: any) => {
-    toggleDropdown()
-    return navigate(`/${location}`, { state: { card,cards } });
+    toggleDropdown();
+    return navigate(`/${location}`, { state: { card, cards } });
   };
-  
+
   const location = useLocation();
-  
+
   const cards = location.state?.cards || [];
 
   return (
     <div className="relative flex justify-center">
       {/* Profile and Chevron */}
 
-      <button className="relative hover:text-yellow-600" onClick={toggleDropdown}>
+      <button
+        className="relative hover:text-yellow-600"
+        onClick={toggleDropdown}
+      >
         <MdOutlineNotifications size={24} />
         {notifications.length != 0 && (
           <span className="absolute bottom-5 bg-red-600 text-white rounded-full px-1 text-xs">
@@ -72,7 +77,12 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications,
                     "after:absolute after:-left-4 after:top-1/2 after:w-3 after:h-3 after:bg-yellow-400 after:rounded-full"
                   }`}
                   onClick={() =>
-                    onClick ? onClick() : handleCardClick("details",recentUnreadNotification.toCar)
+                    onClick
+                      ? onClick()
+                      : handleCardClick(
+                          "details",
+                          recentUnreadNotification.toCar
+                        )
                   }
                 >
                   <div className="relative w-28">
@@ -83,9 +93,9 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications,
                     />
                     <div className="bg-amber-200 w-fit p-1 rounded-full absolute -bottom-2 -right-2">
                       {recentUnreadNotification.replyType ? (
-                        <IoChatbubbleEllipsesOutline  />
+                        <IoChatbubbleEllipsesOutline />
                       ) : (
-                        <MdOutlineDirectionsCar  />
+                        <MdOutlineDirectionsCar />
                       )}
                     </div>
                   </div>
@@ -106,7 +116,10 @@ const NotiDropDown: React.FC<NotiDropDownProps> = ({ notifications,
                 </div>
               ))
             ) : (
-              <p className="text-gray-500">No notifications yet, but we’ll beep when something exciting happens!</p>
+              <p className="text-gray-500">
+                No notifications yet, but we’ll beep when something exciting
+                happens!
+              </p>
             )}
           </div>
         </div>

@@ -26,7 +26,7 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
   showStatus = false,
   onClick,
 }) => {
-  const [isFavorite, setIsFavorite] = useState(carData.isFavourite); // State to manage favorite status
+  const [isFavorite, setIsFavorite] = useState(carData.isFavourite); 
 
   const navigate = useNavigate();
   const location = useLocation();

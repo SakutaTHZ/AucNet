@@ -8,7 +8,12 @@ interface RangeSliderProps {
   customClass?: string;
 }
 
-const RangeSlider: React.FC<RangeSliderProps> = ({ boxName, min, max, customClass }) => {
+const RangeSlider: React.FC<RangeSliderProps> = ({
+  boxName,
+  min,
+  max,
+  customClass,
+}) => {
   const halfPoint = Math.round((min + max) / 2);
   const [minValue, setMinValue] = useState(min);
   const [maxValue, setMaxValue] = useState(max);

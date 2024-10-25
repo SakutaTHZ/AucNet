@@ -85,7 +85,10 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
     return cardData;
   };
 
-  const cards = Array.from({ length: Math.floor(Math.random() * 300) }, generateCardData);
+  const cards = Array.from(
+    { length: Math.floor(Math.random() * 300) },
+    generateCardData
+  );
 
   const generateNotifications = () => {
     const refCar = generateCardData();
@@ -114,7 +117,10 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
     return notification;
   };
 
-  const notifications = Array.from({ length: Math.floor(Math.random() * 50)}, generateNotifications);
+  const notifications = Array.from(
+    { length: Math.floor(Math.random() * 50) },
+    generateNotifications
+  );
 
   return (
     <>
@@ -122,20 +128,13 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
         basketCount={20}
         favouriteCount={20}
         notifications={notifications}
-        customClass={
-          location.pathname === "/"
-            ? "hidden"
-            : ""
-        }
+        customClass={location.pathname === "/" ? "hidden" : ""}
         isAdmin={location.pathname === "/admin"}
       />
 
-      <ScrollToTopButton 
-        customClass={
-          location.pathname === "/"
-            ? "hidden"
-            : ""
-        }/>
+      <ScrollToTopButton
+        customClass={location.pathname === "/" ? "hidden" : ""}
+      />
 
       <div
         className={`w-screen min-h-screen flex flex-col justify-center items-center ${
@@ -149,7 +148,7 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
             : "bg-gradient-to-br from-yellow-200 via-yellow-200 to-amber-300"
         }`}
       >
-        <Link to="/home" state={{ cards,page:1}}>
+        <Link to="/home" state={{ cards, page: 1 }}>
           <h1 className="text-5xl font-bold flex items-center gap-5 drop-shadow-lg text-white cursor-pointer">
             <img src={logo} className="h-16" alt="Logo" />
             AucNet

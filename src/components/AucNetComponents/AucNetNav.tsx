@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import {
-  MdOutlineShoppingCart,
-  MdFavoriteBorder,
-} from "react-icons/md";
-import {  FaBars, FaTimes } from "react-icons/fa";
+import { MdOutlineShoppingCart, MdFavoriteBorder } from "react-icons/md";
+import { FaBars, FaTimes } from "react-icons/fa";
 import cosmoLogo from "../../assets/CosmoLogo.svg";
 import JPFlag from "../../assets/JPFlag.png";
 import ProfileDropDown from "./ProfileDropDown";
@@ -15,7 +12,7 @@ interface AucNetNavProps {
   basketCount?: number;
   favouriteCount?: number;
   notifications?: any;
-  customClass?:string;
+  customClass?: string;
   onClick?: () => void;
 }
 
@@ -34,10 +31,8 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
   customClass,
   onClick,
 }) => {
-  // State to handle burger menu toggle
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-  // Function to toggle the menu
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -48,16 +43,21 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
 
   const cards = location.state?.cards || [];
 
-  basketCount = cards.filter((card:any) => card.isBasket === true).length;
-  favouriteCount = cards.filter((card:any) => card.isFavourite === true).length;
+  basketCount = cards.filter((card: any) => card.isBasket === true).length;
+  favouriteCount = cards.filter(
+    (card: any) => card.isFavourite === true
+  ).length;
   const handleButtonClick = (location: any) => {
-    return navigate(`/${location}`, { state: { cards ,page:1} });
+    return navigate(`/${location}`, { state: { cards, page: 1 } });
   };
 
-  const activeNavClass = "text-yellow-600 bg-amber-100 md:bg-transparent md:border-b-4 md:border-b-yellow-600"
+  const activeNavClass =
+    "text-yellow-600 bg-amber-100 md:bg-transparent md:border-b-4 md:border-b-yellow-600";
 
   return (
-    <nav className={`flex bg-white justify-between gap-4 align-middle fixed w-screen top-0 left-0 shadow-sm px-8 md:px-16 lg:px-32 py-0 z-50 ${customClass}`}>
+    <nav
+      className={`flex bg-white justify-between gap-4 align-middle fixed w-screen top-0 left-0 shadow-sm px-8 md:px-16 lg:px-32 py-0 z-50 ${customClass}`}
+    >
       <img
         src={cosmoLogo}
         alt="Logo"
@@ -81,8 +81,10 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
         <div className="navLinks w-full py-2 flex flex-col gap-4 flex-start md:flex-row items-center md:justify-start">
           <Link
             to="/home"
-            state={{ cards ,page:1}}
-            className={`flex px-2 w-full md:w-auto md:h-full justify-center items-center font-bold rounded-md md:rounded-none ${!isAdmin && activeNavClass}`}
+            state={{ cards, page: 1 }}
+            className={`flex px-2 w-full md:w-auto md:h-full justify-center items-center font-bold rounded-md md:rounded-none ${
+              !isAdmin && activeNavClass
+            }`}
           >
             Car Stock
           </Link>
@@ -90,8 +92,10 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
           {isAdmin && (
             <Link
               to="/admin"
-              state={{ cards ,page:1}}
-              className={`flex px-2 w-full md:w-auto md:h-full justify-center items-center font-bold rounded-md md:rounded-none ${isAdmin && activeNavClass}`}
+              state={{ cards, page: 1 }}
+              className={`flex px-2 w-full md:w-auto md:h-full justify-center items-center font-bold rounded-md md:rounded-none ${
+                isAdmin && activeNavClass
+              }`}
             >
               Flow
             </Link>
@@ -127,7 +131,7 @@ const AucNetNav: React.FC<AucNetNavProps> = ({
                   </span>
                 )}
               </button>
-              <NotiDropDown notifications={notifications}/>
+              <NotiDropDown notifications={notifications} />
             </div>
             <div className="flex justify-center">
               <img src={JPFlag} alt="Flag" className="pr-1" />

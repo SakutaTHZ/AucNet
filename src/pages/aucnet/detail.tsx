@@ -91,11 +91,6 @@ const DetailsPage = () => {
   const openPopup = () => setIsPopupOpen(true);
   const closePopup = () => setIsPopupOpen(false);
 
-  // const [isFeaturePopupOpen, setIsFeaturePopupOpen] = useState(false);
-
-  // const openFeaturePopup = () => setIsFeaturePopupOpen(true);
-  // const closeFeaturePopup = () => setIsFeaturePopupOpen(false);
-
   const [isAISPopupOpen, setIsAISPopupOpen] = useState(false);
 
   const openAISPopup = () => setIsAISPopupOpen(true);
@@ -113,19 +108,28 @@ const DetailsPage = () => {
     setShowPopUp(true);
   };
 
-  const [showGallery,setShowGallery] = useState(false)
+  const [showGallery, setShowGallery] = useState(false);
 
-  function toggleGallery(){
-    setShowGallery(()=>!showGallery)
+  function toggleGallery() {
+    setShowGallery(() => !showGallery);
   }
 
   return (
     <>
       {showPopUp && <PopUpMessage />}
-      {showGallery && <Gallery customClass="animate-appear animate-slideUp" closeBox={toggleGallery}/>}
+      {showGallery && (
+        <Gallery
+          customClass="animate-appear animate-slideUp"
+          closeBox={toggleGallery}
+        />
+      )}
       <div className="flex flex-col gap-6 w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-28 bg-slate-50">
         <div className="flex items-center gap-1 font-medium">
-          <Link to="/home" state={{ cards, page: 1 }} className="text-gray-500p">
+          <Link
+            to="/home"
+            state={{ cards, page: 1 }}
+            className="text-gray-500p"
+          >
             Cars for Sale /
           </Link>
           <p className="text-blue-950 font-semibold">
@@ -244,7 +248,10 @@ const DetailsPage = () => {
               }}
             />
           </div>
-          <button className="absolute flex gap-2 items-center bg-white bg-opacity-75 hover:bg-opacity-100 shadow-md px-2 py-1 rounded-md right-2 md:right-4 top-2 md:top-auto md:bottom-4 transition-all" onClick={toggleGallery}>
+          <button
+            className="absolute flex gap-2 items-center bg-white bg-opacity-75 hover:bg-opacity-100 shadow-md px-2 py-1 rounded-md right-2 md:right-4 top-2 md:top-auto md:bottom-4 transition-all"
+            onClick={toggleGallery}
+          >
             <MdOutlineRemoveRedEye size={20} />
             <p className="hidden md:block">See All Photos</p>
             <p className="count font-semibold">34</p>
@@ -892,7 +899,7 @@ const DetailsPage = () => {
                 </div>
                 <div className="flex gap-3">
                   <img
-                    src={cardData.link} // Placeholder for the profile image
+                    src={cardData.link}
                     className="w-12 md:w-12 aspect-square bg-center bg-fixed bg-cover rounded-full"
                     alt="profile"
                   />
@@ -901,16 +908,16 @@ const DetailsPage = () => {
                     className="h-12 bg-white border rounded-md px-2 w-full"
                     placeholder="Enter Comment"
                     value={newComment}
-                    onChange={handleInputChange} // Track the input value
+                    onChange={handleInputChange}
                   />
                   <button
-                    onClick={handleAddComment} // Add the new comment on click
+                    onClick={handleAddComment}
                     className={` text-nowrap px-4 py-1 rounded-md font-semibold transition-all ${
                       newComment.trim() === ""
                         ? "bg-gray-200 cursor-not-allowed"
                         : "bg-amber-200 border border-yellow-400 cursor-pointer"
                     }`}
-                    disabled={newComment.trim() === ""} // Disable the button if input is empty
+                    disabled={newComment.trim() === ""}
                   >
                     Submit
                   </button>
@@ -932,19 +939,19 @@ const DetailsPage = () => {
           <h1 className="text-3xl pb-4 font-bold">Recommend for you</h1>
           <div className="flex flex-col md:flex-row gap-4">
             {recommend.map((cardData: any, index: number) => (
-                <AucNetCard
-                  key={index}
-                  customClass={`opacity-0 delay-${
-                    index === 0 ? 0 : index === 1 ? 100 : 200
-                  }`}
-                  style={{
-                    animationDelay: `${index === 0 ? "0s" : `${index * 0.1}s`}`,
-                    animationFillMode: "forwards",
-                  }}
-                  carData={cardData}
-                  showStatus={cardData.isBasket ? true : false}
-                />
-              ))}
+              <AucNetCard
+                key={index}
+                customClass={`opacity-0 delay-${
+                  index === 0 ? 0 : index === 1 ? 100 : 200
+                }`}
+                style={{
+                  animationDelay: `${index === 0 ? "0s" : `${index * 0.1}s`}`,
+                  animationFillMode: "forwards",
+                }}
+                carData={cardData}
+                showStatus={cardData.isBasket ? true : false}
+              />
+            ))}
           </div>
         </div>
       </div>

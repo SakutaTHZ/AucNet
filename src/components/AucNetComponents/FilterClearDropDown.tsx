@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 
@@ -18,14 +18,10 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
   boxName = "Data",
   listData,
 }) => {
-  const [searchTerm, setSearchTerm] = useState("");
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showAllChecked, setShowAllChecked] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
-
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setSearchTerm(e.target.value);
 
   const handleCheckboxChange = (item: ListDataItem) => {
     setCheckedItems((prev) =>
@@ -45,7 +41,7 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
   };
 
   const filteredData = listData.filter((item) =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    item.name.toLowerCase()
   );
 
   const toggleShowAllChecked = () => setShowAllChecked(!showAllChecked);

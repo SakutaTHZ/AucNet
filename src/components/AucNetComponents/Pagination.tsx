@@ -43,7 +43,7 @@ const Pagination: React.FC<PaginationProps> = ({
   const renderPagination = () => {
     const paginationItems = [];
 
-    // Show the first page
+    
     paginationItems.push(
       <button
         key={1}
@@ -56,7 +56,7 @@ const Pagination: React.FC<PaginationProps> = ({
       </button>
     );
 
-    // Show ellipsis if needed
+    
     if (totalPages > 5) {
       if (currentPage > 3) {
         paginationItems.push(
@@ -67,7 +67,7 @@ const Pagination: React.FC<PaginationProps> = ({
       }
     }
 
-    // Show previous pages
+    
     for (
       let i = Math.max(2, currentPage - 1);
       i <= Math.min(totalPages - 1, currentPage + 1);
@@ -86,7 +86,7 @@ const Pagination: React.FC<PaginationProps> = ({
       );
     }
 
-    // Show ellipsis if needed
+    
     if (totalPages > 5) {
       if (currentPage < totalPages - 2) {
         paginationItems.push(
@@ -97,7 +97,7 @@ const Pagination: React.FC<PaginationProps> = ({
       }
     }
 
-    // Show the last page if needed
+    
     if (totalPages > 1) {
       paginationItems.push(
         <button
@@ -112,7 +112,7 @@ const Pagination: React.FC<PaginationProps> = ({
       );
     }
 
-    // Add input box at the end
+    
     if (totalPages > 5) {
       paginationItems.push(
         <input

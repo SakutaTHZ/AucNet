@@ -13,7 +13,7 @@ interface FilterOptionDropDownProps {
   listData: ListDataItem[];
   customClass?: string;
   placeholder?: string;
-  onSelectionChange?:any;
+  onSelectionChange?: any;
 }
 
 const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
@@ -21,26 +21,23 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
   listData,
   customClass,
   placeholder = "Search here",
-  onSelectionChange
+  onSelectionChange,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showAllChecked, setShowAllChecked] = useState(false);
 
-  // Function to handle input change
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  // Handle checkbox change
   const handleCheckboxChange = (item: ListDataItem) => {
     setCheckedItems((prev) => {
       const newCheckedItems = prev.includes(item.name)
         ? prev.filter((checked) => checked !== item.name)
         : [...prev, item.name];
-  
-      // Call onSelectionChange prop with the new checked items
+
       if (onSelectionChange) {
         onSelectionChange(newCheckedItems);
       }
@@ -48,17 +45,14 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
     });
   };
 
-  // Remove item from checked list
   const handleRemoveCheckedItem = (item: string) => {
     setCheckedItems((prev) => prev.filter((checked) => checked !== item));
   };
 
-  // Filter the listData based on the search term
   const filteredData = listData.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Function to toggle showing all checked items
   const toggleShowAllChecked = () => {
     setShowAllChecked(!showAllChecked);
   };
@@ -123,7 +117,10 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
               className="flex gap-1 items-center bg-gray-100 w-fit px-2 rounded-full shadow-sm hover:bg-gray-200 cursor-pointer transition"
             >
               {item}
-              <MdClose size={14} className="text-gray-600 hover:text-gray-800" />
+              <MdClose
+                size={14}
+                className="text-gray-600 hover:text-gray-800"
+              />
             </div>
           ))}
 
