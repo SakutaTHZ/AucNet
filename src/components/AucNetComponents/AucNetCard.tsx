@@ -41,13 +41,19 @@ const AucNetCard: React.FC<AucNetCardProps> = ({
   const [showPopUp, setShowPopUp] = useState<boolean>(false);
 
   const toggleFavorite = () => {
+    isFavorite ? setMessage(()=>"The car has been removed from your favorites.") : setMessage(()=>"The car has been saved to your favorites.");
     setIsFavorite(!isFavorite);
-    setShowPopUp(true);
+    setShowPopUp(false);
+    setTimeout(() => {
+      setShowPopUp(true);
+    }, 0);
   };
+
+  const [message,setMessage] = useState("This is a message")
 
   return (
     <>
-      {showPopUp && <PopUpMessage />}
+      {showPopUp && <PopUpMessage message={message}/>}
 
       <div
         className={`card animate-slideUp transition-all flex flex-col w-full hover:bg-slate-100 cursor-pointer border border-slate-100 h-fit p-0 rounded-xl overflow-hidden shadow-md hover:shadow-lg ${customClass}`}

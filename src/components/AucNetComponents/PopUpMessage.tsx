@@ -3,9 +3,10 @@ import { MdOutlineFavorite } from "react-icons/md";
 
 interface PopUpMessageProps {
   customClass?: string;
+  message?:string;
 }
 
-const PopUpMessage: React.FC<PopUpMessageProps> = ({ customClass }) => {
+const PopUpMessage: React.FC<PopUpMessageProps> = ({ customClass,message="This is a message" }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const PopUpMessage: React.FC<PopUpMessageProps> = ({ customClass }) => {
       onClick={handleClick}
     >
       <MdOutlineFavorite size={20} className="flex-shrink-0 text-red-600" />
-      <p>The car has been saved to your favorites. </p>
+      <p>{message} </p>
     </div>
   );
 };

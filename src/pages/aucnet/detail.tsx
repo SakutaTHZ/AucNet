@@ -103,9 +103,15 @@ const DetailsPage = () => {
   const [isFavorite, setIsFavorite] = useState<boolean>(cardData.isFavourite);
   const [showPopUp, setShowPopUp] = useState<boolean>(false);
 
+  
+  const [message,setMessage] = useState("This is a message")
   const toggleFavorite = () => {
+    isFavorite ? setMessage(()=>"The car has been removed from your favorites.") : setMessage(()=>"The car has been saved to your favorites.");
     setIsFavorite(!isFavorite);
-    setShowPopUp(true);
+    setShowPopUp(false);
+    setTimeout(() => {
+      setShowPopUp(true);
+    }, 0);
   };
 
   const [showGallery, setShowGallery] = useState(false);
@@ -116,7 +122,7 @@ const DetailsPage = () => {
 
   return (
     <>
-      {showPopUp && <PopUpMessage />}
+      {showPopUp && <PopUpMessage message={message}/>}
       {showGallery && (
         <Gallery
           customClass="animate-appear animate-slideUp"
@@ -128,7 +134,7 @@ const DetailsPage = () => {
           <Link
             to="/home"
             state={{ cards, page: 1 }}
-            className="text-gray-500p"
+            className="text-gray-500"
           >
             Cars for Sale /
           </Link>
@@ -151,7 +157,7 @@ const DetailsPage = () => {
                 <MdOutlineDirectionsCar size={20} /> {cardData.type}
               </div>
               <div className="flex items-center gap-1 text-gray-500 py-1">
-                <TbEngine size={20} /> {cardData.enginePower} cc
+                <TbEngine size={20} /> {cardData.enginePower.toLocaleString()} cc
               </div>
               <div className="flex items-center gap-1 text-gray-500 py-1">
                 <TbRoad size={20} /> {cardData.mileage.toLocaleString()} km
@@ -163,12 +169,12 @@ const DetailsPage = () => {
             <div className="flex item-center gap-2">
               <button
                 onClick={toggleFavorite}
-                className={`flex items-center gap-1 px-4 font-semibold hover:text-white hover:bg-red-400 py-1 rounded-md transition-all duration-500 bg-gray-100 shadow-sm`}
+                className={`flex items-center gap-1 px-4 font-semibold hover:bg-gray-200 py-1 rounded-md transition-all duration-500 bg-gray-100 shadow-sm`}
               >
                 {isFavorite ? (
                   <TbHeartFilled
                     size={20}
-                    className="text-red-500 hover:text-white"
+                    className="text-red-500"
                   />
                 ) : (
                   <TbHeart size={20} />
@@ -930,7 +936,7 @@ const DetailsPage = () => {
             <CarStatusBox
               cardData={cardData}
               customClass="md:w-full md:sticky md:top-24"
-              status={cardData.status}
+              status={'checkavailability'}
             />
           </div>
         </div>
