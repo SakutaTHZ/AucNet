@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   IoCarOutline,
   IoCheckmarkCircleSharp,
@@ -9,6 +9,7 @@ import {
 import { TbCalendarCheck } from "react-icons/tb";
 import StatusBullet from "./StatusBullet";
 import { PiSealCheckFill } from "react-icons/pi";
+import PopUpMessage from "./PopUpMessage";
 
 interface CarStatusBoxProps {
   customClass?: string;
@@ -21,9 +22,23 @@ const CarStatusBox: React.FC<CarStatusBoxProps> = ({
   cardData,
   status = "default",
 }) => {
+  const [carStatus,setCarStatus] = useState(status);
+    
+  const [showPopUp, setShowPopUp] = useState<boolean>(false);
+
+  const changeStatus = ()=>{
+    setCarStatus(()=>"checkavailability")
+    setShowPopUp(false);
+    setTimeout(() => {
+      setShowPopUp(true);
+    }, 0);
+  }
+
   return (
     <>
-      {status === "checkavailability" ? (
+      {showPopUp && <PopUpMessage message={"The request has been sent"}/>}
+
+      {carStatus === "checkavailability" ? (
         <div className={`w-full md:w-1/3 flex flex-col gap-3 ${customClass}`}>
           <div className="itemCard flex flex-col gap-4 rounded-md shadow-md p-6">
             <StatusBullet
@@ -68,7 +83,7 @@ const CarStatusBox: React.FC<CarStatusBoxProps> = ({
             </p>
           </div>
         </div>
-      ) : status === "unavailable" ? (
+      ) : carStatus === "unavailable" ? (
         <div className={`w-full md:w-1/3 flex flex-col gap-3 ${customClass}`}>
           <div className="itemCard flex flex-col gap-4 rounded-md shadow-md p-6">
             <StatusBullet status="unavailable" customClass="font-semibold" />
@@ -131,7 +146,7 @@ const CarStatusBox: React.FC<CarStatusBoxProps> = ({
             </p>
           </div>
         </div>
-      ) : status === "orderconfirmed" ? (
+      ) : carStatus === "orderconfirmed" ? (
         <div className={`w-full md:w-1/3 flex flex-col gap-3 ${customClass}`}>
           <div className="itemCard flex flex-col gap-4 rounded-md shadow-md p-6">
             <StatusBullet status="orderconfirmed" customClass="font-semibold" />
@@ -190,7 +205,7 @@ const CarStatusBox: React.FC<CarStatusBoxProps> = ({
             </p>
           </div>
         </div>
-      ) : status === "canceled" ? (
+      ) : carStatus === "canceled" ? (
         <div className={`w-full md:w-1/3 flex flex-col gap-3 ${customClass}`}>
           <div className="itemCard flex flex-col gap-4 rounded-md shadow-md p-6">
             <StatusBullet status="canceled" customClass="font-semibold" />
@@ -249,7 +264,7 @@ const CarStatusBox: React.FC<CarStatusBoxProps> = ({
             </p>
           </div>
         </div>
-      ) : status === "purchased" ? (
+      ) : carStatus === "purchased" ? (
         <div className={`w-full md:w-1/3 flex flex-col gap-3 ${customClass}`}>
           <div className="itemCard flex flex-col gap-4 rounded-md shadow-md p-6">
             <StatusBullet status="purchased" customClass="font-semibold" />
@@ -360,8 +375,8 @@ const CarStatusBox: React.FC<CarStatusBoxProps> = ({
             </div>
 
             <div className="flex flex-col gap-2">
-              <button className="bg-amber-400 py-2 font-bold rounded-md">
-                Check availability
+              <button className="bg-amber-400 py-2 font-bold rounded-md" onClick={changeStatus}>
+                Check Availability
               </button>
               <p className="text-gray-500 text-center">
                 Admin team will check the availability of the selected car.
