@@ -10,6 +10,7 @@ import AucNetRow from "../../components/AucNetComponents/AucNetRow";
 import Pagination from "../../components/AucNetComponents/Pagination";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaCarTunnel } from "react-icons/fa6";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 interface Model {
   name: string;
@@ -188,7 +189,7 @@ const App: React.FC = () => {
                   className="clearAll text-yellow-600 font-semibold"
                   onClick={handleClearAll}
                 >
-                  Clear all
+                  <FaRegTrashAlt />
                 </button>
               </div>
               <FilterOptionDropDown

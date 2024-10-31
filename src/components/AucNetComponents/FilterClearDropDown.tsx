@@ -24,25 +24,34 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
   const [selectAll, setSelectAll] = useState(false);
 
   const handleCheckboxChange = (item: ListDataItem) => {
-    setCheckedItems((prev) =>
-      prev.includes(item.name)
-        ? prev.filter((checked) => checked !== item.name)
-        : [...prev, item.name]
-    );
+    const updatedCheckedItems = checkedItems.includes(item.name)
+      ? checkedItems.filter((checked) => checked !== item.name)
+      : [...checkedItems, item.name];
+    
+    setCheckedItems(updatedCheckedItems);
+    
+    // Check if all items are selected after update
+    setSelectAll(updatedCheckedItems.length === listData.length);
   };
 
   const handleRemoveCheckedItem = (item: string) => {
-    setCheckedItems((prev) => prev.filter((checked) => checked !== item));
+    const updatedCheckedItems = checkedItems.filter((checked) => checked !== item);
+    setCheckedItems(updatedCheckedItems);
+
+    // Check if all items are selected after removal
+    setSelectAll(updatedCheckedItems.length === listData.length);
   };
 
   const handleSelectAllChange = () => {
-    setCheckedItems(selectAll ? [] : listData.map((item) => item.name));
+    if (selectAll) {
+      setCheckedItems([]);
+    } else {
+      setCheckedItems(listData.map((item) => item.name));
+    }
     setSelectAll(!selectAll);
   };
 
-  const filteredData = listData.filter((item) =>
-    item.name.toLowerCase()
-  );
+  const filteredData = listData.filter((item) => item.name.toLowerCase());
 
   const toggleShowAllChecked = () => setShowAllChecked(!showAllChecked);
 
@@ -68,6 +77,7 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
             <label className="inline-flex items-center cursor-pointer">
               <input
                 type="checkbox"
+                checked={selectAll}
                 className="sr-only peer"
                 onChange={handleSelectAllChange}
               />

@@ -36,6 +36,7 @@ const App: React.FC = () => {
     "orderconfirmed",
     "canceled",
     "purchased",
+    "default",
   ];
 
   const generateCardData = () => {
@@ -85,10 +86,18 @@ Sociosqu nascetur fusce sociosqu in sociosqu; dapibus sodales amet. Eget hac mol
     return cardData;
   };
 
-  const cards = Array.from(
-    { length: Math.floor(Math.random() * 300) },
-    generateCardData
-  );
+  const totalCards = Math.floor(Math.random() * 300);
+  const cards = Array.from({ length: totalCards }, generateCardData);
+
+  cards.forEach((card, index) => {
+    if (index < carStatus.length) {
+      card.status = carStatus[index];
+      card.isBasket = true;
+      card.isFavourite = true;
+    } else {
+      card.status = carStatus[Math.floor(Math.random() * carStatus.length)];
+    }
+  });
 
   const generateNotifications = () => {
     const refCar = generateCardData();

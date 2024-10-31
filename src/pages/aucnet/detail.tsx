@@ -12,7 +12,7 @@ import {
   MdAirlineSeatReclineNormal,
   MdOutlineStarOutline,
 } from "react-icons/md";
-import { TbEngine, TbRoad, TbHeart, TbHeartFilled } from "react-icons/tb";
+import { TbRoad, TbHeart, TbHeartFilled } from "react-icons/tb";
 import AucNetCard from "../../components/AucNetComponents/AucNetCard";
 
 import CarStatusBox from "../../components/AucNetComponents/CarStatusBox";
@@ -153,16 +153,16 @@ const DetailsPage = () => {
           </div>
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
             <div className="flex flex-wrap py-3 gap-4 gap-y-1 justify-start">
-              <div className="flex items-center gap-1 text-gray-500 py-1">
+              <div className="flex items-center gap-1 text-[#797A7B] py-1">
                 <MdOutlineDirectionsCar size={20} /> {cardData.type}
               </div>
-              <div className="flex items-center gap-1 text-gray-500 py-1">
-                <TbEngine size={20} /> {cardData.enginePower.toLocaleString()} cc
+              <div className="flex items-center gap-1 text-[#797A7B] py-1">
+              <img src={enginepower} alt="Engine Power" className="w-[22px] grayscale opacity-55" /> {cardData.enginePower.toLocaleString()} cc
               </div>
-              <div className="flex items-center gap-1 text-gray-500 py-1">
+              <div className="flex items-center gap-1 text-[#797A7B] py-1">
                 <TbRoad size={20} /> {cardData.mileage.toLocaleString()} km
               </div>
-              <div className="flex items-center gap-1 text-gray-500 py-1">
+              <div className="flex items-center gap-1 text-[#797A7B] py-1">
                 <MdOutlineDateRange size={20} /> {cardData.year}
               </div>
             </div>
@@ -936,7 +936,7 @@ const DetailsPage = () => {
             <CarStatusBox
               cardData={cardData}
               customClass="md:w-full md:sticky md:top-24"
-              status={'checkavailability'}
+              status={cardData.status}
             />
           </div>
         </div>
