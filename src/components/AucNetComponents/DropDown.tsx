@@ -7,11 +7,12 @@ interface DropDownProps {
   optionClass?: string;
   optionBoxClass?:string;
   buttonClass?:string;
+  selected?:string;
 }
 
-const DropDown: React.FC<DropDownProps> = ({ options, customClass,buttonClass, optionClass, optionBoxClass='right-0' }) => {
+const DropDown: React.FC<DropDownProps> = ({ selected,options, customClass,buttonClass, optionClass, optionBoxClass='right-0' }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedOption, setSelectedOption] = useState(selected?selected:options[0]);
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);

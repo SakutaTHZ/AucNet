@@ -148,6 +148,10 @@ body {
   display: none;
 }
 
+input[type="checkbox"]{
+  accent-color:#FFC158;
+}
+
 /* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

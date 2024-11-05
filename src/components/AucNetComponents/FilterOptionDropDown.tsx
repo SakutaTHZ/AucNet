@@ -93,7 +93,7 @@ const FilterOptionDropDown: React.FC<FilterOptionDropDownProps> = ({
                       type="checkbox"
                       checked={checkedItems.includes(item.name)}
                       onChange={() => handleCheckboxChange(item)}
-                      className="form-checkbox h-3 w-3 hue-rotate-[185deg] opacity-80 cursor-pointer"
+                      className="form-checkbox h-3 w-3 cursor-pointer"
                     />
                     <span>{item.name}</span>
                   </label>

@@ -1,22 +1,87 @@
+const conditions: string[] = [
+  "Condition",
+  "Not Paid",
+  "Cancelled",
+  "Group",
+  "No Bid",
+  "Too Low Bid",
+  "Hold",
+  "Leave,Admin",
+];
+
+const statusSelectBefore: string[] = [
+  "No Sales Code",
+  "Cancel",
+  "Last",
+  "SKTSU",
+  "Sold",
+  "Nego",
+  "BGHT",
+  "Hold",
+];
+const statusSelectAfter: string[] = [
+  "Not Auction",
+  "Cancelled",
+  "Last Bid",
+  "Not Bought",
+  "Bought",
+  "Sold By Nego",
+  "Hold",
+  "Blocked",
+];
+
+const status: string[] = [
+  "All",
+  "New",
+  "Approved",
+  "Qualified",
+  "Processed",
+  "Finished",
+];
+const getRandomDate = (start: Date, end: Date) => {
+  const date = new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
+
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = date.toLocaleString("default", { month: "short" });
+  const year = date.getFullYear();
+
+  return `${day}-${month}-${year}`;
+};
+
 // Mock data fetching function with a delay
 const fetchCarData = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const data = Array.from({ length: 5 }).map((_, i) => ({
-        orderDate: new Date("2024-07-11T00:00:00Z"),
-        chassis: "ABCDS",
+      console.log(conditions[Math.floor(Math.random() * conditions.length)]);
+      const data = Array.from({ length: 50 }).map((_, i) => ({
+        orderDate: getRandomDate(
+          new Date("2024-01-01"),
+          new Date("2024-12-31")
+        ),
+        chassis:
+          "ABCDS" + Math.floor(Math.random() * (100000 - 10000 + 1) + 10000),
         make: "Toyota",
-        model: "Model " + i,
+        model: "Model" + Math.floor(Math.random() * (1000 - 100 + 1) + 100),
         id: i,
-        customer: "Customer " + i,
+        status: status[Math.floor(Math.random() * status.length)],
+        customer: "Ken" + Math.floor(Math.random() * (1000 - 100 + 1) + 100),
         stockPrice: Math.floor(Math.random() * (100000 - 10000 + 1) + 10000),
-        leaveReason: "Condition",
-        stateBefore: "No Sales Code",
-        stateAfter: "Not Auction",
-        imageUrl: "https://i.pinimg.com/originals/46/2f/42/462f42b27b701a708e60bb73866659f1.jpg",
+        leaveReason: conditions[Math.floor(Math.random() * conditions.length)],
+        stateBefore:
+          statusSelectBefore[
+            Math.floor(Math.random() * statusSelectBefore.length)
+          ],
+        stateAfter:
+          statusSelectAfter[
+            Math.floor(Math.random() * statusSelectAfter.length)
+          ],
+        imageUrl: "../src/assets/images/stock/00165048_01.jpg",
+        images: Math.floor(Math.random() * (25 - 12 + 1) + 12),
       }));
       resolve(data);
-    }, 2000); // simulate 2-second delay
+    }, 5000); // simulate 2-second delay
   });
 };
 
@@ -53,17 +118,6 @@ import Gallery from "../../components/AucNetComponents/Gallery";
 import AdminTableRow from "../../components/AucNetComponents/AdminComponents/AdminTableRow";
 import ErrorBoundary from "../../components/AucNetComponents/AdminComponents/ErrorBoundary";
 
-const CarList = () => {
-  const cars = resource.read(); // This will throw until data is ready
-  return (
-    <tbody>
-      {cars.map((car:any) => (
-        <AdminTableRow key={car.id} {...car} />
-      ))}
-    </tbody>
-  );
-};
-
 const adminPage: React.FC = () => {
   const [activeBullet, setActiveBullet] = useState<string>("New");
 
@@ -87,6 +141,45 @@ const adminPage: React.FC = () => {
     );
   }
 
+  const [selectAll, setSelectAll] = useState(false);
+
+  const [selectedRows, setSelectedRows] = useState<number[]>([]);
+
+  const handleCheckboxChange = (id: number, checked: boolean) => {
+    setSelectedRows((prevSelected) => {
+      const newSelectedRows = checked
+        ? [...prevSelected, id]
+        : prevSelected.filter((rowId) => rowId !== id);
+
+      // Update the "Select All" checkbox based on whether all rows are selected
+      setSelectAll(newSelectedRows.length === 50);
+      return newSelectedRows;
+    });
+  };
+
+  const handleSelectAllChange = (checked: boolean) => {
+    setSelectAll(checked);
+    setSelectedRows(checked ? Array.from({ length: 50 }, (_, i) => i) : []);
+  };
+
+  const CarList = () => {
+    const cars = resource.read();
+    return (
+      <tbody>
+        {cars.map((car: any) => (
+          <AdminTableRow
+            key={car.id}
+            car={car}
+            onClick={toggleGallery}
+            customClass="animate-appear"
+            isSelected={selectedRows.includes(car.id)}
+            onCheckboxChange={(checked:any) => handleCheckboxChange(car.id, checked)}
+          />
+        ))}
+      </tbody>
+    );
+  };
+
   const status: string[] = [
     "All",
     "New",
@@ -104,64 +197,8 @@ const adminPage: React.FC = () => {
     "Cyprus",
   ];
 
-  const conditions: string[] = [
-    "Condition",
-    "Not Paid",
-    "Cancelled",
-    "Group",
-    "No Bid",
-    "Too Low Bid",
-    "Hold",
-    "Leave,Admin",
-  ];
-  
-  const statusSelectBefore: string[] = [
-    "No Sales Code",
-    "Cancel",
-    "Last",
-    "SKTSU",
-    "Sold",
-    "Nego",
-    "BGHT",
-    "Hold",
-  ];
-  const statusSelectAfter: string[] = [
-    "Not Auction",
-    "Cancelled",
-    "Last Bid",
-    "Not Bought",
-    "Bought",
-    "Sold By Nego",
-    "Hold",
-    "Blocked",
-  ];
-
-  const queue:any = [];
-  const generateCars = () => {
-    for (let i = 0; i < 5; i++) {
-      queue.push({
-        orderDate: new Date("2024-07-11T00:00:00Z"),
-        chassis: "ABCDS",
-        make: "Toyota",
-        model: "Model "+i,
-        id: i,
-        customer: "Customer "+i,
-        stockPrice:Math.floor(Math.random() * (100000 - 10000 + 1) + 10000),
-        leaveReason:conditions[Math.floor(Math.random() * conditions.length)],
-        stateBefore:statusSelectBefore[Math.floor(Math.random() * statusSelectBefore.length)],
-        stateAfter:statusSelectAfter[Math.floor(Math.random() * statusSelectAfter.length)],
-        imageUrl:
-          "https://i.pinimg.com/originals/46/2f/42/462f42b27b701a708e60bb73866659f1.jpg",
-      });
-    }
-  
-    console.log(queue);
-  };
-
-  generateCars();
-
   return (
-    <div className="w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 pt-24 bg-slate-50">
+    <div className="w-full h-fit min-h-screen px-8 md:px-16 lg:px-32 py-24 bg-slate-50">
       {showGallery && (
         <Gallery
           customClass="animate-appear animate-slideUp"
@@ -219,7 +256,7 @@ const adminPage: React.FC = () => {
             <p className="font-semibold">Status</p>
             <DropDown
               options={status}
-              customClass="w-full z-50"
+              customClass="w-full z-20"
               optionClass="w-full"
               optionBoxClass="left-0"
               buttonClass="py-2"
@@ -229,7 +266,7 @@ const adminPage: React.FC = () => {
             <p className="font-semibold">Region</p>
             <DropDown
               options={region}
-              customClass="w-full z-50"
+              customClass="w-full z-20"
               optionClass="w-full"
               optionBoxClass="left-0"
               buttonClass="py-2"
@@ -239,7 +276,7 @@ const adminPage: React.FC = () => {
             <p className="font-semibold">Customer</p>
             <DropDown
               options={status}
-              customClass="w-full z-50"
+              customClass="w-full z-20"
               optionClass="w-full"
               optionBoxClass="left-0"
               buttonClass="py-2"
@@ -249,7 +286,7 @@ const adminPage: React.FC = () => {
             <p className="font-semibold">Auction</p>
             <DropDown
               options={status}
-              customClass="w-full z-50"
+              customClass="w-full z-20"
               optionClass="w-full"
               optionBoxClass="left-0"
               buttonClass="py-2"
@@ -259,7 +296,7 @@ const adminPage: React.FC = () => {
             <p className="font-semibold">Model</p>
             <DropDown
               options={status}
-              customClass="w-full z-50"
+              customClass="w-full z-20"
               optionClass="w-full"
               optionBoxClass="left-0"
               buttonClass="py-2"
@@ -269,7 +306,7 @@ const adminPage: React.FC = () => {
             <p className="font-semibold">Auction Grade</p>
             <DropDown
               options={status}
-              customClass="w-full z-50"
+              customClass="w-full z-20"
               optionClass="w-full"
               optionBoxClass="left-0"
               buttonClass="py-2"
@@ -279,7 +316,7 @@ const adminPage: React.FC = () => {
             <p className="font-semibold">Sort By</p>
             <DropDown
               options={status}
-              customClass="w-full z-50"
+              customClass="w-full z-20"
               optionClass="w-full"
               optionBoxClass="left-0"
               buttonClass="py-2"
@@ -293,14 +330,33 @@ const adminPage: React.FC = () => {
           <table className="w-full border mt-6">
             <thead>
               <tr className="bg-gray-100">
-                <td className="border text-center"><input type="checkbox" /></td>
+                <td className="border text-center">
+                  <input
+                    type="checkbox"
+                    className="mainCheck"
+                    checked={selectAll}
+                    onChange={(e) => handleSelectAllChange(e.target.checked)}
+                  />
+                </td>
                 <td className="border text-center font-semibold py-2">#</td>
-                <td className="w-52 border text-center font-semibold py-2">Images</td>
-                <td className="border text-center font-semibold py-2">Order Date</td>
-                <td className="border text-center font-semibold py-2">Model/Chassis</td>
-                <td className="border text-center font-semibold py-2">Customer</td>
-                <td className="border text-center font-semibold py-2">Stock Price</td>
-                <td className="border text-center font-semibold py-2">Leave Reason</td>
+                <td className="w-52 border text-center font-semibold py-2">
+                  Images
+                </td>
+                <td className="border text-center font-semibold py-2">
+                  Order Date
+                </td>
+                <td className="border text-center font-semibold py-2">
+                  Model/Chassis
+                </td>
+                <td className="border text-center font-semibold py-2">
+                  Customer
+                </td>
+                <td className="border text-center font-semibold py-2">
+                  Stock Price
+                </td>
+                <td className="border text-center font-semibold py-2">
+                  Leave Reason
+                </td>
                 <td className="border text-center font-semibold py-2">State</td>
                 <td className="border text-center font-semibold py-2">Price</td>
               </tr>
