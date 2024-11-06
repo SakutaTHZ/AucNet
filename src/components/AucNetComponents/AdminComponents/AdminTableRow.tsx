@@ -136,8 +136,8 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
         </td>
         <td className="border w-36 text-center py-2">
           <div className="flex flex-col gap-1">
-            <p className="customer font-bold">{` Mr ${car.customer}`}</p>
-            <p className="region">Japan</p>
+            <p className="customer font-bold">{`${car.customer}`}</p>
+            <p className="region">{`${car.region}`}</p>
           </div>
         </td>
         <td className="w-48 border text-center font-semibold py-2">
@@ -150,9 +150,9 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
         <td className="w-48 border text-center font-semibold py-2">
           <DropDown
             options={conditions}
-            customClass="md:w-fit h-fit text-sm"
-            optionClass="w-fit h-fit text-sm"
-            optionBoxClass="left-0 w-fit h-fit z-50"
+            customClass="md:w-fit h-fit text-sm bg-gray-100"
+            optionClass="w-full h-fit text-sm"
+            optionBoxClass="left-0 w-fit-cus h-fit z-50"
             buttonClass="py-1"
             selected={car.leaveReason}
           />
@@ -161,7 +161,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
           <div className="flex flex-col items-center gap-0.5">
             <DropDown
               options={statusSelectBefore}
-              customClass="md:w-36 h-fit text-sm"
+              customClass="md:w-36 h-fit text-sm bg-gray-100"
               optionClass="w-fit h-fit text-sm"
               optionBoxClass="left-0 w-fit h-fit z-20"
               buttonClass="py-0.5"
@@ -170,8 +170,8 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
             <FaChevronDown size={10} className="text-gray-400" />
             <DropDown
               options={statusSelectAfter}
-              customClass="md:w-36 h-fit text-sm"
-              optionClass="w-fit h-fit text-sm"
+              customClass="md:w-36 h-fit text-sm bg-gray-100"
+              optionClass="w-fit h-fit text-sm bg-gray-100"
               optionBoxClass="left-0 w-fit h-fit z-20"
               buttonClass="py-0.5"
               selected={car.stateAfter}
@@ -182,7 +182,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
           <div className="flex justify-center gap-1">
             <input
               type="text"
-              className="border w-12 px-1 rounded-md"
+              className="border w-12 px-1 rounded-md bg-gray-100"
               placeholder="¥00"
             />
             <p className="price font-bold">,000</p>

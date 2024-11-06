@@ -8,15 +8,20 @@ interface DropDownProps {
   optionBoxClass?:string;
   buttonClass?:string;
   selected?:string;
+  onSelectionChange?: (selectedItems: string) => void;
 }
 
-const DropDown: React.FC<DropDownProps> = ({ selected,options, customClass,buttonClass, optionClass, optionBoxClass='right-0' }) => {
+const DropDown: React.FC<DropDownProps> = ({ selected,options, customClass,buttonClass, optionClass, optionBoxClass='right-0',
+  onSelectionChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(selected?selected:options[0]);
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
     setIsOpen(false);
+    if (onSelectionChange) {
+      onSelectionChange(option);
+    }
   };
 
   const toggleDropdown = () => {
@@ -27,7 +32,7 @@ const DropDown: React.FC<DropDownProps> = ({ selected,options, customClass,butto
     <div className={`relative inline-block w-full text-left ${customClass}`}>
       <button
         onClick={toggleDropdown}
-        className={`inline-flex justify-between gap-2 text-nowrap items-center w-full bg-white border border-gray-300 hover:border-gray-400 px-3 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
+        className={`inline-flex justify-between gap-2 text-nowrap items-center w-full transition-all border border-gray-300 hover:border-gray-400 px-3 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
       >
         {selectedOption}
         <FaChevronDown size={12} className="text-gray-400 flex-shrink-0" />

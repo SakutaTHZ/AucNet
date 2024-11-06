@@ -152,6 +152,10 @@ input[type="checkbox"]{
   accent-color:#FFC158;
 }
 
+.w-fit-cus{
+  width:fit-content !important;
+}
+
 /* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
