@@ -348,7 +348,7 @@ const adminPage: React.FC = () => {
               onSelectionChange={handleCustomerChange}
             />
           </div>
-          <div className="w-full flex flex-col gap-1">
+          {/* <div className="w-full flex flex-col gap-1">
             <p className="font-semibold">Auction</p>
             <DropDownSearch
               options={auction}
@@ -357,7 +357,7 @@ const adminPage: React.FC = () => {
               buttonClass="py-2 h-10"
               onSelectionChange={handleAuctionChange}
             />
-          </div>
+          </div> */}
           <div className="w-full flex flex-col gap-1">
             <p className="font-semibold">Model</p>
             <DropDownSearch
