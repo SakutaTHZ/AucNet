@@ -12,16 +12,19 @@ interface AdminTableRowProps {
   count?: number;
   car: any;
   isSelected: boolean;
+  carNum:number;
   onClick?: () => void;
   onCheckboxChange?: any;
 }
 
 const AdminTableRow: React.FC<AdminTableRowProps> = ({
+  carNum,
   car,
   onClick,
   onCheckboxChange,
   isSelected = false,
 }) => {
+
   const status: string[] = [
     "All",
     "New",
@@ -65,7 +68,6 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
   const [currentStatus, setCurrentStatus] = useState(car.status);
 
   const handleStatusChange = (newstatus: any) => {
-    console.log(newstatus);
     setCurrentStatus(newstatus);
   };
 
@@ -83,7 +85,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
           rowSpan={2}
           className="border align-top text-center font-semibold px-1"
         >
-          <p>{car.id + 1}</p>
+          <p>{carNum+1}</p>
         </td>
         <td
           rowSpan={2}
@@ -96,7 +98,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
           >
             <img
               className={`w-full h-full object-cover block`}
-              src={`../src/assets/images/stock/00165048_01.jpg`}
+              src={car.link}
               style={{ filter: `hue-rotate(${car.id * 30}deg)` }}
               alt=""
             />

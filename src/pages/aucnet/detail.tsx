@@ -147,7 +147,7 @@ const DetailsPage = () => {
           <div className="flex text-3xl gap-4 font-bold">
             {cardData.name} {cardData.engineType}
             <StatusBullet
-              status={cardData.status}
+              status={cardData.availabilityStatus}
               customClass="font-semibold hidden"
             />
           </div>
@@ -936,7 +936,7 @@ const DetailsPage = () => {
             <CarStatusBox
               cardData={cardData}
               customClass="md:w-full md:sticky md:top-24"
-              status={cardData.status}
+              status={cardData.availabilityStatus}
             />
           </div>
         </div>

@@ -111,7 +111,7 @@ const DropDownSearch: React.FC<DropDownSearchProps> = ({
                   />
                   <span>All</span>
                 </div>
-                <span className="text-gray-500">{options.reduce((acc, item) => acc + item.count, 0)}</span>
+                <span className="text-transparent">{options.reduce((acc, item) => acc + item.count, 0)}</span>
               </label>
             </div>
 
@@ -132,7 +132,7 @@ const DropDownSearch: React.FC<DropDownSearchProps> = ({
                       />
                       <span>{item.name}</span>
                     </label>
-                    <span className="text-gray-500">{item.count}</span>
+                    <span className="text-transparent">{item.count}</span>
                   </div>
                 ))
               ) : (

@@ -77,7 +77,7 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
               customClass={`absolute top-1 left-1 text-xs rounded-xl font-semibold ${
                 showStatus ? "block" : "hidden"
               }`}
-              status={carData.status}
+              status={carData.availabilityStatus}
             />
             <img
               src={carData.link}
@@ -137,7 +137,7 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
             customClass={`absolute top-1 left-1 text-xs rounded-xl font-semibold ${
               showStatus ? "block" : "hidden"
             }`}
-            status={carData.status}
+            status={carData.availabilityStatus}
           />
 
           <img

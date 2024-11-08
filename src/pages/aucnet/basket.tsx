@@ -17,19 +17,19 @@ const MyBasket: React.FC = () => {
 
   const statusCounts = {
     checkavailability: cards.filter(
-      (card: any) => card.status === "checkavailability"
+      (card: any) => card.availabilityStatus === "checkavailability"
     ).length,
-    unavailable: cards.filter((card: any) => card.status === "unavailable")
+    unavailable: cards.filter((card: any) => card.availabilityStatus === "unavailable")
       .length,
     orderconfirmed: cards.filter(
-      (card: any) => card.status === "orderconfirmed"
+      (card: any) => card.availabilityStatus === "orderconfirmed"
     ).length,
-    canceled: cards.filter((card: any) => card.status === "canceled").length,
-    purchased: cards.filter((card: any) => card.status === "purchased").length,
+    canceled: cards.filter((card: any) => card.availabilityStatus === "canceled").length,
+    purchased: cards.filter((card: any) => card.availabilityStatus === "purchased").length,
   };
 
   const filteredCards = selectedStatus
-    ? cards.filter((card: any) => card.status === selectedStatus)
+    ? cards.filter((card: any) => card.availabilityStatus === selectedStatus)
     : cards;
 
   const [currentPage, setCurrentPage] = useState(location.state?.page);

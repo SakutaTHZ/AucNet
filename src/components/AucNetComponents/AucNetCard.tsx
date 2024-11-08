@@ -70,7 +70,7 @@ const AucNetCard: React.FC<AucNetCardProps> = ({
             customClass={`absolute top-1 left-1 text-xs rounded-xl font-semibold ${
               showStatus ? "block" : "hidden"
             }`}
-            status={carData.status}
+            status={carData.availabilityStatus}
           />
           <button
             onClick={toggleFavorite}
