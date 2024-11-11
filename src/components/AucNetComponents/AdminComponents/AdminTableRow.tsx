@@ -3,6 +3,9 @@ import AdminStatusBullet from "./AdminStatusBullet";
 import { FaChevronDown } from "react-icons/fa";
 import { MdImage } from "react-icons/md";
 import DropDown from "../DropDown";
+import { useNavigate } from "react-router-dom";
+import { useAtom } from "jotai";
+import { carAtom } from "../../../components/AucNetComponents/Datas/atoms";
 
 interface AdminTableRowProps {
   customClass?: string;
@@ -70,6 +73,47 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
   const handleStatusChange = (newstatus: any) => {
     setCurrentStatus(newstatus);
   };
+  const navigate = useNavigate();
+
+  const [cards] = useAtom(carAtom);
+  const carcards = cards.map((card) => ({
+    isFavourite: card.isFavourite,
+    isBasket: card.isBasket,
+    name: card.name,
+    type: card.type,
+    link: card.link,
+    engineType: card.engineType,
+    availabilityStatus: card.availabilityStatus,
+    status: card.status,
+    price: card.price,
+    enginePower: card.enginePower,
+    mileage: card.mileage,
+    year: card.year,
+    comments: card.comments,
+    orderDate: card.orderDate,
+    chassis: card.chassis,
+    make: card.make,
+    model: card.model,
+    region: card.region,
+    auction: card.auction,
+    auctionGrade: card.auctionGrade,
+    statusAfter: card.statusAfter,
+    customer: card.customer,
+    stockPrice: card.stockPrice,
+    leaveReason: card.leaveReason,
+    stateBefore: card.stateBefore,
+    stateAfter: card.stateAfter,
+    imageUrl: card.imageUrl,
+    images: card.images,
+  }));
+  
+  console.log(carcards);
+  const recommend = [...cards].sort(() => 0.5 - Math.random()).slice(0, 4);
+
+  const handleCardClick = (cardData: any) => {
+    console.log('navigate')
+    navigate("/details", { state: { card: cardData, cards: cards , recommend:recommend } });
+  };
 
   return (
     <>
@@ -84,6 +128,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
         <td
           rowSpan={2}
           className="border align-top text-center font-semibold px-1"
+          onClick={()=>handleCardClick(car)}
         >
           <p>{carNum+1}</p>
         </td>
@@ -109,7 +154,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
           </div>
         </td>
 
-        <td className="border text-center py-2">
+        <td className="border text-center p-2">
           <div className=" flex flex-col gap-1">
             <p className="date">{`${car.orderDate}`}</p>
             <div className="relative h-8 flex justify-center group">
@@ -130,26 +175,26 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
             </div>
           </div>
         </td>
-        <td className="border text-center py-2">
+        <td className="border text-center p-2">
           <div className="flex flex-col gap-1">
-            <p className="Model">{`${car.make} ${car.model}`}</p>
+            <p className="Model font-semibold">{`${car.model}`} <span className="text-gray-500 font-normal text-sm">2024</span></p>
             <p className="Chassis">{`${car.chassis}`}</p>
           </div>
         </td>
-        <td className="border w-36 text-center py-2">
+        <td className="border w-36 text-center p-2">
           <div className="flex flex-col gap-1">
             <p className="customer font-bold">{`${car.customer}`}</p>
             <p className="region">{`${car.region}`}</p>
           </div>
         </td>
-        <td className="w-48 border text-center font-semibold py-2">
+        <td className="w-48 border text-center font-semibold p-2">
           <div className="flex flex-col gap-1">
             <p className="price font-bold">
               ¥{`${car.stockPrice.toLocaleString()}`}
             </p>
           </div>
         </td>
-        <td className="w-48 border text-center font-semibold py-2">
+        <td className="w-48 border text-center font-semibold p-2">
           <DropDown
             options={conditions}
             customClass="md:w-fit h-fit text-sm bg-gray-100"
@@ -159,7 +204,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
             selected={car.leaveReason}
           />
         </td>
-        <td className="w-48 border text-center font-semibold py-2">
+        <td className="w-48 border text-center font-semibold p-2">
           <div className="flex flex-col items-center gap-0.5">
             <DropDown
               options={statusSelectBefore}
@@ -180,7 +225,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
             />
           </div>
         </td>
-        <td className="w-48 border text-center font-semibold py-2">
+        <td className="w-48 border text-center font-semibold p-2">
           <div className="flex justify-center gap-1">
             <input
               type="text"
@@ -197,17 +242,17 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
           <div className="flex w-full h-full">
             <div className="flex w-1/2 flex-col">
               <textarea
-                className="border-b h-14 resize-none p-1 outline-none focus-within:border focus-within:border-slate-500"
+                className="border-b h-14 resize-none p-1 px-2 text-sm outline-none focus-within:border focus-within:border-slate-500"
                 placeholder="Customer Comment"
               />
               <textarea
-                className="h-14 resize-none p-1 outline-none focus-within:border focus-within:border-slate-500"
+                className="h-14 resize-none p-1 px-2 text-sm outline-none focus-within:border focus-within:border-slate-500"
                 placeholder="Admin Comment to Customer"
               />
             </div>
             <div className="flex w-1/2">
               <textarea
-                className="border-l h-full w-full resize-none p-1 outline-none focus-within:border focus-within:border-slate-500"
+                className="border-l h-full w-full resize-none p-1 px-2 text-sm outline-none focus-within:border focus-within:border-slate-500"
                 placeholder="Admin Comment"
               />
             </div>
@@ -216,11 +261,11 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
         <td colSpan={2} className="border text-center">
           <div className="flex w-full flex-col">
             <textarea
-              className="border-b h-14 resize-none p-1 outline-none focus-within:border focus-within:border-slate-500"
+              className="border-b h-14 resize-none p-1 px-2 text-sm outline-none focus-within:border focus-within:border-slate-500"
               placeholder="Car Comment of The Day"
             />
             <textarea
-              className="h-14 resize-none p-1 bg-gray-100  outline-none focus-within:border focus-within:border-slate-500"
+              className="h-14 resize-none p-1 px-2 text-sm bg-gray-100  outline-none focus-within:border focus-within:border-slate-500"
               placeholder="Car Comment of The Past"
             />
           </div>
@@ -228,11 +273,11 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
         <td colSpan={2} className="border text-center">
           <div className="flex w-full flex-col">
             <textarea
-              className="border-b h-14 resize-none p-1 outline-none focus-within:border focus-within:border-slate-500"
+              className="border-b h-14 resize-none p-1 px-2 text-sm outline-none focus-within:border focus-within:border-slate-500"
               placeholder="Shitami Comment of The Day"
             />
             <textarea
-              className="h-14 resize-none p-1 bg-gray-100 outline outline-1 outline-gray-100 outline-none focus-within:border focus-within:border-slate-500"
+              className="h-14 resize-none p-1 px-2 text-sm bg-gray-100 outline outline-1 outline-gray-100 outline-none focus-within:border focus-within:border-slate-500"
               placeholder="Shitami Comment of The Past"
             />
           </div>

@@ -65,7 +65,7 @@ const CarStatusBox: React.FC<CarStatusBoxProps> = ({
 
             <div className="flex flex-col gap-2">
               <button className="bg-gray-100 text-gray-400 py-2 font-bold rounded-md">
-                Checking availability
+                Checking Availability
               </button>
               <p className="text-gray-500 text-center">
                 Admin team will check the availability of the selected car.

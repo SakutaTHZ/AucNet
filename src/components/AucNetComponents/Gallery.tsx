@@ -257,7 +257,7 @@ const Gallery: React.FC<GalleryProps> = ({
           </button>
           <img
             src={images[currentIndex - 1]}
-            className={`mainImage h-4/6 ${animate ? "animate-slideLeft" : ""}`}
+            className={`mainImage w-1/2 ${animate ? "animate-slideLeft" : ""}`}
             style={{
               transform: `scale(${scale}) translate(${translate.x}px, ${translate.y}px)`,
               cursor: isImageDragging ? "grabbing" : "grab",

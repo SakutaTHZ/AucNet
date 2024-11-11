@@ -15,7 +15,7 @@ const SuperStatusBullet: React.FC<SuperStatusBulletProps> = ({
 
   return (
     <div
-    className={`w-full flex gap-2 items-center justify-between cursor-pointer border-2 border-transparent p-2 rounded-md transition-colors ${
+    className={`status w-full flex gap-2 items-center justify-between cursor-pointer border-2 border-transparent p-2 rounded-md transition-colors ${
       isActive ? activeColor : 'bg-gray-100 border-gray-300'
     }`}
       onClick={onClick}

@@ -13,7 +13,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
   placeholder = "Search",
 }) => {
   return (
-    <div className="relative flex items-center justify-center">
+    <div className="w-full md:w-auto relative flex items-center justify-center">
       <input
         type="text"
         placeholder={placeholder}

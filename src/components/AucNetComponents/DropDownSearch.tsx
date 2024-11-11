@@ -88,7 +88,7 @@ const DropDownSearch: React.FC<DropDownSearchProps> = ({
 
       {isOpen && (
         <div
-          className={`origin-top-right absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
+          className={`z-[50] origin-top-right absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
         >
           <div className="py-1 px-2 flex flex-col">
             <input
@@ -100,7 +100,7 @@ const DropDownSearch: React.FC<DropDownSearchProps> = ({
             />
 
             {/* "All" Checkbox */}
-            <div className="py-1 px-1 flex justify-between cursor-pointer transition-all hover:bg-gray-100">
+            <div className="py-1 px-1 mt-2 flex justify-between cursor-pointer transition-all hover:bg-gray-100">
               <label className="flex items-center justify-between w-full gap-2 cursor-pointer">
                 <div className="flex items-center gap-2">
                   <input
@@ -118,22 +118,22 @@ const DropDownSearch: React.FC<DropDownSearchProps> = ({
             {/* Filtered options */}
             <div className="flex flex-col gap-2 py-2">
               {filteredData.length > 0 ? (
-                filteredData.map((item, index) => (
-                  <div
-                    key={index}
-                    className="py-1 px-1 flex justify-between cursor-pointer transition-all hover:bg-gray-100"
-                  >
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={checkedItems.includes(item.name)}
-                        onChange={() => handleCheckboxChange(item)}
-                        className="form-checkbox h-3 w-3 cursor-pointer"
-                      />
-                      <span>{item.name}</span>
-                    </label>
-                    <span className="text-transparent">{item.count}</span>
-                  </div>
+                filteredData.map((item, index) => (<div
+                  key={index}
+                  className="py-1 px-1 flex justify-between cursor-pointer transition-all hover:bg-gray-100"
+                  onClick={() => handleCheckboxChange(item)}
+                >
+                  <label className="flex items-center gap-2 cursor-pointer" onClick={() => handleCheckboxChange(item)}>
+                    <input
+                      type="checkbox"
+                      checked={checkedItems.includes(item.name)}
+                      onChange={() => handleCheckboxChange(item)}
+                      className="form-checkbox h-3 w-3 cursor-pointer"
+                    />
+                    <span>{item.name}</span>
+                  </label>
+                  <span className="text-transparent">{item.count}</span>
+                </div>
                 ))
               ) : (
                 <p className="text-sm text-red-500">No results found</p>

@@ -32,6 +32,7 @@ const AucNetRow: React.FC<AucNetRowProps> = ({
   const location = useLocation();
 
   const cards = location.state?.cards || [];
+  console.log(cards);
   const recommend = [...cards].sort(() => 0.5 - Math.random()).slice(0, 4);
   const [showPopUp, setShowPopUp] = useState<boolean>(false);
 

@@ -19,7 +19,7 @@ const AdminStatusBullet: React.FC<AdminStatusBulletProps> = ({
     <>
       {status == "New" ? (
         <button
-          className={`flex gap-1 items-center justify-center bg-yellow-200 hover:bg-yellow-300 px-2 py-1 font-semibold ${customClass}`}
+          className={`flex gap-1 items-center justify-center bg-[#FEEBA6] hover:bg-[#ffe483] px-2 py-1 font-semibold ${customClass}`}
           onClick={onClick}
         >
           <TbTag size={18} className="flex-shrink-0"/>
@@ -27,7 +27,7 @@ const AdminStatusBullet: React.FC<AdminStatusBulletProps> = ({
         </button>
       ) : status == "Approved" ? (
         <button
-          className={`flex gap-1 items-center justify-center bg-amber-200 hover:bg-amber-300 px-2 py-1 font-semibold ${customClass}`}
+          className={`flex gap-1 items-center justify-center bg-orange-200 hover:bg-orange-300 px-2 py-1 font-semibold ${customClass}`}
           onClick={onClick}
         >
           <LuStar  size={18} className="flex-shrink-0"/>
@@ -35,7 +35,7 @@ const AdminStatusBullet: React.FC<AdminStatusBulletProps> = ({
         </button>
       ) : status == "Qualified" ? (
         <button
-          className={`flex gap-1 items-center justify-center bg-orange-300 hover:bg-orange-400 px-2 py-1 font-semibold ${customClass}`}
+          className={`flex gap-1 items-center justify-center bg-amber-300 hover:bg-amber-400 px-2 py-1 font-semibold ${customClass}`}
           onClick={onClick}
         >
           <PiStarHalf size={18} className="flex-shrink-0" />
