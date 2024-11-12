@@ -109,30 +109,30 @@ const AdminPage: React.FC = () => {
           {[
             {
               title: "New",
-              color: "bg-[#FEEBA6] hover:bg-[#ffe483]",
+              color: "bg-[#FEEBA6]",
               count: cards.filter((car: any) => car.status === "New").length,
             },
             {
               title: "Approved",
-              color: "bg-orange-200 hover:bg-orange-300",
+              color: "bg-orange-200",
               count: cards.filter((car: any) => car.status === "Approved")
                 .length,
             },
             {
               title: "Qualified",
-              color: "bg-amber-300 hover:bg-amber-400",
+              color: "bg-amber-300",
               count: cards.filter((car: any) => car.status === "Qualified")
                 .length,
             },
             {
               title: "Processed",
-              color: "bg-green-200 hover:bg-green-300",
+              color: "bg-green-200",
               count: cards.filter((car: any) => car.status === "Processed")
                 .length,
             },
             {
               title: "Finished",
-              color: "bg-blue-200 hover:bg-blue-300",
+              color: "bg-blue-200",
               count: cards.filter((car: any) => car.status === "Finished")
                 .length,
             },
@@ -220,7 +220,7 @@ const AdminPage: React.FC = () => {
                   <td className="border text-center">
                     <input
                       type="checkbox"
-                      className="mainCheck"
+                      className="mainCheck cursor-pointer"
                       checked={selectAll}
                       onChange={(e) => handleSelectAllChange(e.target.checked)}
                     />

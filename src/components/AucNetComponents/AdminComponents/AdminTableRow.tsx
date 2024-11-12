@@ -15,7 +15,7 @@ interface AdminTableRowProps {
   count?: number;
   car: any;
   isSelected: boolean;
-  carNum:number;
+  carNum: number;
   onClick?: () => void;
   onCheckboxChange?: any;
 }
@@ -27,7 +27,6 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
   onCheckboxChange,
   isSelected = false,
 }) => {
-
   const status: string[] = [
     "All",
     "New",
@@ -106,31 +105,35 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
     imageUrl: card.imageUrl,
     images: card.images,
   }));
-  
+
   console.log(carcards);
   const recommend = [...cards].sort(() => 0.5 - Math.random()).slice(0, 4);
 
   const handleCardClick = (cardData: any) => {
-    console.log('navigate')
-    navigate("/details", { state: { card: cardData, cards: cards , recommend:recommend } });
+    console.log("navigate");
+    navigate("/details", {
+      state: { card: cardData, cards: cards, recommend: recommend },
+    });
   };
 
   return (
     <>
       <tr className="bg-white">
         <td rowSpan={2} className="border align-top text-center px-1">
-        <input
-          type="checkbox"
-          checked={isSelected}
-          onChange={(e) => onCheckboxChange(e.target.checked)}
-        />
+          <input
+            className="cursor-pointer"
+            type="checkbox"
+            checked={isSelected}
+            onChange={(e) => onCheckboxChange(e.target.checked)}
+          />
         </td>
         <td
           rowSpan={2}
-          className="border align-top text-center font-semibold px-1 cursor-pointer"
-          onClick={()=>handleCardClick(car)}
+          className="border align-top text-center font-semibold px-1"
         >
-          <p>{carNum+1}</p>
+          <p className="cursor-pointer" onClick={() => handleCardClick(car)}>
+            {carNum + 1}
+          </p>
         </td>
         <td
           rowSpan={2}
@@ -177,7 +180,10 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
         </td>
         <td className="border text-center p-2">
           <div className="flex flex-col gap-1">
-            <p className="Model font-semibold">{`${car.model}`} <span className="text-gray-500 font-normal text-sm">2024</span></p>
+            <p className="Model font-semibold">
+              {`${car.model}`}{" "}
+              <span className="text-gray-500 font-normal text-sm">2024</span>
+            </p>
             <p className="Chassis">{`${car.chassis}`}</p>
           </div>
         </td>
@@ -204,23 +210,23 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
             selected={car.leaveReason}
           />
         </td>
-        <td className="w-48 border text-center font-semibold p-2">
+        <td className={`w-48 border text-center font-semibold p-2 ${(car.stateBefore==="BGHT"&&car.stateAfter==="Bought")&&"bg-green-400"} `}>
           <div className="flex flex-col items-center gap-0.5">
             <DropDown
               options={statusSelectBefore}
-              customClass="md:w-36 h-fit text-sm bg-gray-100"
+              customClass="md:w-36 h-fit text-sm"
               optionClass="w-fit h-fit text-sm"
               optionBoxClass="left-0 w-fit h-fit z-20"
-              buttonClass="py-0.5"
+              buttonClass="py-0.5 bg-gray-100"
               selected={car.stateBefore}
             />
             <FaChevronDown size={10} className="text-gray-400" />
             <DropDown
               options={statusSelectAfter}
-              customClass="md:w-36 h-fit text-sm bg-gray-100"
+              customClass="md:w-36 h-fit text-sm"
               optionClass="w-fit h-fit text-sm bg-gray-100"
               optionBoxClass="left-0 w-fit h-fit z-20"
-              buttonClass="py-0.5"
+              buttonClass="py-0.5 bg-gray-100"
               selected={car.stateAfter}
             />
           </div>
@@ -240,7 +246,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
       <tr className="bg-white border-b-2 border-b-slate-300">
         <td colSpan={3} className="border text-center">
           <div className="flex w-full h-full">
-            <div className="flex w-1/2 flex-col">
+            <div className="flex w-full flex-col">
               <textarea
                 className="border-b h-14 resize-none p-1 px-2 text-sm outline-none focus-within:border focus-within:border-slate-500"
                 placeholder="Customer Comment"
@@ -250,13 +256,13 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
                 placeholder="Admin Comment to Customer"
               />
             </div>
-            <div className="flex w-1/2">
-              <textarea
-                className="border-l h-full w-full resize-none p-1 px-2 text-sm outline-none focus-within:border focus-within:border-slate-500"
-                placeholder="Admin Comment"
-              />
-            </div>
           </div>
+        </td>
+        <td colSpan={2} className="border text-center align-top p-0 h-[100px]">
+          <textarea
+            className="w-full h-full resize-none m-0 p-1 text-sm outline-none focus:border focus:border-slate-500 block leading-none"
+            placeholder="Admin Comment"
+          />
         </td>
         <td colSpan={2} className="border text-center">
           <div className="flex w-full flex-col">
@@ -270,7 +276,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
             />
           </div>
         </td>
-        <td colSpan={2} className="border text-center">
+        {/* <td colSpan={2} className="border text-center">
           <div className="flex w-full flex-col">
             <textarea
               className="border-b h-14 resize-none p-1 px-2 text-sm outline-none focus-within:border focus-within:border-slate-500"
@@ -281,7 +287,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
               placeholder="Shitami Comment of The Past"
             />
           </div>
-        </td>
+        </td> */}
       </tr>
     </>
   );
