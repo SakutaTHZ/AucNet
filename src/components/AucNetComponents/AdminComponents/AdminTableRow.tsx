@@ -127,7 +127,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
         </td>
         <td
           rowSpan={2}
-          className="border align-top text-center font-semibold px-1"
+          className="border align-top text-center font-semibold px-1 cursor-pointer"
           onClick={()=>handleCardClick(car)}
         >
           <p>{carNum+1}</p>
