@@ -7,6 +7,7 @@ interface ListDataItem {
 }
 
 interface DropDownSearchProps {
+  noDropDown?:boolean;
   options: ListDataItem[];
   customClass?: string;
   buttonClass?: string;
@@ -15,6 +16,7 @@ interface DropDownSearchProps {
 }
 
 const DropDownSearch: React.FC<DropDownSearchProps> = ({
+  noDropDown,
   options,
   customClass,
   buttonClass,
@@ -78,7 +80,7 @@ const DropDownSearch: React.FC<DropDownSearchProps> = ({
     <div className={`relative inline-block w-full text-left ${customClass}`}>
       <button
         onClick={toggleDropdown}
-        className={`inline-flex justify-between gap-2 text-nowrap items-center w-full transition-all border border-gray-300 hover:border-gray-400 px-3 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
+        className={`${noDropDown&&"hidden"} inline-flex justify-between gap-2 text-nowrap items-center w-full transition-all border border-gray-300 hover:border-gray-400 px-3 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
       >
         <p className="overflow-hidden max-w-40 text-ellipsis">
           {checkedItems.length === 0 ? "All" : checkedItems.join(", ")}
@@ -86,9 +88,9 @@ const DropDownSearch: React.FC<DropDownSearchProps> = ({
         <FaChevronDown size={12} className="text-gray-400 flex-shrink-0" />
       </button>
 
-      {isOpen && (
+      {(noDropDown || isOpen) && (
         <div
-          className={`z-[50] origin-top-right absolute mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
+          className={`${noDropDown?"block":"absolute mt-2"} custom-scrollbar transition-all delay-150 z-[50] origin-top-right w-full h-64 overflow-y-scroll pt-2 rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
         >
           <div className="py-1 px-2 flex flex-col">
             <input

@@ -8,33 +8,33 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: #00122A;
+  color: #00122a;
   background-color: white;
 
-  --cosmo-yellow:#FFC158;
+  --cosmo-yellow: #ffc158;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-#root{
-  width:100dvw;
+#root {
+  width: 100dvw;
 }
 body {
-  width:100dvw;
+  width: 100dvw;
   margin: 0;
   display: flex;
   place-items: center;
-  overflow-x:hidden;
-  overflow-y:scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .rangeSlider {
   width: 100%;
-  -webkit-appearance :none;
-  -moz-appearance :none;
-  appearance :none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   background: none;
   cursor: pointer;
 }
@@ -56,88 +56,90 @@ body {
   margin-top: -3px;
   background-color: var(--cosmo-yellow);
   height: 15px;
-  aspect-ratio: 1;   
-  border-radius: 50%; 
+  aspect-ratio: 1;
+  border-radius: 50%;
   border: 1px solid transparent;
   outline: 3px solid transparent;
   z-index: 10;
-  transition: .5s ease-in-out;
+  transition: 0.5s ease-in-out;
 }
 .rangeSlider::-moz-range-thumb {
   border: none; /*Removes extra border that FF applies*/
   background-color: var(--cosmo-yellow);
   height: 15px;
-  aspect-ratio: 1;   
-  border-radius: 50%; 
+  aspect-ratio: 1;
+  border-radius: 50%;
 }
 .rangeSlider:focus {
   outline: none;
 }
-.rangeSlider:focus::-webkit-slider-thumb,.rangeSlider:hover::-webkit-slider-thumb {
+.rangeSlider:focus::-webkit-slider-thumb,
+.rangeSlider:hover::-webkit-slider-thumb {
   border: 1px solid white;
   outline: 2px solid var(--cosmo-yellow);
   outline-offset: 0.125rem;
 }
 
-.rangeSlider:focus::-moz-range-thumb,.rangeSlider:hover::-moz-range-thumb {
+.rangeSlider:focus::-moz-range-thumb,
+.rangeSlider:hover::-moz-range-thumb {
   border: 1px solid white;
   outline: 2px solid var(--cosmo-yellow);
-  outline-offset: 0.125rem;     
+  outline-offset: 0.125rem;
 }
 
-.carDetailsBox{
-  .dataRow{
-    position:relative;
-    align-items:center;
-    justify-content:center;
-    .description::before{
-      content:'';
-      position:absolute;
-      left:-4.5px;
-      top:50%;
-      width:10px;
-      height:10px;
-      border-radius:50%;
-      background:grey;
+.carDetailsBox {
+  .dataRow {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    .description::before {
+      content: "";
+      position: absolute;
+      left: -4.5px;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: grey;
     }
   }
-  .dataRow:first-of-type{
-    background:#00000005;
-    border-radius:10px 10px 10px 0;
+  .dataRow:first-of-type {
+    background: #00000005;
+    border-radius: 10px 10px 10px 0;
   }
-  .dataRow:not(:first-of-type){
-    color:#00000060;
-    p{
-      color:#00000060;
+  .dataRow:not(:first-of-type) {
+    color: #00000060;
+    p {
+      color: #00000060;
     }
   }
-  .dataRow::before{
-    content:'';
-    position:absolute;
-    left:0px;
-    top:50%;
-    width:2px;
-    height:50%;
-    background:gray;
+  .dataRow::before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    width: 2px;
+    height: 50%;
+    background: gray;
   }
-  .dataRow:last-of-type::before{
-    display:none;
+  .dataRow:last-of-type::before {
+    display: none;
   }
-  .dataRow::after{
-    content:'';
-    position:absolute;
-    left:0px;
-    bottom:50%;
-    width:2px;
-    height:50%;
-    background:gray;
+  .dataRow::after {
+    content: "";
+    position: absolute;
+    left: 0px;
+    bottom: 50%;
+    width: 2px;
+    height: 50%;
+    background: gray;
   }
-  .dataRow:first-of-type::after{
-    display:none;
+  .dataRow:first-of-type::after {
+    display: none;
   }
 }
-.comment:last-of-type{
-  border:0;
+.comment:last-of-type {
+  border: 0;
 }
 .scrollBox {
   scrollbar-width: none;
@@ -148,20 +150,41 @@ body {
   display: none;
 }
 
-input[type="checkbox"]{
-  accent-color:#FFC158;
+input[type="checkbox"] {
+  accent-color: #ffc158;
 }
 
-.w-fit-cus{
-  width:fit-content !important;
+.w-fit-cus {
+  width: fit-content !important;
 }
 @media only screen and (max-width: 600px) {
-  
-.statusSeclection{
-  .status{
-    width:48%;
+  .statusSeclection {
+    .status {
+      width: 48%;
+    }
   }
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0px;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgb(209 213 219);
+  border-radius:20px;
+  cursor:pointer;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgb(252 211 77);
 }
 
 /* @media (prefers-color-scheme: light) {

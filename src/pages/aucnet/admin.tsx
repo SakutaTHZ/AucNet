@@ -104,7 +104,7 @@ const AdminPage: React.FC = () => {
         />
       )}
 
-      <div className="flex flex-col gap-2 pb-4 border-b border-b-gray-200">
+      <div className="flex flex-col gap-2 pb-0 border-b border-b-gray-200">
         <div className="statusSeclection flex flex-wrap md:flex-nowrap justify-between  md:justify-normal gap-2">
           {[
             {
@@ -157,6 +157,7 @@ const AdminPage: React.FC = () => {
           <div className="w-full">
             <p className="font-semibold mb-2">Region</p>
             <DropDownSearch
+              noDropDown={true}
               options={region}
               customClass="w-full bg-white"
               buttonClass="py-2 h-10"
@@ -166,6 +167,7 @@ const AdminPage: React.FC = () => {
           <div className="w-full">
             <p className="font-semibold mb-2">Customer</p>
             <DropDownSearch
+              noDropDown={true}
               options={customer}
               customClass="w-full bg-white"
               buttonClass="py-2 h-10"
@@ -176,6 +178,7 @@ const AdminPage: React.FC = () => {
           <div className="w-full">
             <p className="font-semibold mb-2">Model</p>
             <DropDownSearch
+              noDropDown={true}
               options={model}
               customClass="w-full bg-white"
               buttonClass="py-2 h-10"
@@ -186,6 +189,7 @@ const AdminPage: React.FC = () => {
           <div className="w-full">
             <p className="font-semibold mb-2">Auction Grade</p>
             <DropDownSearch
+              noDropDown={true}
               options={auctionGrade}
               customClass="w-full bg-white"
               buttonClass="py-2 h-10"
@@ -195,6 +199,7 @@ const AdminPage: React.FC = () => {
           <div className="w-full">
             <p className="font-semibold mb-2">Sort By Price</p>
             <DropDown
+              noDropDown={true}
               options={sortModes}
               customClass="w-full"
               buttonClass="py-2 h-10"
@@ -214,7 +219,7 @@ const AdminPage: React.FC = () => {
           }
         >
           <div className="overflow-y-scroll md:overflow-y-auto">
-            <table className="w-full border mt-6">
+            <table className="w-full border mt-4">
               <thead>
                 <tr className="bg-gray-100">
                   <td className="border text-center">
