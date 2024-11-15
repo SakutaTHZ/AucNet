@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminStatusBullet from "./AdminStatusBullet";
 import { FaChevronDown } from "react-icons/fa";
 import { MdImage } from "react-icons/md";
@@ -6,6 +6,7 @@ import DropDown from "../DropDown";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import { carAtom } from "../../../components/AucNetComponents/Datas/atoms";
+import Chats from "../Chats";
 
 interface AdminTableRowProps {
   customClass?: string;
@@ -115,17 +116,35 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
       state: { card: cardData, cards: cards, recommend: recommend },
     });
   };
+  const [stateBefore, setStateBefore] = useState(car.stateBefore);
+  const [stateAfter, setStateAfter] = useState(car.stateAfter);
+
+  const [stateColor, setStateColor] = useState(
+    car.stateBefore === "BGHT" && car.stateAfter === "Bought"
+  );
+
+  useEffect(() => {
+    console.log("Before - " + stateBefore + ", After - " + stateAfter);
+    setStateColor(stateBefore === "BGHT" && stateAfter === "Bought");
+    console.log(stateColor);
+  }, [stateBefore, stateAfter]);
 
   return (
     <>
       <tr className="bg-white">
-        <td rowSpan={2} className="border align-top text-center px-1">
-          <input
-            className="cursor-pointer"
-            type="checkbox"
-            checked={isSelected}
-            onChange={(e) => onCheckboxChange(e.target.checked)}
-          />
+        <td rowSpan={2} className="border align-top text-center px-1 h-[100px]"> 
+          <div className="h-full flex flex-col py-2 justify-between">
+            <input
+              className="cursor-pointer"
+              type="checkbox"
+              checked={isSelected}
+              onChange={(e) => onCheckboxChange(e.target.checked)}
+            />
+
+            <div className="flex flex-col items-center gap-2">
+              <Chats commentCount={10} showComment={false} withComments={false} />
+            </div>
+          </div>
         </td>
         <td
           rowSpan={2}
@@ -210,7 +229,11 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
             selected={car.leaveReason}
           />
         </td>
-        <td className={`w-48 border text-center font-semibold p-2 ${(car.stateBefore==="BGHT"&&car.stateAfter==="Bought")&&"bg-green-400"} `}>
+        <td
+          className={`w-48 border text-center font-semibold p-2 ${
+            stateColor ? "bg-green-400" : ""
+          }`}
+        >
           <div className="flex flex-col items-center gap-0.5">
             <DropDown
               options={statusSelectBefore}
@@ -219,6 +242,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
               optionBoxClass="left-0 w-fit h-fit z-20"
               buttonClass="py-0.5 bg-gray-100"
               selected={car.stateBefore}
+              onSelectionChange={(newValue) => setStateBefore(newValue)}
             />
             <FaChevronDown size={10} className="text-gray-400" />
             <DropDown
@@ -228,6 +252,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
               optionBoxClass="left-0 w-fit h-fit z-20"
               buttonClass="py-0.5 bg-gray-100"
               selected={car.stateAfter}
+              onSelectionChange={(newValue) => setStateAfter(newValue)}
             />
           </div>
         </td>
@@ -244,7 +269,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
       </tr>
 
       <tr className="bg-white border-b-2 border-b-slate-300">
-        <td colSpan={3} className="border text-center">
+        {/* <td colSpan={3} className="border text-center">
           <div className="flex w-full h-full">
             <div className="flex w-full flex-col">
               <textarea
@@ -257,24 +282,24 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
               />
             </div>
           </div>
-        </td>
-        <td colSpan={2} className="border text-center align-top p-0 h-[100px]">
+        </td> */}
+        <td colSpan={3} className="border text-center align-top p-0 h-[100px]">
           <textarea
             className="w-full h-full resize-none m-0 p-1 text-sm outline-none focus:border focus:border-slate-500 block leading-none"
             placeholder="Admin Comment"
           />
         </td>
-        <td colSpan={2} className="border text-center">
-          <div className="flex w-full flex-col">
-            <textarea
-              className="border-b h-14 resize-none p-1 px-2 text-sm outline-none focus-within:border focus-within:border-slate-500"
-              placeholder="Car Comment of The Day"
-            />
-            <textarea
-              className="h-14 resize-none p-1 px-2 text-sm bg-gray-100  outline-none focus-within:border focus-within:border-slate-500"
-              placeholder="Car Comment of The Past"
-            />
-          </div>
+        <td colSpan={2} className="border text-center align-top p-0 h-[100px]">
+          <textarea
+            className="w-full h-full resize-none m-0 p-1 text-sm outline-none focus:border focus:border-slate-500 block leading-none"
+            placeholder="Car Comment of The Day"
+          />
+        </td>
+        <td colSpan={2} className="border text-center align-top p-0 h-[100px]">
+          <textarea
+            className=" bg-gray-100 w-full h-full resize-none m-0 p-1 text-sm outline-none focus:border focus:border-slate-500 block leading-none"
+            placeholder="Car Comment of The Past"
+          />
         </td>
         {/* <td colSpan={2} className="border text-center">
           <div className="flex w-full flex-col">

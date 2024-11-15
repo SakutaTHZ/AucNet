@@ -2,27 +2,36 @@ import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
 interface DropDownProps {
-  noDropDown?:boolean;
+  noDropDown?: boolean;
   options: string[];
   customClass?: string;
   optionClass?: string;
-  optionBoxClass?:string;
-  buttonClass?:string;
-  selected?:string;
-  onSelectionChange?: (selectedItems: string) => void;
+  optionBoxClass?: string;
+  buttonClass?: string;
+  selected?: string;
+  onSelectionChange?: (selectedItem: string) => void;
 }
 
-const DropDown: React.FC<DropDownProps> = ({ 
-  noDropDown,selected,options, customClass,buttonClass, optionClass, optionBoxClass='right-0',
-  onSelectionChange }) => {
+const DropDown: React.FC<DropDownProps> = ({
+  noDropDown,
+  selected,
+  options,
+  customClass,
+  buttonClass,
+  optionClass,
+  optionBoxClass = "right-0",
+  onSelectionChange,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(selected?selected:options[0]);
+  const [selectedOption, setSelectedOption] = useState(
+    selected ? selected : options[0]
+  );
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
     setIsOpen(false);
     if (onSelectionChange) {
-      onSelectionChange(option);
+      onSelectionChange(option); // Trigger parent callback
     }
   };
 
@@ -34,14 +43,16 @@ const DropDown: React.FC<DropDownProps> = ({
     <div className={`relative inline-block w-full text-left ${customClass}`}>
       <button
         onClick={toggleDropdown}
-        className={`${noDropDown&&"hidden"} inline-flex justify-between gap-2 text-nowrap items-center w-full transition-all border border-gray-300 hover:border-gray-400 px-3 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
+        className={`${noDropDown && "hidden"} inline-flex justify-between gap-2 text-nowrap items-center w-full transition-all border border-gray-300 hover:border-gray-400 px-3 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
       >
         {selectedOption}
         <FaChevronDown size={12} className="text-gray-400 flex-shrink-0" />
       </button>
 
       {(noDropDown || isOpen) && (
-        <div className={`${noDropDown?"block":"absolute mt-2"} origin-top-right w-full h-64 rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}>
+        <div
+          className={`${noDropDown ? "block" : "absolute mt-2"} origin-top-right w-full h-64 rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
+        >
           <div className="py-1">
             {options.map((option) => (
               <button

@@ -29,19 +29,18 @@ import ErrorBoundary from "./components/AucNetComponents/AdminComponents/ErrorBo
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {
-  const location = useLocation(); // Get the current location
+  const location = useLocation();
 
   const [carData, setCarData] = useAtom(carAtom);
 
   useEffect(() => {
-    // Generate cars once on component mount
     const totalCards = Math.floor(Math.random() * 300);
     const cards = Array.from({ length: totalCards }, generateCardData);
-
-    setCarData(cards); // Update car data in atom
+    cards[0].stateBefore="BGHT";
+    cards[0].stateAfter="Bought";
+    setCarData(cards);
   }, [setCarData]);
 
-  // Generate notifications
   const notifications = Array.from(
     { length: Math.floor(Math.random() * 50) },
     generateNotifications
