@@ -34,7 +34,7 @@ const Popup: React.FC<PopupProps> = ({
       <div
         className={`animate-slideUp bg-white p-8 md:p-12 py-8 rounded-lg shadow-lg relative min-w-96 ${customClass}`}
       >
-        <div className="flex items-center justify-between mb-4">
+        <div className="w-full flex items-center justify-between mb-4">
           <p className="text-2xl font-bold">{title}</p>
 
           {/* Close button */}

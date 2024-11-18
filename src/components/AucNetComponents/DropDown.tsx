@@ -31,7 +31,7 @@ const DropDown: React.FC<DropDownProps> = ({
     setSelectedOption(option);
     setIsOpen(false);
     if (onSelectionChange) {
-      onSelectionChange(option); // Trigger parent callback
+      onSelectionChange(option);
     }
   };
 

@@ -1,4 +1,3 @@
-// TypeScript Interfaces
 import {
   Auction,
   AuctionGrade,
@@ -7,7 +6,7 @@ import {
   Customer,
   Region,
 } from "./types";
-// Constant Arrays
+
 export const carNames: string[] = [
   "A3 Sportback",
   "TT Coupe",
@@ -138,6 +137,68 @@ export const getRandomDate = (start: Date, end: Date): string => {
   return `${day}-${month}-${year}`;
 };
 
+export function getRandomTime() {
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  const randomMonth = months[Math.floor(Math.random() * 12)];
+  const randomDay = Math.floor(Math.random() * 28) + 1;
+  const randomHour = Math.floor(Math.random() * 24);
+  const randomMinute = Math.floor(Math.random() * 60);
+
+  const formattedTime = `${randomMonth} ${randomDay.toString().padStart(2, "0")} ${randomHour.toString().padStart(2, "0")}:${randomMinute.toString().padStart(2, "0")}`;
+  
+  return formattedTime;
+}
+
+const usernames = [
+  "John Doe", "Okarun", "Jinx", "Vi", "Chansey", "Granny", "Sakuta", "Bruda"
+];
+const comments = [
+  "Nice Car", "Cool Car", "Is it Available?", "How Much?", 
+  "What is the Price?", "Is it in Good Condition?", 
+  "Is it damaged?", "Love this Car"
+];
+const times = [
+  "12 minutes ago", "1 hour ago", "3 hours ago", 
+  "1 day ago", "1 week ago", "2 weeks ago"
+];
+
+// Helper function to generate a random item from an array
+const getRandomItem = (array:any) => array[Math.floor(Math.random() * array.length)];
+
+// Helper function to generate a random number between min and max (inclusive)
+const getRandomNumber = (min:any, max:any) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+// Function to generate random replies
+const generateReplies = () => {
+  const replies = [];
+  const numReplies = getRandomNumber(0, 3); // 1 to 3 replies
+  for (let i = 0; i < numReplies; i++) {
+    replies.push({
+      name: getRandomItem(usernames),
+      comment: getRandomItem(comments),
+      time: getRandomItem(times),
+    });
+  }
+  return replies;
+};
+
+// Function to generate random comments
+const generateRandomComments = (count = 5) => {
+  const result = [];
+  for (let i = 0; i < count; i++) {
+    result.push({
+      name: getRandomItem(usernames),
+      comment: getRandomItem(comments),
+      time: getRandomItem(times),
+      reply: generateReplies(), // Replies without further replies
+    });
+  }
+  return result;
+};
+
+
 // Main Function to Generate Car Data
 export const generateCardData = (): CarData => {
   const cardData: CarData = {
@@ -153,29 +214,7 @@ export const generateCardData = (): CarData => {
     enginePower: Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
     mileage: Math.floor(Math.random() * (999999 - 1000 + 1)) + 1000,
     year: Math.floor(Math.random() * (2025 - 1980 + 1)) + 1980,
-    comments: [
-      {
-        name: "John Doe",
-        comment: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
-        time: "12 minutes ago",
-        reply: [
-          { name: "Kelly Kim", comment: "Nice Car", time: "1 week ago" },
-          { name: "Talia", comment: "Would recommend", time: "1 day ago" },
-        ],
-      },
-      {
-        name: "Kelly Kim",
-        comment: "I would buy this",
-        time: "1 week ago",
-        reply: [
-          {
-            name: "Talia",
-            comment: "I think there are some issues...",
-            time: "1 day ago",
-          },
-        ],
-      },
-    ],
+    comments: generateRandomComments(getRandomNumber(0, 3)),
     orderDate: getRandomDate(new Date("2024-01-01"), new Date("2024-12-31")),
     chassis: "ABCDS" + Math.floor(Math.random() * (100000 - 10000 + 1) + 10000),
     make: "Toyota",

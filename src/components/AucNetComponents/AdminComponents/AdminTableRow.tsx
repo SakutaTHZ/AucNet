@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import { carAtom } from "../../../components/AucNetComponents/Datas/atoms";
 import Chats from "../Chats";
+import Bids from "../Bids";
 
 interface AdminTableRowProps {
   customClass?: string;
@@ -132,7 +133,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
   return (
     <>
       <tr className="bg-white">
-        <td rowSpan={2} className="border align-top text-center px-1 h-[100px]"> 
+        <td rowSpan={2} className="border align-top text-center px-1 h-[100px]">
           <div className="h-full flex flex-col py-2 justify-between">
             <input
               className="cursor-pointer"
@@ -141,8 +142,18 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
               onChange={(e) => onCheckboxChange(e.target.checked)}
             />
 
-            <div className="flex flex-col items-center gap-2">
-              <Chats commentCount={10} showComment={false} withComments={false} />
+            <div className="flex flex-col items-center gap-3">
+              <Bids
+                car={car}
+              />
+              <Chats
+                comments={car.comments}
+                showComment={car.comments.length > 0 && car.status === "New"}
+                withComments={
+                  (car.comments.length > 0 && car.status === "New") ||
+                  (car.comments.length > 0 && car.status !== "New")
+                }
+              />
             </div>
           </div>
         </td>
@@ -285,19 +296,19 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
         </td> */}
         <td colSpan={3} className="border text-center align-top p-0 h-[100px]">
           <textarea
-            className="w-full h-full resize-none m-0 p-1 text-sm outline-none focus:border focus:border-slate-500 block leading-none"
+            className="w-full h-full resize-none m-0 p-2 text-sm outline-none focus:border focus:border-slate-500 block leading-none"
             placeholder="Admin Comment"
           />
         </td>
         <td colSpan={2} className="border text-center align-top p-0 h-[100px]">
           <textarea
-            className="w-full h-full resize-none m-0 p-1 text-sm outline-none focus:border focus:border-slate-500 block leading-none"
+            className="w-full h-full resize-none m-0 p-2 text-sm outline-none focus:border focus:border-slate-500 block leading-none"
             placeholder="Car Comment of The Day"
           />
         </td>
         <td colSpan={2} className="border text-center align-top p-0 h-[100px]">
           <textarea
-            className=" bg-gray-100 w-full h-full resize-none m-0 p-1 text-sm outline-none focus:border focus:border-slate-500 block leading-none"
+            className=" bg-gray-100 w-full h-full resize-none m-0 p-2 text-sm outline-none focus:border focus:border-slate-500 block leading-none"
             placeholder="Car Comment of The Past"
           />
         </td>

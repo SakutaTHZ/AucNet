@@ -47,7 +47,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({
         <p className="font-semibold text-gray-900">{commentData.name}</p>
         <p className="text-sm text-gray-400">{commentData.time}</p>
       </div>
-      <div className="px-12 py-2">{commentData.comment}</div>
+      <div className="px-12 py-2 text-left">{commentData.comment}</div>
 
       {!isReply && (
         <>

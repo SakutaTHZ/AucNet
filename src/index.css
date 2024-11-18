@@ -166,7 +166,8 @@ input[type="checkbox"] {
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 0px;
+  width: 5px;
+  transition: width 0.3s ease !important;
 }
 
 .custom-scrollbar:hover::-webkit-scrollbar {
@@ -179,8 +180,8 @@ input[type="checkbox"] {
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: rgb(209 213 219);
-  border-radius:20px;
-  cursor:pointer;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {

@@ -27,18 +27,18 @@ const FilterClearDropDown: React.FC<FilterClearDropDownProps> = ({
     const updatedCheckedItems = checkedItems.includes(item.name)
       ? checkedItems.filter((checked) => checked !== item.name)
       : [...checkedItems, item.name];
-    
+
     setCheckedItems(updatedCheckedItems);
-    
-    // Check if all items are selected after update
+
     setSelectAll(updatedCheckedItems.length === listData.length);
   };
 
   const handleRemoveCheckedItem = (item: string) => {
-    const updatedCheckedItems = checkedItems.filter((checked) => checked !== item);
+    const updatedCheckedItems = checkedItems.filter(
+      (checked) => checked !== item
+    );
     setCheckedItems(updatedCheckedItems);
 
-    // Check if all items are selected after removal
     setSelectAll(updatedCheckedItems.length === listData.length);
   };
 

@@ -22,10 +22,9 @@ import {
 } from "./components/AucNetComponents/Datas/generateData";
 import { useAtom } from "jotai";
 import { carAtom } from "./components/AucNetComponents/Datas/atoms";
-import { QueryClient, QueryClientProvider } from "react-query"; // Import react-query
+import { QueryClient, QueryClientProvider } from "react-query";
 import ErrorBoundary from "./components/AucNetComponents/AdminComponents/ErrorBoundary";
 
-// Create a QueryClient instance
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {

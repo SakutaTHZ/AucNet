@@ -7,12 +7,12 @@ interface ListDataItem {
 }
 
 interface DropDownSearchProps {
-  noDropDown?:boolean;
+  noDropDown?: boolean;
   options: ListDataItem[];
   customClass?: string;
   buttonClass?: string;
   optionBoxClass?: string;
-  onSelectionChange?: (selectedItems: string[]) => void; // Callback for selected items
+  onSelectionChange?: (selectedItems: string[]) => void;
 }
 
 const DropDownSearch: React.FC<DropDownSearchProps> = ({
@@ -32,12 +32,10 @@ const DropDownSearch: React.FC<DropDownSearchProps> = ({
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Handle search term update
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  // Handle individual item check/uncheck
   const handleCheckboxChange = (item: ListDataItem) => {
     setCheckedItems((prev) => {
       const newCheckedItems = prev.includes(item.name)
@@ -51,27 +49,25 @@ const DropDownSearch: React.FC<DropDownSearchProps> = ({
     });
   };
 
-  // Handle "All" checkbox toggle
   const handleAllCheckboxChange = () => {
-    const newCheckedItems = isAllChecked ? [] : options.map((item) => item.name);
+    const newCheckedItems = isAllChecked
+      ? []
+      : options.map((item) => item.name);
     setCheckedItems(newCheckedItems);
     updateAllCheckedState(newCheckedItems);
     notifySelectionChange(newCheckedItems);
   };
 
-  // Update "All" checkbox state based on current selection
   const updateAllCheckedState = (newCheckedItems: string[]) => {
     setIsAllChecked(newCheckedItems.length === options.length);
   };
 
-  // Notify parent component of selection change
   const notifySelectionChange = (selectedItems: string[]) => {
     if (onSelectionChange) {
       onSelectionChange(selectedItems);
     }
   };
 
-  // Toggle dropdown open/close
   const toggleDropdown = () => {
     setIsOpen((prevState) => !prevState);
   };
@@ -80,7 +76,9 @@ const DropDownSearch: React.FC<DropDownSearchProps> = ({
     <div className={`relative inline-block w-full text-left ${customClass}`}>
       <button
         onClick={toggleDropdown}
-        className={`${noDropDown&&"hidden"} inline-flex justify-between gap-2 text-nowrap items-center w-full transition-all border border-gray-300 hover:border-gray-400 px-3 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
+        className={`${
+          noDropDown && "hidden"
+        } inline-flex justify-between gap-2 text-nowrap items-center w-full transition-all border border-gray-300 hover:border-gray-400 px-3 rounded-md shadow-sm focus:outline-none ${buttonClass}`}
       >
         <p className="overflow-hidden max-w-40 text-ellipsis">
           {checkedItems.length === 0 ? "All" : checkedItems.join(", ")}
@@ -90,7 +88,9 @@ const DropDownSearch: React.FC<DropDownSearchProps> = ({
 
       {(noDropDown || isOpen) && (
         <div
-          className={`${noDropDown?"block":"absolute mt-2"} custom-scrollbar transition-all delay-150 z-[50] origin-top-right w-full h-64 overflow-y-scroll pt-2 rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
+          className={`${
+            noDropDown ? "block" : "absolute mt-2"
+          } custom-scrollbar transition-all delay-150 z-[50] origin-top-right w-full h-64 overflow-y-scroll pt-2 rounded-md bg-white ring-1 ring-black ring-opacity-5 ${optionBoxClass}`}
         >
           <div className="py-1 px-2 flex flex-col">
             <input
@@ -113,29 +113,35 @@ const DropDownSearch: React.FC<DropDownSearchProps> = ({
                   />
                   <span>All</span>
                 </div>
-                <span className="text-transparent">{options.reduce((acc, item) => acc + item.count, 0)}</span>
+                <span className="text-transparent">
+                  {options.reduce((acc, item) => acc + item.count, 0)}
+                </span>
               </label>
             </div>
 
             {/* Filtered options */}
             <div className="flex flex-col gap-2 py-2">
               {filteredData.length > 0 ? (
-                filteredData.map((item, index) => (<div
-                  key={index}
-                  className="py-1 px-1 flex justify-between cursor-pointer transition-all hover:bg-gray-100"
-                  onClick={() => handleCheckboxChange(item)}
-                >
-                  <label className="flex items-center gap-2 cursor-pointer" onClick={() => handleCheckboxChange(item)}>
-                    <input
-                      type="checkbox"
-                      checked={checkedItems.includes(item.name)}
-                      onChange={() => handleCheckboxChange(item)}
-                      className="form-checkbox h-3 w-3 cursor-pointer"
-                    />
-                    <span>{item.name}</span>
-                  </label>
-                  <span className="text-transparent">{item.count}</span>
-                </div>
+                filteredData.map((item, index) => (
+                  <div
+                    key={index}
+                    className="py-1 px-1 flex justify-between cursor-pointer transition-all hover:bg-gray-100"
+                    onClick={() => handleCheckboxChange(item)}
+                  >
+                    <label
+                      className="flex items-center gap-2 cursor-pointer"
+                      onClick={() => handleCheckboxChange(item)}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={checkedItems.includes(item.name)}
+                        onChange={() => handleCheckboxChange(item)}
+                        className="form-checkbox h-3 w-3 cursor-pointer"
+                      />
+                      <span>{item.name}</span>
+                    </label>
+                    <span className="text-transparent">{item.count}</span>
+                  </div>
                 ))
               ) : (
                 <p className="text-sm text-red-500">No results found</p>
