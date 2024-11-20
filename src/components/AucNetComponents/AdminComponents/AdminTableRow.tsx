@@ -132,7 +132,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
 
   return (
     <>
-      <tr className="bg-white">
+      <tr className="bg-white h-24">
         <td rowSpan={2} className="border align-top text-center px-1 h-[100px]">
           <div className="h-full flex flex-col py-2 justify-between">
             <input
@@ -279,7 +279,7 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
         </td>
       </tr>
 
-      <tr className="bg-white border-b-2 border-b-slate-300">
+      <tr className="bg-white h-24 border-b-2 border-b-slate-300">
         {/* <td colSpan={3} className="border text-center">
           <div className="flex w-full h-full">
             <div className="flex w-full flex-col">
@@ -294,19 +294,19 @@ const AdminTableRow: React.FC<AdminTableRowProps> = ({
             </div>
           </div>
         </td> */}
-        <td colSpan={3} className="border text-center align-top p-0 h-[100px]">
+        <td colSpan={3} className="border text-center align-top p-0 h-[96px]">
           <textarea
             className="w-full h-full resize-none m-0 p-2 text-sm outline-none focus:border focus:border-slate-500 block leading-none"
             placeholder="Admin Comment"
           />
         </td>
-        <td colSpan={2} className="border text-center align-top p-0 h-[100px]">
+        <td colSpan={2} className="border text-center align-top p-0 h-[96px]">
           <textarea
             className="w-full h-full resize-none m-0 p-2 text-sm outline-none focus:border focus:border-slate-500 block leading-none"
             placeholder="Car Comment of The Day"
           />
         </td>
-        <td colSpan={2} className="border text-center align-top p-0 h-[100px]">
+        <td colSpan={2} className="border text-center align-top p-0 h-[96px]">
           <textarea
             className=" bg-gray-100 w-full h-full resize-none m-0 p-2 text-sm outline-none focus:border focus:border-slate-500 block leading-none"
             placeholder="Car Comment of The Past"
