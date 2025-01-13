@@ -180,7 +180,7 @@ const App: React.FC = () => {
           {/* Left Sticky Box */}
           {isFilterOn && (
             <div
-              className="leftBox mr-6 overflow-hidden animate-slideUp transition-all inset-0 md:sticky top-24 w-full md:w-64 flex flex-col rounded-md shadow-lg h-fit z-40"
+              className="leftBox mr-6 overflow-hidden overflow-y-auto custom-scrollbar animate-slideUp transition-all inset-0 md:sticky top-24 w-full md:w-64 max-h-[85dvh] flex flex-col rounded-md shadow-lg h-fit z-40"
               style={{ animationFillMode: "forwards" }}
             >
               <div className="bg-slate-50 w-full flex gap-1 justify-between items-center py-2.5 px-4 border-b border-b-gray-200">
@@ -343,7 +343,7 @@ const App: React.FC = () => {
             ) : isTableView ? (
               <div className="rightBox flex flex-col gap-3 w-full h-full">
                 {cards
-                  .slice(20 * currentPage - 20, 20 * currentPage)
+                  // .slice(20 * currentPage - 20, 20 * currentPage)
                   .map((cardData: any, index: number) => (
                     <AucNetRow
                       key={index}
@@ -364,7 +364,7 @@ const App: React.FC = () => {
             ) : (
               <div className="rightBox grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full h-full">
                 {cards
-                  .slice(20 * currentPage - 20, 20 * currentPage)
+                  // .slice(20 * currentPage - 20, 20 * currentPage)
                   .map((cardData: any, index: number) => (
                     <AucNetCard
                       key={index}
